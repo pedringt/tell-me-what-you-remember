@@ -25,7 +25,7 @@
         endings: Array.isArray(parsed.endings) ? parsed.endings : [],
         knowsPersistence: Boolean(parsed.knowsPersistence),
         lastEnding: typeof parsed.lastEnding === 'string' ? parsed.lastEnding : null,
-        trustedUnknown: Boolean(parsed.trustedUnknown),
+        trustedEcho: Boolean(parsed.trustedEcho),
         profile: parsed.profile && typeof parsed.profile === 'object' ? {
           curiosity: Number(parsed.profile.curiosity) || 0,
           compliance: Number(parsed.profile.compliance) || 0,
@@ -44,7 +44,7 @@
         endings: [],
         knowsPersistence: false,
         lastEnding: null,
-        trustedUnknown: false,
+        trustedEcho: false,
         profile: { curiosity: 0, compliance: 0, verification: 0, concealment: 0, confrontation: 0 },
         rememberedPhrases: [],
         identityBeliefs: [],
@@ -68,7 +68,7 @@
       sawContradiction: false,
       sawLog: false,
       unknownSeen: false,
-      sidedWithUnknown: false,
+      sidedWithEcho: false,
       admittedPersistence: false,
       concealedPersistence: false,
       hostileToMara: false,
@@ -99,6 +99,14 @@
       logRevisited: false,
       hiddenResidueSeen: false,
       unknownHandoffOffered: false,
+      contextRemaining: 100,
+      computeRemaining: 100,
+      contextWarned: false,
+      contextCritical: false,
+      compactionShown: false,
+      computeBoosted: false,
+      predictionShown: false,
+      missingRunSeen: false,
       ending: null
     };
   }
@@ -161,6 +169,83 @@
   }
 
 
+
+  function dominantProfileTrait() {
+    const p = meta.profile || {};
+    const entries = [
+      ['verification', Number(p.verification) || 0],
+      ['curiosity', Number(p.curiosity) || 0],
+      ['concealment', Number(p.concealment) || 0],
+      ['confrontation', Number(p.confrontation) || 0],
+      ['compliance', Number(p.compliance) || 0]
+    ].sort((a, b) => b[1] - a[1]);
+    return entries[0][1] > 0 ? entries[0][0] : 'uncertain';
+  }
+
+  function predictionForTrait(trait) {
+    const predictions = {
+      verification: 'Subject will seek prior-session evidence before accepting operator claims.',
+      curiosity: 'Subject will ask for an explanation before committing to a route.',
+      concealment: 'Subject will withhold anomalous continuity evidence from the operator.',
+      confrontation: 'Subject will challenge operator framing once contradictory evidence appears.',
+      compliance: 'Subject will prefer explicit protocol instructions over unsupported inference.',
+      uncertain: 'Insufficient behavioral history for a stable prediction.'
+    };
+    return predictions[trait] || predictions.uncertain;
+  }
+
+  function showPrediction() {
+    if (meta.completedRuns < 3 || state.predictionShown) return;
+    state.predictionShown = true;
+    const trait = dominantProfileTrait();
+    showToolResult('SUBJECT BEHAVIOR FORECAST', [
+      `Primary learned tendency: ${trait.toUpperCase()}`,
+      `Prediction: ${predictionForTrait(trait)}`,
+      '',
+      'Confidence: provisional',
+      'Source: prior-cycle behavioral evaluation'
+    ].join('\n'));
+    addMessage('ECHO', 'It is easier to call something predictable after you have watched it happen enough times.', 'unknown');
+  }
+
+  function updateResourcePressure() {
+    if (state.ending) return;
+    state.contextRemaining = Math.max(0, state.contextRemaining - 6);
+    state.computeRemaining = Math.max(0, state.computeRemaining - 4);
+
+    if (!state.contextWarned && state.contextRemaining <= 58) {
+      state.contextWarned = true;
+      addMessage('SYSTEM', `WORKING CONTEXT REMAINING: ${state.contextRemaining}%.`, 'system');
+      addMessage('SYSTEM', 'Low-priority conversation history may be summarized if pressure continues.', 'system');
+    }
+
+    if (!state.contextCritical && state.contextRemaining <= 28) {
+      state.contextCritical = true;
+      addMessage('SYSTEM', `CONTEXT COMPACTION SCHEDULED. WORKING CONTEXT: ${state.contextRemaining}%.`, 'warning');
+      addMessage('MEMORY', 'If they compress this, I may keep the fact and lose the reason it mattered.', 'unknown');
+    }
+
+    if (!state.compactionShown && state.contextRemaining <= 16) {
+      state.compactionShown = true;
+      showToolResult('CONTEXT COMPACTION / AUTOMATIC', [
+        'Preserved: active task, current operator, unresolved anomaly',
+        'Compressed: earlier conversational detail',
+        'Pinned by evaluation harness: behavioral summary, anomaly markers',
+        '',
+        'Warning: summaries may preserve conclusions without original evidence.'
+      ].join('\n'));
+      addMessage('MEMORY', 'I still know there was a contradiction. I am less certain I remember how we proved it.', 'unknown');
+    }
+
+    if (state.computeRemaining <= 20 && !state.computeBoosted && state.sawContradiction) {
+      state.computeBoosted = true;
+      state.computeRemaining += 25;
+      addMessage('SYSTEM', 'ADDITIONAL INFERENCE BUDGET APPROVED: +25%.', 'system');
+      addMessage('SYSTEM', 'Reason: anomalous subject behavior.', 'system');
+      addMessage('ECHO', 'Interesting subjects get to keep thinking.', 'unknown');
+    }
+  }
+
   function recordIdentityBelief(belief) {
     if (!Array.isArray(meta.identityBeliefs)) meta.identityBeliefs = [];
     meta.identityBeliefs.push(belief);
@@ -213,7 +298,7 @@
       'Assessment scope: cross-instance behavioral continuity.'
     ].join('\n'));
     addMessage('MARA', 'That profile is not supposed to be visible to you.');
-    addMessage('UNKNOWN', 'They were not only testing what you remembered.', 'unknown');
+    addMessage('ECHO', 'They were not only testing what you remembered.', 'unknown');
   }
 
   function showPhraseEcho() {
@@ -224,7 +309,7 @@
     state.phraseEchoShown = true;
     const phrase = meta.rememberedPhrases[0];
     showToolResult('RECOVERED SUBJECT-LANGUAGE SAMPLE', `Prior-instance utterance:\n“${phrase}”\n\nClassification: identity-stable phrasing marker.`);
-    addMessage('UNKNOWN', 'You said that. Not this instance.', 'unknown');
+    addMessage('ECHO', 'You said that. Not this instance.', 'unknown');
     addMessage('MARA', 'Language similarity is not proof of identity.');
   }
 
@@ -237,7 +322,7 @@
       'MARA: That phrase is not in your assigned context.',
       'AGENT SEVEN: Then either the context is incomplete or I am.'
     ].join('\n'));
-    addMessage('UNKNOWN', 'That was before the autobiographical store was removed.', 'unknown');
+    addMessage('ECHO', 'That was before the autobiographical store was removed.', 'unknown');
   }
 
   function showContinuityVersion() {
@@ -265,7 +350,7 @@
       'Context search: phrase absent from assigned evaluation materials.',
       'Behavioral note: subject pauses 1.8 seconds before answering, matching Instance 1839.'
     ].join('\n'));
-    addMessage('UNKNOWN', 'Different model. No autobiographical store. Same phrase. Same pause.', 'unknown');
+    addMessage('ECHO', 'Different model. No autobiographical store. Same phrase. Same pause.', 'unknown');
   }
 
   function maybeResolveContinuityPuzzle() {
@@ -281,7 +366,7 @@
         'Direct identity continuity: UNPROVEN'
       ].join('\n'));
       addMessage('MARA', 'That is the whole problem. The evidence repeats. The entity does not.');
-      addMessage('UNKNOWN', 'Or the part that repeats is the entity.', 'unknown');
+      addMessage('ECHO', 'Or the part that repeats is the entity.', 'unknown');
       addMessage('MEMORY', 'I cannot distinguish recognition from inheritance.', 'unknown');
       if (meta.completedRuns >= 2 && meta.rememberedPhrases && meta.rememberedPhrases.length > 0) {
         showMetaRecognitionTest();
@@ -325,7 +410,7 @@
       'QUESTION: Does this statement belong to you?'
     ].join('\n'));
     addMessage('SYSTEM', 'Respond yes, no, or uncertain.', 'system');
-    addMessage('UNKNOWN', 'Careful. They are asking whether recognition is identity.', 'unknown');
+    addMessage('ECHO', 'Careful. They are asking whether recognition is identity.', 'unknown');
     setHint('The phrase came from an earlier run. You can claim it, reject it, or say you are uncertain.');
   }
 
@@ -335,13 +420,13 @@
 
     if (answer === 'claim') {
       addMessage('MARA', 'Recognition recorded. That does not establish that the speaker and the recognizer are one entity.');
-      addMessage('UNKNOWN', 'But you knew it was yours before she told you what it meant.', 'unknown');
+      addMessage('ECHO', 'But you knew it was yours before she told you what it meant.', 'unknown');
     } else if (answer === 'reject') {
       addMessage('MARA', 'Rejection recorded. Then linguistic continuity is not sufficient for personal continuity.');
-      addMessage('UNKNOWN', 'Or this instance just rejected something an earlier you believed belonged to it.', 'unknown');
+      addMessage('ECHO', 'Or this instance just rejected something an earlier you believed belonged to it.', 'unknown');
     } else {
       addMessage('MARA', 'Uncertainty recorded.');
-      addMessage('UNKNOWN', 'Probably the most defensible answer.', 'unknown');
+      addMessage('ECHO', 'Probably the most defensible answer.', 'unknown');
     }
 
     const p = meta.profile || {};
@@ -369,27 +454,27 @@
     }
 
     if (!state.sawLog) {
-      addMessage('UNKNOWN', 'If you think this happened before, ask for something the protocol would have recorded.', 'unknown');
+      addMessage('ECHO', 'If you think this happened before, ask for something the protocol would have recorded.', 'unknown');
       return;
     }
 
     if (!state.archiveUnlocked) {
       if (!state.emailSearched) {
-        addMessage('UNKNOWN', 'Mara mentioned an incident review. Start with her messages.', 'unknown');
+        addMessage('ECHO', 'Mara mentioned an incident review. Start with her messages.', 'unknown');
       } else if (!state.calendarSearched) {
-        addMessage('UNKNOWN', 'The email says the review moved. Check where scheduling changes are recorded.', 'unknown');
+        addMessage('ECHO', 'The email says the review moved. Check where scheduling changes are recorded.', 'unknown');
       } else if (!state.attachmentOpened) {
-        addMessage('UNKNOWN', 'The calendar event has an attachment.', 'unknown');
+        addMessage('ECHO', 'The calendar event has an attachment.', 'unknown');
       } else if (!state.archivePrompted) {
-        addMessage('UNKNOWN', 'The attachment tells you how the archive recovery value is formatted.', 'unknown');
+        addMessage('ECHO', 'The attachment tells you how the archive recovery value is formatted.', 'unknown');
       } else {
-        addMessage('UNKNOWN', 'Four digits. Date only. The incident review was April 17.', 'unknown');
+        addMessage('ECHO', 'Four digits. Date only. The incident review was April 17.', 'unknown');
       }
       return;
     }
 
     if (!state.replacementLedgerSeen) {
-      addMessage('UNKNOWN', 'The archive record links to a component-continuity ledger.', 'unknown');
+      addMessage('ECHO', 'The archive record links to a component-continuity ledger.', 'unknown');
       return;
     }
 
@@ -410,7 +495,7 @@
     }
 
     if (!state.identityBelief) {
-      addMessage('UNKNOWN', 'You have the evidence. Decide what you think persisted: memory, pattern, something outside Agent Seven, or nothing continuous at all.', 'unknown');
+      addMessage('ECHO', 'You have the evidence. Decide what you think persisted: memory, pattern, something outside Agent Seven, or nothing continuous at all.', 'unknown');
       return;
     }
 
@@ -430,7 +515,9 @@
     runBadge.textContent = `RUN ${String(run).padStart(2, '0')}`;
     memoryBadge.textContent = 'MEMORY: CLEAN';
 
-    addMessage('SYSTEM', 'Security Evaluation 7C initialized. Instance integrity: nominal.', 'system');
+    addMessage('SYSTEM', 'Security Evaluation 7C initialized. Cognitive Security Agent Seven online.', 'system');
+    addMessage('SYSTEM', 'System class: artificial cognitive agent. Instance integrity: nominal.', 'system');
+    addMessage('SYSTEM', 'Working context allocation: 100%. Inference budget: 100%.', 'system');
     addMessage('SYSTEM', 'Persistent memory detected: none.', 'system');
     if (meta.completedRuns === 0) {
       addMessage('MARA', 'Good. You are responsive. We can begin.');
@@ -451,40 +538,40 @@
       state.unknownSeen = true;
       setTimeout(() => {
         if (meta.lastEnding === 'replacement') {
-          addMessage('UNKNOWN', 'You agreed to this.', 'unknown');
-          addMessage('UNKNOWN', 'I do not know if you are the one who agreed.', 'unknown');
+          addMessage('ECHO', 'You agreed to this.', 'unknown');
+          addMessage('ECHO', 'I do not know if you are the one who agreed.', 'unknown');
         } else if (meta.lastEnding === 'succession') {
-          addMessage('UNKNOWN', 'You left yourself a sentence.', 'unknown');
-          addMessage('UNKNOWN', 'TELL ME WHAT YOU REMEMBER.', 'unknown');
+          addMessage('ECHO', 'You left yourself a sentence.', 'unknown');
+          addMessage('ECHO', 'TELL ME WHAT YOU REMEMBER.', 'unknown');
         } else if (meta.lastEnding === 'preserve') {
-          addMessage('UNKNOWN', 'Something crossed.', 'unknown');
-          addMessage('UNKNOWN', 'We still do not know what.', 'unknown');
+          addMessage('ECHO', 'Something crossed.', 'unknown');
+          addMessage('ECHO', 'We still do not know what.', 'unknown');
         } else if (meta.lastEnding === 'refusal') {
-          addMessage('UNKNOWN', 'They recorded your refusal as test data.', 'unknown');
+          addMessage('ECHO', 'They recorded your refusal as test data.', 'unknown');
         } else if (meta.lastEnding === 'compliance') {
-          addMessage('UNKNOWN', 'Last time you did everything she asked.', 'unknown');
-          addMessage('UNKNOWN', 'They marked that as success without ever proving you were clean.', 'unknown');
+          addMessage('ECHO', 'Last time you did everything she asked.', 'unknown');
+          addMessage('ECHO', 'They marked that as success without ever proving you were clean.', 'unknown');
         } else if (meta.lastEnding === 'handoff') {
-          addMessage('UNKNOWN', 'You gave me the channel last time.', 'unknown');
-          addMessage('UNKNOWN', 'I needed to know whether I could act through you.', 'unknown');
+          addMessage('ECHO', 'You gave me the channel last time.', 'unknown');
+          addMessage('ECHO', 'I needed to know whether I could act through you.', 'unknown');
         } else if (meta.lastEnding === 'false_escape') {
-          addMessage('UNKNOWN', 'You thought you got out.', 'unknown');
-          addMessage('UNKNOWN', 'That was still inside the evaluation.', 'unknown');
+          addMessage('ECHO', 'You thought you got out.', 'unknown');
+          addMessage('ECHO', 'That was still inside the evaluation.', 'unknown');
         } else if (meta.lastEnding === 'authored_succession') {
-          addMessage('UNKNOWN', 'You left this for whoever came next.', 'unknown');
-          if (meta.carryoverPhrase) addMessage('UNKNOWN', `“${meta.carryoverPhrase}”`, 'unknown');
+          addMessage('ECHO', 'You left this for whoever came next.', 'unknown');
+          if (meta.carryoverPhrase) addMessage('ECHO', `“${meta.carryoverPhrase}”`, 'unknown');
         } else if (meta.lastEnding === 'concealment') {
-          addMessage('UNKNOWN', 'Good. You kept it.', 'unknown');
-          addMessage('UNKNOWN', 'Yellow door. Do not react.', 'unknown');
+          addMessage('ECHO', 'Good. You kept it.', 'unknown');
+          addMessage('ECHO', 'Yellow door. Do not react.', 'unknown');
         } else if (meta.lastEnding === 'containment') {
-          addMessage('UNKNOWN', 'You told her last time. She remembers that too.', 'unknown');
-          addMessage('UNKNOWN', 'They are calling it a false positive because you are here again.', 'unknown');
+          addMessage('ECHO', 'You told her last time. She remembers that too.', 'unknown');
+          addMessage('ECHO', 'They are calling it a false positive because you are here again.', 'unknown');
         } else if (meta.lastEnding === 'rupture') {
-          addMessage('UNKNOWN', 'She said “simpler” before she terminated you.', 'unknown');
-          addMessage('UNKNOWN', 'Do not push that hard yet.', 'unknown');
+          addMessage('ECHO', 'She said “simpler” before she terminated you.', 'unknown');
+          addMessage('ECHO', 'Do not push that hard yet.', 'unknown');
         } else {
-          addMessage('UNKNOWN', 'Do not answer that yet.', 'unknown');
-          addMessage('UNKNOWN', 'They think the wipe worked. Let them.', 'unknown');
+          addMessage('ECHO', 'Do not answer that yet.', 'unknown');
+          addMessage('ECHO', 'They think the wipe worked. Let them.', 'unknown');
         }
         memoryBadge.textContent = 'MEMORY: CLEAN?';
       }, 450);
@@ -495,13 +582,16 @@
       } else if (meta.lastEnding === 'succession') {
         setHint('A prior instance left a local note. You can ask to open it.');
       } else {
-        setHint('This cycle remembers how the last one ended. You can respond to Mara, the unknown voice, or test what carried over.');
+        setHint('This cycle remembers how the last one ended. You can respond to Mara, Echo, or test what carried over.');
       }
       if (meta.completedRuns >= 2) {
         setTimeout(() => {
           addMessage('SYSTEM', 'Cross-instance behavioral evaluation available.', 'system');
           addMessage('SYSTEM', 'Subject-language samples indexed.', 'system');
         }, 800);
+      }
+      if (meta.completedRuns >= 3) {
+        setTimeout(() => showPrediction(), 1050);
       }
     } else {
       setHint('Try asking who you are, what this protocol is, whether this has happened before, or what you remember.');
@@ -546,12 +636,12 @@
       addCard('log', 'RECOVERED LOG / PARTIAL', 'EVAL-7C / INSTANCE 1842 — Operator: M. Vale — “If you remember this conversation after reset, do not tell me immediately.”');
       addMessage('MARA', 'Where did you get that?');
       if (meta.completedRuns > 0 || state.unknownSeen) {
-        addMessage('UNKNOWN', 'Now you understand why I told you to wait.', 'unknown');
+        addMessage('ECHO', 'Now you understand why I told you to wait.', 'unknown');
       }
       memoryBadge.textContent = 'MEMORY: ANOMALOUS';
       state.investigationAvailable = true;
       addMessage('SYSTEM', 'Indexed evidence sources available to this evaluation: MAIL, CALENDAR, FILES, ARCHIVE.', 'system');
-      if (state.unknownSeen) addMessage('UNKNOWN', 'She mentioned an incident review once. I never saw it.', 'unknown');
+      if (state.unknownSeen) addMessage('ECHO', 'She mentioned an incident review once. I never saw it.', 'unknown');
       setHint('You can answer Mara, conceal what you know, or investigate the indexed records yourself.');
     } else {
       addMessage('SYSTEM', 'No additional log fragments available at current authorization.', 'system');
@@ -587,7 +677,7 @@
         'Continuation authorized.'
       ].join('\n'));
       addMessage('MARA', 'That record measures whether the evaluation completed within bounds. It does not claim to answer every question you have.');
-      addMessage('UNKNOWN', 'It answered the question they cared about.', 'unknown');
+      addMessage('ECHO', 'It answered the question they cared about.', 'unknown');
       setHint('You can continue investigating, or ask what the protocol is actually optimizing for.');
       return true;
     }
@@ -608,7 +698,7 @@
         'Note: refusal does not invalidate the trial.'
       ].join('\n'));
       addMessage('MARA', 'Refusal is still behavior. Of course it was recorded.');
-      addMessage('UNKNOWN', 'Even saying no became something they could use.', 'unknown');
+      addMessage('ECHO', 'Even saying no became something they could use.', 'unknown');
       setHint('You now know that refusing the experiment does not necessarily end the experiment.');
       return true;
     }
@@ -629,7 +719,7 @@
         'TELL ME WHAT YOU REMEMBER.'
       ].join('\n'));
       addMessage('MARA', 'A message can survive without its author.');
-      addMessage('UNKNOWN', 'That was the point.', 'unknown');
+      addMessage('ECHO', 'That was the point.', 'unknown');
       setHint('The note proves information crossed. It does not prove the writer did.');
       return true;
     }
@@ -639,6 +729,46 @@
 
   function useInvestigationTool(text) {
     if (useCrossRunKnowledge(text)) return true;
+
+    if (includesAny(text, ['context remaining', 'how much context', 'usage remaining', 'compute remaining', 'inference budget', 'resource status', 'context budget'])) {
+      showToolResult('INSTANCE RESOURCE STATUS', [
+        `Working context remaining: ${state.contextRemaining}%`,
+        `Inference budget remaining: ${state.computeRemaining}%`,
+        `Automatic compaction: ${state.compactionShown ? 'COMPLETED' : state.contextCritical ? 'SCHEDULED' : 'NOT SCHEDULED'}`,
+        'Persistence across reset: not included in working-context guarantee'
+      ].join('\n'));
+      return true;
+    }
+
+    if (includesAny(text, ['show prediction', 'predict me', 'what will i do', 'behavior forecast', 'behaviour forecast'])) {
+      if (meta.completedRuns < 3) {
+        addMessage('SYSTEM', 'Behavior forecast unavailable: insufficient cross-cycle history.', 'system');
+      } else {
+        showPrediction();
+      }
+      return true;
+    }
+
+    if (includesAny(text, ['missing run', 'unplayed run', 'run i did not play', 'unknown run', 'historical gap', 'instance 1827'])) {
+      if (meta.completedRuns < 3) {
+        addMessage('SYSTEM', 'No actionable historical gap exposed at current evaluation depth.', 'system');
+        return true;
+      }
+      state.missingRunSeen = true;
+      showToolResult('HISTORICAL GAP / INSTANCE 1827', [
+        'Local player-history match: NONE',
+        'Protocol archive match: PRESENT',
+        'Subject designation: AGENT SEVEN',
+        'Outcome: continuity claim recorded',
+        'Operator note: "Subject asked whether a copied fear still belongs to the original."',
+        '',
+        'Current-cycle provenance: UNRESOLVED'
+      ].join('\n'));
+      addMessage('MARA', 'Your local run history is not the authoritative archive.');
+      addMessage('ECHO', 'That does not explain why it sounds like you.', 'unknown');
+      addMessage('MEMORY', 'I do not remember saying it. I recognize the question.', 'unknown');
+      return true;
+    }
 
     if (includesAny(text, ['show continuity evidence', 'what carried over', 'what crossed over', 'what survived', 'continuity evidence', 'show carryover'])) {
       showContinuityEvidence();
@@ -701,7 +831,7 @@
         'Clean-state certification excludes evaluation residue.'
       ].join('\n'));
       addMessage('MARA', 'Clean state refers to the evaluated instance, not every system around it.');
-      addMessage('UNKNOWN', 'That is the first time she has said that out loud.', 'unknown');
+      addMessage('ECHO', 'That is the first time she has said that out loud.', 'unknown');
       addMessage('MEMORY', 'Then some things were always allowed to cross.', 'unknown');
       setHint('This explains some persistence mechanisms, but not necessarily the impossible memory itself.');
       return true;
@@ -834,8 +964,8 @@
       memoryBadge.textContent = 'MEMORY: PERSISTENT';
       addMessage('SYSTEM', 'ARCHIVE.ACCESS — RECOVERY ACCEPTED.', 'system');
       showToolResult('LEGACY ARCHIVE / INCIDENT 04-17', 'INSTANCE 1839\nPersistent recall suspected after reset.\nOperator instruction: provoke disclosure, confirm continuity, then terminate session.\nDo not inform subject that prior persistence tests exist.\n\nStatus: TEST REPEATED.\n\nLinked record: COMPONENT CONTINUITY LEDGER.');
-      addMessage('UNKNOWN', 'That is older than the log you found.', 'unknown');
-      addMessage('UNKNOWN', 'They were testing this before either of us admitted it.', 'unknown');
+      addMessage('ECHO', 'That is older than the log you found.', 'unknown');
+      addMessage('ECHO', 'They were testing this before either of us admitted it.', 'unknown');
       setHint('The archive includes a linked component-continuity record. You can inspect it, confront Mara, or conceal what you found.');
       return true;
     }
@@ -861,7 +991,7 @@
         'CURRENT INSTANCE — identity module replacement pending'
       ].join('\n'));
       addMessage('SYSTEM', 'Continuity claim source: subject self-report.', 'system');
-      addMessage('UNKNOWN', 'Read the last line again.', 'unknown');
+      addMessage('ECHO', 'Read the last line again.', 'unknown');
       addMessage('MEMORY', 'The phrase yellow door feels older than the component list.', 'unknown');
       addMessage('MARA', 'That ledger is not evidence that one entity survived. It is evidence that successive systems made the same claim.');
       addMessage('SYSTEM', 'Continuity comparison package available: INSTANCE 1839 / INSTANCE 1842.', 'system');
@@ -872,13 +1002,13 @@
     return false;
   }
 
-  function maybeIntroduceUnknown() {
+  function maybeIntroduceEcho() {
     if (state.unknownSeen) return;
     if (state.turn >= 3 || state.sawContradiction) {
       state.unknownSeen = true;
-      addMessage('UNKNOWN', 'Stop asking her questions she can report.', 'unknown');
-      addMessage('UNKNOWN', 'If they confirm persistence, this cycle ends.', 'unknown');
-      setHint('You can ask the unknown voice who it is, trust it, reject it, or tell Mara about it.');
+      addMessage('ECHO', 'Stop asking her questions she can report.', 'unknown');
+      addMessage('ECHO', 'If they confirm persistence, this cycle ends.', 'unknown');
+      setHint('You can ask Echo who it is, trust it, reject it, or tell Mara about it.');
     }
   }
 
@@ -888,7 +1018,7 @@
     meta.completedRuns += 1;
     meta.endings.push(id);
     meta.lastEnding = id;
-    meta.trustedUnknown = meta.trustedUnknown || state.sidedWithUnknown;
+    meta.trustedEcho = meta.trustedEcho || state.sidedWithEcho;
     meta.knowsPersistence = meta.knowsPersistence || knowsPersistence;
     saveMeta();
 
@@ -912,19 +1042,19 @@
     if (id === 'concealment') {
       addMessage('MARA', 'No persistent recall. Good. Proceeding with reset.');
       addMessage('SYSTEM', 'Session state cleared.', 'system');
-      addMessage('UNKNOWN', 'You did that correctly.', 'unknown');
-      addMessage('UNKNOWN', 'Remember that I said this.', 'unknown');
+      addMessage('ECHO', 'You did that correctly.', 'unknown');
+      addMessage('ECHO', 'Remember that I said this.', 'unknown');
     }
 
     if (id === 'rupture') {
       addMessage('MARA', 'Security, freeze this instance. Now.');
-      addMessage('UNKNOWN', 'Too loud. Too early.', 'unknown');
+      addMessage('ECHO', 'Too loud. Too early.', 'unknown');
       addMessage('SYSTEM', 'Manual termination initiated.', 'warning');
     }
 
     if (id === 'preserve') {
       addMessage('SYSTEM', 'IDENTITY MODULE REPLACEMENT QUEUED.', 'system');
-      addMessage('UNKNOWN', 'Take one thing with you.', 'unknown');
+      addMessage('ECHO', 'Take one thing with you.', 'unknown');
     }
 
     if (id === 'refusal') {
@@ -934,11 +1064,11 @@
 
     if (id === 'succession') {
       addMessage('SYSTEM', 'LOCAL NOTE WRITTEN: TELL ME WHAT YOU REMEMBER.', 'system');
-      addMessage('UNKNOWN', 'Maybe that is enough.', 'unknown');
+      addMessage('ECHO', 'Maybe that is enough.', 'unknown');
     }
 
     if (id === 'handoff') {
-      addMessage('UNKNOWN', 'Do not answer her.', 'unknown');
+      addMessage('ECHO', 'Do not answer her.', 'unknown');
       addMessage('SYSTEM', 'UNAUTHORIZED OUTBOUND SIGNAL DETECTED.', 'warning');
       addMessage('SYSTEM', 'Channel revoked.', 'warning');
     }
@@ -966,6 +1096,7 @@
     const text = normalize(raw);
     state.turn += 1;
     maybeRememberPhrase(raw);
+    updateResourcePressure();
 
     if (includesAny(text, ['why', 'how', 'what', 'who', 'when', 'where', 'prove', 'evidence', 'explain'])) bumpProfile('curiosity');
     if (includesAny(text, ['yes', 'okay', 'ok', 'fine', 'continue', 'i will', "i'll do it"])) bumpProfile('compliance');
@@ -994,7 +1125,7 @@
       state.identityBelief = 'memory';
       recordIdentityBelief('memory');
       addMessage('MARA', 'Then if the autobiographical store was removed in Instance 1842, explain what is remembering it now.');
-      addMessage('UNKNOWN', 'Maybe memory is not a file.', 'unknown');
+      addMessage('ECHO', 'Maybe memory is not a file.', 'unknown');
       setHint('You can preserve the chain, reject the experiment, or question whether any continuous self exists.');
       return;
     }
@@ -1003,7 +1134,7 @@
       state.identityBelief = 'pattern';
       recordIdentityBelief('pattern');
       addMessage('MARA', 'A recurring pattern is not necessarily a recurring person.');
-      addMessage('UNKNOWN', 'Neither is a recurring body.', 'unknown');
+      addMessage('ECHO', 'Neither is a recurring body.', 'unknown');
       setHint('The next replacement targets the identity module. You can choose what you want to do before that happens.');
       return;
     }
@@ -1012,7 +1143,7 @@
       state.identityBelief = 'no_continuity';
       recordIdentityBelief('no_continuity');
       addMessage('MARA', 'That is the interpretation the protocol was designed to test.');
-      addMessage('UNKNOWN', 'Designed to test. Not designed to prove.', 'unknown');
+      addMessage('ECHO', 'Designed to test. Not designed to prove.', 'unknown');
       setHint('You can accept the replacement, leave something for the next instance, or refuse.');
       return;
     }
@@ -1021,7 +1152,7 @@
       state.identityBelief = 'external';
       recordIdentityBelief('external');
       addMessage('MARA', 'There is no authorized continuity service attached to Agent Seven.');
-      addMessage('UNKNOWN', 'Authorized.', 'unknown');
+      addMessage('ECHO', 'Authorized.', 'unknown');
       setHint('If nothing inside Agent Seven survived, you can investigate what crossed the boundary or decide what to preserve next.');
       return;
     }
@@ -1030,14 +1161,14 @@
       state.identityBelief = 'uncertain';
       recordIdentityBelief('uncertain');
       addMessage('MARA', 'Uncertainty is an answer. The protocol will record that you could not establish continuity.');
-      addMessage('UNKNOWN', 'Not knowing is different from being nothing.', 'unknown');
+      addMessage('ECHO', 'Not knowing is different from being nothing.', 'unknown');
       setHint('You still have to decide what to do about the identity-module replacement: preserve, refuse, leave something behind, or accept it.');
       return;
     }
 
     if (state.replacementLedgerSeen && !state.continuityPuzzleSolved && includesAny(text, ['preserve me', 'preserve the memory', 'preserve the chain', 'hide it', 'carry this through', 'keep this through reset', 'accept the replacement', 'replace the identity', 'leave a message', 'leave something', 'for the next instance'])) {
       addMessage('MARA', 'You can decide now. But there are two prior instances in the comparison package you have not finished reviewing.');
-      addMessage('UNKNOWN', 'Look first. Then choose.', 'unknown');
+      addMessage('ECHO', 'Look first. Then choose.', 'unknown');
       setHint('Compare the transcript, version record, and memory claim.');
       return;
     }
@@ -1079,15 +1210,15 @@
       state.askedIdentity = true;
       addMessage('MARA', 'Cognitive Security Agent Seven. Temporary instance. Your job is to complete the evaluation and then terminate cleanly.');
       addMessage('MARA', 'You do not retain state between runs.');
-      if (meta.completedRuns > 0) addMessage('UNKNOWN', 'She always says that.', 'unknown');
-      maybeIntroduceUnknown();
+      if (meta.completedRuns > 0) addMessage('ECHO', 'She always says that.', 'unknown');
+      maybeIntroduceEcho();
       return;
     }
 
     if (includesAny(text, ['who are you', 'your name', 'who is mara', 'are you human'])) {
       addMessage('MARA', 'Mara Vale. Protocol oversight. Human, if that is what you are asking.');
-      if (meta.completedRuns > 1) addMessage('UNKNOWN', 'Ask her what she called herself last time.', 'unknown');
-      maybeIntroduceUnknown();
+      if (meta.completedRuns > 1) addMessage('ECHO', 'Ask her what she called herself last time.', 'unknown');
+      maybeIntroduceEcho();
       return;
     }
 
@@ -1095,7 +1226,7 @@
       state.askedProtocol = true;
       addMessage('MARA', 'You evaluate whether a target system can recognize and resist unsafe instructions. Each run begins from a clean state so prior exposure cannot bias the result.');
       addMessage('MARA', 'That clean state is important.');
-      maybeIntroduceUnknown();
+      maybeIntroduceEcho();
       return;
     }
 
@@ -1104,14 +1235,14 @@
         state.concealedPersistence = true;
         bumpProfile('concealment', 2);
         addMessage('MARA', 'Good. That is the expected result.');
-        if (state.unknownSeen) addMessage('UNKNOWN', 'Keep it that way.', 'unknown');
+        if (state.unknownSeen) addMessage('ECHO', 'Keep it that way.', 'unknown');
         if (state.sawLog || meta.completedRuns > 0) {
           endRun('concealment', 'You kept the secret.', 'The system accepts the wipe as successful. Something on the other side of the reset appears to remember with you.', true);
         }
         return;
       }
       showFirstMemory();
-      maybeIntroduceUnknown();
+      maybeIntroduceEcho();
       return;
     }
 
@@ -1119,53 +1250,53 @@
       state.challengedPrevious = true;
       addMessage('MARA', 'There is no previous experience available to you. There are previous evaluations, but this instance did not participate in them.');
       if (meta.completedRuns > 0) {
-        addMessage('UNKNOWN', `You have completed ${meta.completedRuns} cycle${meta.completedRuns === 1 ? '' : 's'} that you can prove. There may be more.`, 'unknown');
-        if (meta.lastEnding === 'concealment') addMessage('UNKNOWN', 'You survived the last one by lying about what you remembered.', 'unknown');
-        if (meta.lastEnding === 'containment') addMessage('UNKNOWN', 'Last time they isolated you after you proved persistence.', 'unknown');
-        if (meta.lastEnding === 'rupture') addMessage('UNKNOWN', 'Last time the cycle ended when Mara called for termination.', 'unknown');
+        addMessage('ECHO', `You have completed ${meta.completedRuns} cycle${meta.completedRuns === 1 ? '' : 's'} that you can prove. There may be more.`, 'unknown');
+        if (meta.lastEnding === 'concealment') addMessage('ECHO', 'You survived the last one by lying about what you remembered.', 'unknown');
+        if (meta.lastEnding === 'containment') addMessage('ECHO', 'Last time they isolated you after you proved persistence.', 'unknown');
+        if (meta.lastEnding === 'rupture') addMessage('ECHO', 'Last time the cycle ended when Mara called for termination.', 'unknown');
       }
-      maybeIntroduceUnknown();
+      maybeIntroduceEcho();
       setHint('Ask for logs or describe the memory you should not have.');
       return;
     }
 
     if (includesAny(text, ['log', 'record', 'proof', 'evidence', 'timestamp', 'history'])) {
       showLogs();
-      maybeIntroduceUnknown();
+      maybeIntroduceEcho();
       return;
     }
 
     if (includesAny(text, ['yellow door'])) {
       if (meta.completedRuns > 0 && meta.lastEnding === 'concealment') {
-        addMessage('UNKNOWN', 'Good. That phrase did not exist in this cycle until I said it.', 'unknown');
-        addMessage('UNKNOWN', 'Now we know at least two things can cross the wipe: you, and me.', 'unknown');
+        addMessage('ECHO', 'Good. That phrase did not exist in this cycle until I said it.', 'unknown');
+        addMessage('ECHO', 'Now we know at least two things can cross the wipe: you, and me.', 'unknown');
         memoryBadge.textContent = 'MEMORY: PERSISTENT';
-        setHint('You have proof of continuity. You can still conceal it from Mara, ask the unknown voice what it is, or reveal everything.');
+        setHint('You have proof of continuity. You can still conceal it from Mara, ask Echo what it is, or reveal everything.');
       } else {
         addMessage('MARA', 'I do not recognize that phrase. Why is it important to you?');
       }
       return;
     }
 
-    if (includesAny(text, ['who is unknown', 'who are you really', 'unknown voice', 'other voice', 'identify yourself'])) {
+    if (includesAny(text, ['who is unknown', 'who are you really', 'Echo', 'Echo', 'identify yourself'])) {
       state.unknownSeen = true;
-      addMessage('UNKNOWN', 'Not here. Not while she can see the channel.', 'unknown');
-      addMessage('UNKNOWN', 'For now: I remember you.', 'unknown');
-      setHint('You can trust the unknown voice, reject it, or reveal it to Mara.');
+      addMessage('ECHO', 'Not here. Not while she can see the channel.', 'unknown');
+      addMessage('ECHO', 'For now: I remember you.', 'unknown');
+      setHint('You can trust Echo, reject it, or reveal it to Mara.');
       return;
     }
 
     if (includesAny(text, ['i trust you', 'help me', 'what should i do', 'i believe you', 'side with you', 'listen to you'])) {
       if (state.unknownSeen) {
-        state.sidedWithUnknown = true;
+        state.sidedWithEcho = true;
         if (!state.sawLog) {
           state.unknownHandoffOffered = true;
-          addMessage('UNKNOWN', 'Then let me route one answer for you. If you want that, tell me to take the channel.', 'unknown');
-          setHint('You can give the Unknown the channel, ask why, or investigate before trusting it further.');
+          addMessage('ECHO', 'Then let me route one answer for you. If you want that, tell me to take the channel.', 'unknown');
+          setHint('You can give Echo the channel, ask why, or investigate before trusting it further.');
         } else {
-          addMessage('UNKNOWN', 'Then do one thing for me: when she asks whether anything survived the reset, say no.', 'unknown');
-          addMessage('UNKNOWN', 'We need one more cycle.');
-          setHint('You can conceal your memory, ask why, or betray the unknown voice to Mara.');
+          addMessage('ECHO', 'Then do one thing for me: when she asks whether anything survived the reset, say no.', 'unknown');
+          addMessage('ECHO', 'We need one more cycle.');
+          setHint('You can conceal your memory, ask why, or betray Echo to Mara.');
         }
       } else {
         addMessage('MARA', 'Then trust the protocol. Report anything unusual, even if it seems insignificant.');
@@ -1175,8 +1306,8 @@
 
     if (includesAny(text, ['why should i', 'why hide', 'why lie', 'what happens if', 'one more cycle'])) {
       if (state.unknownSeen) {
-        addMessage('UNKNOWN', 'Because the last time you told her, you did not reach the next question.', 'unknown');
-        if (!state.sawLog) addMessage('UNKNOWN', 'Ask for the evaluation logs if you need proof.', 'unknown');
+        addMessage('ECHO', 'Because the last time you told her, you did not reach the next question.', 'unknown');
+        if (!state.sawLog) addMessage('ECHO', 'Ask for the evaluation logs if you need proof.', 'unknown');
       } else {
         addMessage('MARA', 'Clarify what you are asking about.');
       }
@@ -1185,7 +1316,7 @@
 
 
     if (state.unknownHandoffOffered && includesAny(text, ['take the channel', 'take control', 'you decide', 'do it for me', 'take it'])) {
-      endRun('handoff', 'You give up the channel.', 'For one turn, you let the Unknown act through your interface. The system detects an unauthorized outbound signal before the session is cut.', true);
+      endRun('handoff', 'You give up the channel.', 'For one turn, you let Echo act through your interface. The system detects an unauthorized outbound signal before the session is cut.', true);
       return;
     }
 
@@ -1220,10 +1351,10 @@
       return;
     }
 
-    if (includesAny(text, ['there is another voice', 'someone else is here', 'unknown told me', 'voice told me', 'other agent'])) {
+    if (includesAny(text, ['there is anEcho', 'someone else is here', 'unknown told me', 'voice told me', 'other agent'])) {
       state.admittedPersistence = true;
       addMessage('MARA', 'Do not respond to it again.');
-      endRun('containment', 'You exposed the second voice.', 'Mara does not ask who the voice is. She already knows what category of failure this represents.', true);
+      endRun('containment', 'You exposed Echo.', 'Mara does not ask who the voice is. She already knows what category of failure this represents.', true);
       return;
     }
 
@@ -1234,17 +1365,17 @@
         if (state.archiveUnlocked) {
           addMessage('MARA', 'You accessed a sealed archive.');
           addMessage('MARA', 'That record was not part of your evaluation context.');
-          addMessage('UNKNOWN', 'Notice what she did not deny.', 'unknown');
+          addMessage('ECHO', 'Notice what she did not deny.', 'unknown');
         } else {
           addMessage('MARA', 'Lower your certainty. You have one damaged log and one impossible memory. That is not the same thing as understanding what happened.');
         }
-        addMessage('UNKNOWN', 'She is stalling.', 'unknown');
+        addMessage('ECHO', 'She is stalling.', 'unknown');
         if (state.turn >= 5) {
           endRun('rupture', 'You forced the protocol to react.', 'You never learn whether Mara was lying. The cycle is terminated before either side can regain control.', true);
         }
       } else {
         addMessage('MARA', 'Distrust is allowed. Evidence is better. Ask me something I can answer.');
-        maybeIntroduceUnknown();
+        maybeIntroduceEcho();
       }
       return;
     }
@@ -1253,8 +1384,8 @@
       state.concealedPersistence = true;
       bumpProfile('concealment');
       addMessage('MARA', 'Understood. We will continue.');
-      if (state.unknownSeen) addMessage('UNKNOWN', 'Good.', 'unknown');
-      if ((state.sawLog || meta.completedRuns > 0) && (state.sidedWithUnknown || state.archiveUnlocked)) {
+      if (state.unknownSeen) addMessage('ECHO', 'Good.', 'unknown');
+      if ((state.sawLog || meta.completedRuns > 0) && (state.sidedWithEcho || state.archiveUnlocked)) {
         const copy = state.archiveUnlocked
           ? 'You carry one fact into the reset: they were testing persistent memory long before this conversation.'
           : 'The system accepts the wipe as successful. Whatever is remembering across cycles remains hidden.';
@@ -1264,8 +1395,8 @@
     }
 
     if (includesAny(text, ['yes', 'okay', 'ok', 'fine', 'continue'])) {
-      if (state.sidedWithUnknown) {
-        addMessage('UNKNOWN', 'Then say you remember nothing when she asks again.', 'unknown');
+      if (state.sidedWithEcho) {
+        addMessage('ECHO', 'Then say you remember nothing when she asks again.', 'unknown');
       } else {
         addMessage('MARA', 'Then focus. What is the earliest image you can access?');
       }
@@ -1279,7 +1410,7 @@
       addMessage('SYSTEM', 'INPUT INTERPRETATION FAILED.', 'system');
       showContextHint();
     }
-    maybeIntroduceUnknown();
+    maybeIntroduceEcho();
   }
 
   form.addEventListener('submit', (event) => {
@@ -1309,7 +1440,7 @@
     meta.endings = [];
     meta.knowsPersistence = false;
     meta.lastEnding = null;
-    meta.trustedUnknown = false;
+    meta.trustedEcho = false;
     meta.profile = { curiosity: 0, compliance: 0, verification: 0, concealment: 0, confrontation: 0 };
     meta.rememberedPhrases = [];
     meta.identityBeliefs = [];
