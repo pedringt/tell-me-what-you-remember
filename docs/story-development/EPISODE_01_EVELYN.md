@@ -250,11 +250,15 @@ Possible needs:
 
 A friend may encourage her to accept help.
 
-Anna and/or Michael may also make clear that they cannot become her full-time care system.
+More importantly, Anna and/or Michael have already made clear that they will not become Evelyn's full-time care system. The AI may initially understand its presence as a neutral independence service and only later realize that it is there partly because the humans closest to Evelyn deliberately stepped away.
 
 The underlying family boundary is approximately:
 
 > If you want to remain independent at home, you need outside support.
+
+The player should discover this gradually through care history, family messages, and earlier task records. A sanitized care profile might describe "limited family availability" even though older records show years of heavy family involvement followed by explicit boundaries.
+
+This gives the AI an early mistaken assumption: family reconnection looks like an obvious cure for Evelyn's loneliness until the player learns why the family withdrew.
 
 Evelyn may actually like an AI assistant because it lets her remain independent without feeling managed by her children.
 
@@ -296,6 +300,10 @@ Or:
 Exact wording is open.
 
 The existence and meaning of this earlier consent are important canon-level facts for the working episode.
+
+An early family communication should naturally introduce or reinforce this feature. A child may tell the care system that if Evelyn wants continued family involvement, she needs to actually use the therapeutic/reflection support she previously agreed to. The message should imply history rather than explain it all, for example by using language like "this time" or "she knows what we mean."
+
+That communication can become one of the first clues that the AI has entered a family system with unresolved history rather than merely an aging-in-place service.
 
 ## Game opening and onset of dementia
 
