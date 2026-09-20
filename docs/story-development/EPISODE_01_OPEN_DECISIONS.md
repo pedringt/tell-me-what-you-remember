@@ -9,8 +9,11 @@ This file is intentionally short. If a question is not listed here and is alread
 
 - Exact first-husband history and reason for divorce.
 - Exact supporting-cast identities, names, and biographies beyond current structural roles.
-- Exact wedding speech/private disclosure that becomes Anna's final-straw incident.
-- Exact dementia diagnosis, stage progression, and calendar duration.
+- Exact Anna wedding incident is still open between two leading shapes:
+  - a dance-related boundary violation involving Anna and the groom
+  - an upsetting / boundary-crossing speech
+  The core requirement is that Anna set a clear boundary and Evelyn overrides it while believing her own judgment is justified.
+- Exact dementia diagnosis, clinical stage labels, and calendar duration. The progression direction is settled as gradual, beginning with small everyday inconveniences and repeated requests before becoming unmistakable.
 - Exact circumstances/timing of Evelyn's death or final care transition.
 - Exact form, wording, timing, and loss mechanism of Anna's possible final message.
 - Whether the missed-Anna-message outcome is avoidable, fixed, or one of several branches.
@@ -19,7 +22,7 @@ This file is intentionally short. If a question is not listed here and is alread
 - Exact wording of major apologies, recordings, therapy breakthroughs, or Robert artifacts.
 - Final number/identity of recurring caregivers.
 - Exact first physical clue and exact first scanned mail item.
-- Exact sender/wording of the early "use the therapeutic features" message.
+- Exact final wording of Michael's early therapy-boundary message. Sender and function are settled: Michael sends it after Evelyn has been repeatedly contacting/pressuring him, and he makes use of the agreed therapeutic/reflection support a condition before she contacts him again.
 
 ## Product/design decisions still open
 
@@ -31,7 +34,7 @@ This file is intentionally short. If a question is not listed here and is alread
 - Whether stability/ensemble analysis is a standard capability or later unlock.
 - Exact save-slot / branch-from-checkpoint UX.
 - Exact post-game archive / ending gallery presentation.
-- Whether a hypothetical commercial version keeps live generative AI, moves mostly deterministic, or offers a separate generative mode.
+- Exact long-term commercial AI architecture. For the **first build**, the direction is settled: deterministic-first, with live generative AI added only where real player friction, rigidity, or other concrete problems show that it materially improves the experience.
 
 ## Safe implementation assumptions
 
@@ -56,12 +59,9 @@ Implementation must not:
 
 If only a few decisions can be made, prioritize:
 
-1. exact first 30-45 minute content details
-   - caregiver identity
-   - grocery problem
-   - first scanned mail item
-   - family-message sender/wording
-2. exact wedding incident/private disclosure
-3. dementia timeline/diagnosis shape
-4. which ending(s) should be achievable in an initial vertical slice
-5. whether the first build should implement real generative dialogue or deterministic fixtures behind the same interfaces
+1. exact wedding incident: dance-related boundary violation vs upsetting speech, then the specific details
+2. exact home-helper identity/name
+3. exact grocery/delivery problem and first scanned mail item
+4. exact wording of Michael's therapy-boundary message
+5. exact dementia diagnosis/stage timing once medical research is complete
+6. exact ending prerequisites and whether the one-child route can resolve through either Anna or Michael
