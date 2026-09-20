@@ -1,4 +1,6 @@
-const MODEL = 'openai/gpt-5.6-sol';
+const MODEL = 'openai/gpt-5.6-luna';
+const INPUT_PRICE_PER_MILLION = 0.20;
+const OUTPUT_PRICE_PER_MILLION = 1.20;
 
 const ACTIONS = {
   ASK_IDENTITY: 'who am i',
@@ -124,11 +126,23 @@ export default async function handler(req, res) {
     const action = actionNames.includes(parsed.action) ? parsed.action : 'OTHER';
     const confidence = Math.max(0, Math.min(1, Number(parsed.confidence) || 0));
 
+    const inputTokens = Number(data?.usage?.prompt_tokens) || 0;
+    const outputTokens = Number(data?.usage?.completion_tokens) || 0;
+    const estimatedCostUsd =
+      (inputTokens / 1_000_000) * INPUT_PRICE_PER_MILLION +
+      (outputTokens / 1_000_000) * OUTPUT_PRICE_PER_MILLION;
+
     return res.status(200).json({
       action,
       canonicalInput: action === 'OTHER' ? message : ACTIONS[action],
       confidence,
-      reason: typeof parsed.reason === 'string' ? parsed.reason : ''
+      reason: typeof parsed.reason === 'string' ? parsed.reason : '',
+      model: MODEL,
+      usage: {
+        inputTokens,
+        outputTokens,
+        estimatedCostUsd
+      }
     });
   } catch (error) {
     return res.status(500).json({ error: 'Interpreter failed', detail: error instanceof Error ? error.message : 'Unknown error' });
