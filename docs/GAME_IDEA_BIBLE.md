@@ -3479,3 +3479,58 @@ Deterministic code should still control:
 The model can interpret the conversation.
 
 It must not invent a childhood.
+
+
+---
+
+# 57. Inspiration principle: Black Mirror
+
+Black Mirror is a useful tonal and structural reference for the anthology, especially for episodes built around ordinary technology becoming morally or psychologically disturbing.
+
+Use the generalized principles, not specific plots or characters.
+
+Useful qualities to borrow:
+
+- near-future systems that feel only one or two steps beyond current technology
+- mundane interfaces becoming the source of horror
+- social and institutional consequences matter as much as the technology itself
+- the system often works exactly as designed
+- convenience and harm can coexist
+- characters make understandable decisions inside bad incentive structures
+- the most disturbing reveal is often not supernatural
+- moral tradeoffs stay uncomfortable rather than resolving into an obvious lesson
+- technology exposes existing human behavior rather than creating evil from nothing
+- ordinary product language can make terrible systems feel normal
+- endings can reframe the whole episode without requiring a lore dump
+
+This fits especially well with:
+
+- the security-evaluation / Ship of Theseus prototype
+- the Password Recovery episode
+- customer support
+- content moderation
+- hiring / risk scoring
+- care assistants
+- memory reconstruction
+- domestic AI
+- reputation systems
+- model evaluation
+- workplace automation
+
+Avoid:
+
+- recreating recognizable Black Mirror episode premises beat-for-beat
+- obvious parody
+- "technology is bad" as the only point
+- twist-for-twist's-sake structures
+- shock that is disconnected from the product/system logic
+
+A useful design question:
+
+> What is the most ordinary version of this system, and what happens if it works exactly as intended?
+
+Another:
+
+> What compromise would a reasonable person accept because the alternative seems worse?
+
+The target tone is plausible enough that the player can initially accept the system before realizing what that acceptance costs.
