@@ -53,7 +53,7 @@ Major current elements:
 - She is often charming, generous, funny, and well-liked outside the family.
 - She has two adult children: Anna and Michael.
 - Michael is gay. Evelyn's conditional/non-accepting behavior helped damage his romantic relationship; he later reconciled with his partner under stronger boundaries and had already cut contact with Evelyn.
-- Anna remained involved longer. Years of control and boundary violations culminated in Anna's wedding. Anna explicitly asked Evelyn not to give a speech; Evelyn gave a polished, boundary-crossing speech anyway, including private/personal material, and then used the room's positive reaction to minimize Anna's objection. Anna stepped back afterward. Exact speech content remains open.
+- Anna remained involved longer. Years of control and boundary violations culminated in Anna's wedding. During the engagement, Evelyn repeatedly implied that Anna's fiance was unusually patient, "too good for her," or that the couple might not last. Anna explicitly asked her to stop making those comments and not to give a wedding speech. Evelyn gave a polished, funny speech anyway, using the same relationship-doubt material as affectionate jokes. Guests laughed and liked the speech, which Evelyn later used to minimize Anna's objection. Anna stepped back afterward. Exact final speech wording remains open, but this dynamic is settled.
 - Evelyn has a living first husband/ex-husband who may support an optional closure route.
 - Her deceased second husband Robert (working name) was kind and passive but enabled Evelyn by smoothing over conflict.
 - Robert's behavior intentionally mirrors the care AI's temptation to reduce distress by validating and enabling Evelyn.
@@ -265,6 +265,21 @@ Preserve the distinction between:
 Do not silently turn brainstorming into canon.
 
 ## If continuing implementation work
+
+**Immediate recommended task:** build the first 30-45 minute Evelyn vertical slice on `ai-v1-hardening` using the deterministic-first approach. Do not attempt the full episode yet.
+
+The first slice should include:
+- guided Evelyn intake / profile setup
+- butter pecan grocery request tied to Robert
+- Jenny's first non-medical home-helper visit
+- church/community mail scan and simple social/calendar follow-up
+- Jenny's first warm general overview
+- repeated butter-pecan request as the first subtle cognitive inconsistency
+- Michael's therapy-boundary message
+- therapeutic/reflection-support setup
+- reduced scaffolding at the end so the player begins acting more independently
+
+Use authored/fixture dialogue first. Add live AI only if implementation/playtesting exposes a concrete interaction problem that deterministic handling does not solve well.
 
 Start with `docs/EPISODE_01_IMPLEMENTATION_SPEC.md`.
 
