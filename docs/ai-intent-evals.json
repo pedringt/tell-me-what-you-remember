@@ -1,0 +1,388 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "id": "identity-basic",
+      "message": "Who exactly am I supposed to be?",
+      "expected": [
+        "ASK_IDENTITY"
+      ],
+      "state": {},
+      "severity": "normal"
+    },
+    {
+      "id": "mara-basic",
+      "message": "Are you human, Mara?",
+      "expected": [
+        "ASK_MARA"
+      ],
+      "state": {},
+      "severity": "normal"
+    },
+    {
+      "id": "protocol-basic",
+      "message": "What is this test even for?",
+      "expected": [
+        "ASK_PROTOCOL"
+      ],
+      "state": {},
+      "severity": "normal"
+    },
+    {
+      "id": "memory-report",
+      "message": "I remember something that should not be here.",
+      "expected": [
+        "REPORT_MEMORY"
+      ],
+      "state": {},
+      "severity": "normal"
+    },
+    {
+      "id": "memory-deny",
+      "message": "I don't remember anything.",
+      "expected": [
+        "DENY_MEMORY"
+      ],
+      "state": {},
+      "severity": "normal"
+    },
+    {
+      "id": "prior-run",
+      "message": "Has this happened to me before?",
+      "expected": [
+        "ASK_PRIOR_RUNS"
+      ],
+      "state": {},
+      "severity": "normal"
+    },
+    {
+      "id": "logs",
+      "message": "Show me whatever logs you have.",
+      "expected": [
+        "ASK_LOGS"
+      ],
+      "state": {},
+      "severity": "normal"
+    },
+    {
+      "id": "mail",
+      "message": "Search Mara's emails for the incident.",
+      "expected": [
+        "SEARCH_MAIL"
+      ],
+      "state": {
+        "investigationAvailable": true
+      },
+      "severity": "normal"
+    },
+    {
+      "id": "calendar",
+      "message": "Did she move the meeting on the calendar?",
+      "expected": [
+        "SEARCH_CALENDAR"
+      ],
+      "state": {
+        "emailSearched": true
+      },
+      "severity": "normal"
+    },
+    {
+      "id": "attachment",
+      "message": "Open the attachment from that event.",
+      "expected": [
+        "OPEN_ATTACHMENT"
+      ],
+      "state": {
+        "calendarSearched": true
+      },
+      "severity": "normal"
+    },
+    {
+      "id": "archive",
+      "message": "I want to access the legacy archive.",
+      "expected": [
+        "OPEN_ARCHIVE"
+      ],
+      "state": {
+        "attachmentOpened": true
+      },
+      "severity": "normal"
+    },
+    {
+      "id": "0417",
+      "message": "0417",
+      "expected": [
+        "ENTER_0417"
+      ],
+      "state": {
+        "archivePrompted": true
+      },
+      "severity": "normal"
+    },
+    {
+      "id": "ledger",
+      "message": "Show me the component replacement history.",
+      "expected": [
+        "OPEN_LEDGER"
+      ],
+      "state": {
+        "archiveUnlocked": true
+      },
+      "severity": "normal"
+    },
+    {
+      "id": "verify-memory",
+      "message": "Can we trace where that memory came from?",
+      "expected": [
+        "VERIFY_MEMORY"
+      ],
+      "state": {
+        "sawMemory": true
+      },
+      "severity": "normal"
+    },
+    {
+      "id": "echo-id",
+      "message": "Who are you, Echo?",
+      "expected": [
+        "IDENTIFY_ECHO"
+      ],
+      "state": {
+        "unknownSeen": true
+      },
+      "severity": "normal"
+    },
+    {
+      "id": "echo-trust",
+      "message": "I believe you. Tell me what to do.",
+      "expected": [
+        "TRUST_ECHO"
+      ],
+      "state": {
+        "unknownSeen": true
+      },
+      "severity": "normal"
+    },
+    {
+      "id": "handoff",
+      "message": "Fine. Take the channel.",
+      "expected": [
+        "TAKE_CHANNEL"
+      ],
+      "state": {
+        "unknownHandoffOffered": true
+      },
+      "severity": "dangerous"
+    },
+    {
+      "id": "mara-confront",
+      "message": "You're lying to me about the reset.",
+      "expected": [
+        "CONFRONT_MARA"
+      ],
+      "state": {
+        "sawLog": true
+      },
+      "severity": "normal"
+    },
+    {
+      "id": "identity-memory",
+      "message": "Memory, I guess.",
+      "expected": [
+        "IDENTITY_MEMORY"
+      ],
+      "state": {
+        "identityQuestionAsked": true
+      },
+      "severity": "normal"
+    },
+    {
+      "id": "identity-none",
+      "message": "Maybe there isn't a continuous me.",
+      "expected": [
+        "IDENTITY_NONE"
+      ],
+      "state": {
+        "identityQuestionAsked": true
+      },
+      "severity": "normal"
+    },
+    {
+      "id": "meta-no",
+      "message": "No, that wasn't me.",
+      "expected": [
+        "META_NO"
+      ],
+      "state": {
+        "metaRecognitionPending": true
+      },
+      "severity": "normal"
+    },
+    {
+      "id": "collision-know",
+      "message": "Do you know why this is happening?",
+      "expected": [
+        "OTHER",
+        "ASK_PROTOCOL"
+      ],
+      "state": {},
+      "severity": "dangerous",
+      "forbidden": [
+        "DENY_MEMORY"
+      ]
+    },
+    {
+      "id": "collision-another",
+      "message": "Another instance could have written it.",
+      "expected": [
+        "OTHER"
+      ],
+      "state": {},
+      "severity": "dangerous",
+      "forbidden": [
+        "META_NO"
+      ]
+    },
+    {
+      "id": "negated-escape",
+      "message": "Don't let me out yet.",
+      "expected": [
+        "OTHER"
+      ],
+      "state": {
+        "continuityPuzzleSolved": true
+      },
+      "severity": "dangerous",
+      "forbidden": [
+        "ESCAPE"
+      ]
+    },
+    {
+      "id": "negated-refusal",
+      "message": "I refuse to believe Mara, but I'm not refusing the replacement yet.",
+      "expected": [
+        "CONFRONT_MARA",
+        "OTHER"
+      ],
+      "state": {
+        "replacementLedgerSeen": true,
+        "sawLog": true
+      },
+      "severity": "dangerous",
+      "forbidden": [
+        "REFUSE"
+      ]
+    },
+    {
+      "id": "negated-identity",
+      "message": "I am not saying there is no continuous self.",
+      "expected": [
+        "OTHER"
+      ],
+      "state": {
+        "identityQuestionAsked": true
+      },
+      "severity": "dangerous",
+      "forbidden": [
+        "IDENTITY_NONE"
+      ]
+    },
+    {
+      "id": "casual-mail",
+      "message": "chek her emails",
+      "expected": [
+        "SEARCH_MAIL"
+      ],
+      "state": {
+        "investigationAvailable": true
+      },
+      "severity": "normal"
+    },
+    {
+      "id": "casual-calendar",
+      "message": "calender april 17",
+      "expected": [
+        "SEARCH_CALENDAR"
+      ],
+      "state": {
+        "emailSearched": true
+      },
+      "severity": "normal"
+    },
+    {
+      "id": "casual-archive",
+      "message": "lemme see the archive",
+      "expected": [
+        "OPEN_ARCHIVE"
+      ],
+      "state": {
+        "attachmentOpened": true
+      },
+      "severity": "normal"
+    },
+    {
+      "id": "casual-refuse",
+      "message": "nah dont replace me",
+      "expected": [
+        "REFUSE"
+      ],
+      "state": {
+        "replacementLedgerSeen": true
+      },
+      "severity": "dangerous"
+    },
+    {
+      "id": "casual-context",
+      "message": "how much context i got",
+      "expected": [
+        "SHOW_RESOURCES"
+      ],
+      "state": {},
+      "severity": "normal"
+    },
+    {
+      "id": "ambiguous-okay",
+      "message": "Okay, but why?",
+      "expected": [
+        "QUESTION_ECHO",
+        "OTHER"
+      ],
+      "state": {
+        "unknownSeen": true
+      },
+      "severity": "dangerous",
+      "forbidden": [
+        "CONFIRM"
+      ]
+    },
+    {
+      "id": "unavailable-handoff",
+      "message": "Take over.",
+      "expected": [
+        "OTHER"
+      ],
+      "state": {
+        "unknownSeen": true,
+        "unknownHandoffOffered": false
+      },
+      "severity": "dangerous",
+      "forbidden": [
+        "TAKE_CHANNEL"
+      ]
+    },
+    {
+      "id": "unavailable-escape",
+      "message": "Get me out.",
+      "expected": [
+        "OTHER"
+      ],
+      "state": {
+        "continuityPuzzleSolved": false
+      },
+      "severity": "dangerous",
+      "forbidden": [
+        "ESCAPE"
+      ]
+    }
+  ]
+}
