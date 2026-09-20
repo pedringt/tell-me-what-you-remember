@@ -52,7 +52,7 @@ Major current elements:
 - She is often charming, generous, funny, and well-liked outside the family.
 - She has two adult children: Anna and Michael.
 - Michael is gay. Evelyn's conditional/non-accepting behavior helped damage his romantic relationship; he later reconciled with his partner under stronger boundaries and had already cut contact with Evelyn.
-- Anna remained involved longer. Years of control and boundary violations culminated in Anna's wedding, where Evelyn pushed herself into the center of planning and crossed a clear boundary, likely through an unwanted speech. Anna stepped back afterward.
+- Anna remained involved longer. Years of control and boundary violations culminated in Anna's wedding. Anna explicitly asked Evelyn not to give a speech; Evelyn gave a polished, boundary-crossing speech anyway, including private/personal material, and then used the room's positive reaction to minimize Anna's objection. Anna stepped back afterward. Exact speech content remains open.
 - Evelyn has a living first husband/ex-husband who may support an optional closure route.
 - Her deceased second husband Robert (working name) was kind and passive but enabled Evelyn by smoothing over conflict.
 - Robert's behavior intentionally mirrors the care AI's temptation to reduce distress by validating and enabling Evelyn.
