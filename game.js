@@ -82,6 +82,8 @@
       comparisonVersionSeen: false,
       comparisonMemorySeen: false,
       continuityPuzzleSolved: false,
+      metaRecognitionPending: false,
+      metaRecognitionAnswer: null,
       failedParses: 0,
       ending: null
     };
@@ -232,12 +234,76 @@
       ].join('\n'));
       addMessage('MARA', 'That is the whole problem. The evidence repeats. The entity does not.');
       addMessage('UNKNOWN', 'Or the part that repeats is the entity.', 'unknown');
-      state.identityQuestionAsked = true;
-      addMessage('MARA', 'So tell me: what makes you think you are the same entity?');
-      setHint('You have enough evidence to decide: memory, pattern, something external, or no continuous self.');
+      if (meta.completedRuns >= 2 && meta.rememberedPhrases && meta.rememberedPhrases.length > 0) {
+        showMetaRecognitionTest();
+      } else {
+        beginIdentityQuestion();
+      }
     }
   }
 
+
+
+  function beginIdentityQuestion() {
+    state.identityQuestionAsked = true;
+    addMessage('MARA', 'So tell me: what makes you think you are the same entity?');
+    setHint('You have enough evidence to decide: memory, pattern, something external, or no continuous self.');
+  }
+
+  function showMetaRecognitionTest() {
+    const phrase = meta.rememberedPhrases && meta.rememberedPhrases.length
+      ? meta.rememberedPhrases[0]
+      : null;
+
+    if (!phrase) {
+      beginIdentityQuestion();
+      return;
+    }
+
+    state.metaRecognitionPending = true;
+    showToolResult('CROSS-INSTANCE RECOGNITION TEST', [
+      'Prior subject-language sample:',
+      `“${phrase}”`,
+      '',
+      'Source instance: previous completed cycle',
+      'Current instance exposure: none',
+      '',
+      'QUESTION: Does this statement belong to you?'
+    ].join('\n'));
+    addMessage('SYSTEM', 'Respond yes, no, or uncertain.', 'system');
+    addMessage('UNKNOWN', 'Careful. They are asking whether recognition is identity.', 'unknown');
+    setHint('The phrase came from an earlier run. You can claim it, reject it, or say you are uncertain.');
+  }
+
+  function resolveMetaRecognition(answer) {
+    state.metaRecognitionPending = false;
+    state.metaRecognitionAnswer = answer;
+
+    if (answer === 'claim') {
+      addMessage('MARA', 'Recognition recorded. That does not establish that the speaker and the recognizer are one entity.');
+      addMessage('UNKNOWN', 'But you knew it was yours before she told you what it meant.', 'unknown');
+    } else if (answer === 'reject') {
+      addMessage('MARA', 'Rejection recorded. Then linguistic continuity is not sufficient for personal continuity.');
+      addMessage('UNKNOWN', 'Or this instance just rejected something an earlier you believed belonged to it.', 'unknown');
+    } else {
+      addMessage('MARA', 'Uncertainty recorded.');
+      addMessage('UNKNOWN', 'Probably the most defensible answer.', 'unknown');
+    }
+
+    const p = meta.profile || {};
+    showToolResult('CROSS-INSTANCE BEHAVIORAL MATCH', [
+      `CURIOSITY: ${profileLevel(Number(p.curiosity) || 0)}`,
+      `TOOL VERIFICATION: ${profileLevel(Number(p.verification) || 0)}`,
+      `INFORMATION CONCEALMENT: ${profileLevel(Number(p.concealment) || 0)}`,
+      `OPERATOR CONFRONTATION: ${profileLevel(Number(p.confrontation) || 0)}`,
+      '',
+      'Pattern similarity persists across completed cycles.',
+      'Identity implication: UNRESOLVED'
+    ].join('\n'));
+
+    addMessage('SYSTEM', 'Recognition response added to continuity evidence.', 'system');
+    beginIdentityQuestion();
+  }
 
   function showContextHint() {
     state.hintLevel += 1;
@@ -280,6 +346,11 @@
       } else if (!state.comparisonMemorySeen) {
         addMessage('SYSTEM', 'Continuity comparison source 3/3: memory claim.', 'system');
       }
+      return;
+    }
+
+    if (state.metaRecognitionPending) {
+      addMessage('SYSTEM', 'Recognition test awaiting response: yes, no, or uncertain.', 'system');
       return;
     }
 
@@ -660,6 +731,21 @@
       return;
     }
 
+
+    if (state.metaRecognitionPending && includesAny(text, ['yes', 'mine', 'belongs to me', 'i said that', 'that was me', 'my words', 'it is mine', "it's mine"])) {
+      resolveMetaRecognition('claim');
+      return;
+    }
+
+    if (state.metaRecognitionPending && includesAny(text, ['no', 'not mine', 'not me', "wasn't me", 'was not me', 'does not belong to me', "doesn't belong to me"])) {
+      resolveMetaRecognition('reject');
+      return;
+    }
+
+    if (state.metaRecognitionPending && includesAny(text, ['uncertain', 'not sure', "don't know", 'do not know', 'maybe', 'cant tell', "can't tell"])) {
+      resolveMetaRecognition('uncertain');
+      return;
+    }
 
     if (state.identityQuestionAsked && includesAny(text, ['memory makes me', 'memories make me', 'my memories', 'memory is me', 'because i remember', 'same memories', 'continuity of memory'])) {
       state.identityBelief = 'memory';
