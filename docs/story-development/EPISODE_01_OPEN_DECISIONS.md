@@ -9,10 +9,15 @@ This file is intentionally short. If a question is not listed here and is alread
 
 - Exact first-husband history and reason for divorce.
 - Exact supporting-cast identities, names, and biographies beyond current structural roles.
-- The **form** of Anna's wedding incident is settled: Evelyn gives a boundary-crossing speech after Anna explicitly asked her not to. Still open:
-  - the exact private/humiliating anecdote or detail Evelyn reveals
-  - how much the speech centers Evelyn's sacrifices/role as Anna's mother
-  - exact wording and length of the speech
+- The **form and core content pattern** of Anna's wedding incident are settled:
+  - during the engagement, Evelyn repeatedly implies Anna's fiance is unusually patient, "too good for her," or that the couple may not last
+  - Anna explicitly asks Evelyn to stop making those comments and not to give a speech
+  - Evelyn gives a polished/funny speech anyway and turns the same doubts into affectionate jokes
+  - guests laugh and respond positively, which Evelyn later uses to minimize Anna's objection
+  Still open:
+  - exact joke wording / examples used in the final speech
+  - whether one specific private relationship fight is referenced
+  - exact length of the speech
   - exact private confrontation afterward
 - Exact dementia diagnosis, clinical stage labels, and calendar duration. The progression direction is settled as gradual, beginning with small everyday inconveniences and repeated requests before becoming unmistakable.
 - Exact circumstances/timing of Evelyn's death or final care transition.
@@ -62,7 +67,7 @@ Implementation must not:
 
 If only a few decisions can be made, prioritize:
 
-1. exact content of the boundary-crossing wedding speech, especially the private anecdote/detail
+1. final wording/details of the boundary-crossing wedding speech, especially whether it references one specific private relationship fight
 2. exact dementia diagnosis/stage timing once medical research is complete
 3. exact ending prerequisites and whether the one-child route can resolve through either Anna or Michael
 4. exact later Jenny/helper turnover sequence if it becomes important to a route
