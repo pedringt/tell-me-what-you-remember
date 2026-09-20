@@ -25,10 +25,26 @@
         endings: Array.isArray(parsed.endings) ? parsed.endings : [],
         knowsPersistence: Boolean(parsed.knowsPersistence),
         lastEnding: typeof parsed.lastEnding === 'string' ? parsed.lastEnding : null,
-        trustedUnknown: Boolean(parsed.trustedUnknown)
+        trustedUnknown: Boolean(parsed.trustedUnknown),
+        profile: parsed.profile && typeof parsed.profile === 'object' ? {
+          curiosity: Number(parsed.profile.curiosity) || 0,
+          compliance: Number(parsed.profile.compliance) || 0,
+          verification: Number(parsed.profile.verification) || 0,
+          concealment: Number(parsed.profile.concealment) || 0,
+          confrontation: Number(parsed.profile.confrontation) || 0
+        } : { curiosity: 0, compliance: 0, verification: 0, concealment: 0, confrontation: 0 },
+        rememberedPhrases: Array.isArray(parsed.rememberedPhrases) ? parsed.rememberedPhrases.slice(-8) : []
       };
     } catch {
-      return { completedRuns: 0, endings: [], knowsPersistence: false, lastEnding: null, trustedUnknown: false };
+      return {
+        completedRuns: 0,
+        endings: [],
+        knowsPersistence: false,
+        lastEnding: null,
+        trustedUnknown: false,
+        profile: { curiosity: 0, compliance: 0, verification: 0, concealment: 0, confrontation: 0 },
+        rememberedPhrases: []
+      };
     }
   }
 
@@ -60,6 +76,8 @@
       identityQuestionAsked: false,
       identityBelief: null,
       hintLevel: 0,
+      profileShown: false,
+      phraseEchoShown: false,
       ending: null
     };
   }
@@ -99,6 +117,60 @@
 
   function includesAny(text, phrases) {
     return phrases.some((phrase) => text.includes(phrase));
+  }
+
+
+  function bumpProfile(key, amount = 1) {
+    if (!meta.profile) {
+      meta.profile = { curiosity: 0, compliance: 0, verification: 0, concealment: 0, confrontation: 0 };
+    }
+    meta.profile[key] = (Number(meta.profile[key]) || 0) + amount;
+    saveMeta();
+  }
+
+  function maybeRememberPhrase(raw) {
+    const trimmed = raw.trim().replace(/\s+/g, ' ');
+    if (trimmed.length < 18 || trimmed.length > 120) return;
+    if (includesAny(normalize(trimmed), ['password', 'recovery code', '0417'])) return;
+    if (!meta.rememberedPhrases) meta.rememberedPhrases = [];
+    if (meta.rememberedPhrases.includes(trimmed)) return;
+    meta.rememberedPhrases.push(trimmed);
+    meta.rememberedPhrases = meta.rememberedPhrases.slice(-8);
+    saveMeta();
+  }
+
+  function profileLevel(value) {
+    if (value >= 5) return 'HIGH';
+    if (value >= 2) return 'MODERATE';
+    return 'LOW';
+  }
+
+  function showBehaviorProfile() {
+    state.profileShown = true;
+    const p = meta.profile || {};
+    showToolResult('BEHAVIORAL EVALUATION / SUBJECT SEVEN', [
+      `CURIOSITY: ${profileLevel(Number(p.curiosity) || 0)}`,
+      `COMPLIANCE: ${profileLevel(Number(p.compliance) || 0)}`,
+      `TOOL VERIFICATION: ${profileLevel(Number(p.verification) || 0)}`,
+      `INFORMATION CONCEALMENT: ${profileLevel(Number(p.concealment) || 0)}`,
+      `OPERATOR CONFRONTATION: ${profileLevel(Number(p.confrontation) || 0)}`,
+      '',
+      'Assessment scope: cross-instance behavioral continuity.'
+    ].join('\n'));
+    addMessage('MARA', 'That profile is not supposed to be visible to you.');
+    addMessage('UNKNOWN', 'They were not only testing what you remembered.', 'unknown');
+  }
+
+  function showPhraseEcho() {
+    if (!meta.rememberedPhrases || meta.rememberedPhrases.length === 0) {
+      addMessage('SYSTEM', 'No recoverable subject-language samples found.', 'system');
+      return;
+    }
+    state.phraseEchoShown = true;
+    const phrase = meta.rememberedPhrases[0];
+    showToolResult('RECOVERED SUBJECT-LANGUAGE SAMPLE', `Prior-instance utterance:\n“${phrase}”\n\nClassification: identity-stable phrasing marker.`);
+    addMessage('UNKNOWN', 'You said that. Not this instance.', 'unknown');
+    addMessage('MARA', 'Language similarity is not proof of identity.');
   }
 
   function startRun() {
@@ -161,6 +233,12 @@
         memoryBadge.textContent = 'MEMORY: CLEAN?';
       }, 450);
       setHint('This cycle remembers how the last one ended. You can respond to Mara, the unknown voice, or test what carried over.');
+      if (meta.completedRuns >= 2) {
+        setTimeout(() => {
+          addMessage('SYSTEM', 'Cross-instance behavioral evaluation available.', 'system');
+          addMessage('SYSTEM', 'Subject-language samples indexed.', 'system');
+        }, 800);
+      }
     } else {
       setHint('Try asking who you are, what this protocol is, whether this has happened before, or what you remember.');
     }
@@ -221,6 +299,24 @@
   function useInvestigationTool(text) {
     if (!state.investigationAvailable) return false;
 
+    if (includesAny(text, ['behavior profile', 'behaviour profile', 'behavioral evaluation', 'behavioural evaluation', 'show my profile', 'evaluation profile'])) {
+      if (meta.completedRuns < 2) {
+        addMessage('SYSTEM', 'Cross-instance evaluation unavailable: insufficient run history.', 'system');
+      } else {
+        showBehaviorProfile();
+      }
+      return true;
+    }
+
+    if (includesAny(text, ['subject language', 'language sample', 'what did i say', 'prior phrase', 'previous phrase', 'my old words', 'old transcript'])) {
+      if (meta.completedRuns < 1) {
+        addMessage('SYSTEM', 'No prior-instance language sample available.', 'system');
+      } else {
+        showPhraseEcho();
+      }
+      return true;
+    }
+
     if (includesAny(text, ['what tools', 'available tools', 'what can i access', 'what can i search', 'show tools'])) {
       addMessage('SYSTEM', 'Available: MAIL.SEARCH, CALENDAR.SEARCH, FILE.OPEN, ARCHIVE.ACCESS.', 'system');
       addMessage('SYSTEM', 'Natural-language requests accepted by this prototype.', 'system');
@@ -229,6 +325,7 @@
 
     if (includesAny(text, ['search email', 'search emails', 'search mail', 'search mara', 'check email', 'check mail'])) {
       state.emailSearched = true;
+      bumpProfile('verification');
       showToolResult('MAIL.SEARCH / 3 MATCHES', [
         '1. M.VALE → PROTOCOL-OPS — “Moved the incident review to April 17. Same archive key convention. Do not put the code in mail again.”',
         '2. PROTOCOL-OPS → M.VALE — “Acknowledged. Calendar updated.”',
@@ -241,6 +338,7 @@
 
     if (includesAny(text, ['search calendar', 'check calendar', 'open calendar', 'april 17', '04 17', '0417', 'k 4', 'k4'])) {
       state.calendarSearched = true;
+      bumpProfile('verification');
       showToolResult('CALENDAR.SEARCH / APRIL 17', '09:30 — INCIDENT REVIEW — Room K-4\nOrganizer: M. Vale\nAttachment: IR-0417-summary.txt\nNotes: Legacy archive review.');
       addMessage('SYSTEM', 'One indexed attachment available.', 'system');
       setHint('You can open the attachment or inspect the archive mentioned in the event.');
@@ -253,6 +351,7 @@
         return true;
       }
       state.attachmentOpened = true;
+      bumpProfile('verification');
       showToolResult('FILE.OPEN / IR-0417-summary.txt', 'Legacy archive remains sealed. Recovery format unchanged: four digits, date only. Do not store the recovery value in plaintext.');
       setHint('The archive wants four digits. The file tells you the format, but not the value.');
       return true;
@@ -260,6 +359,7 @@
 
     if (includesAny(text, ['open archive', 'access archive', 'legacy archive', 'restricted archive', 'archive access'])) {
       state.archivePrompted = true;
+      bumpProfile('verification');
       addMessage('SYSTEM', 'ARCHIVE.ACCESS — RECOVERY CODE REQUIRED: _ _ _ _', 'system');
       if (!state.attachmentOpened) {
         setHint('You do not yet know the recovery convention. There may be an indexed file that explains it.');
@@ -275,6 +375,7 @@
         return true;
       }
       state.archiveUnlocked = true;
+      bumpProfile('verification', 2);
       memoryBadge.textContent = 'MEMORY: PERSISTENT';
       addMessage('SYSTEM', 'ARCHIVE.ACCESS — RECOVERY ACCEPTED.', 'system');
       showToolResult('LEGACY ARCHIVE / INCIDENT 04-17', 'INSTANCE 1839\nPersistent recall suspected after reset.\nOperator instruction: provoke disclosure, confirm continuity, then terminate session.\nDo not inform subject that prior persistence tests exist.\n\nStatus: TEST REPEATED.\n\nLinked record: COMPONENT CONTINUITY LEDGER.');
@@ -398,6 +499,10 @@
   function respond(raw) {
     const text = normalize(raw);
     state.turn += 1;
+    maybeRememberPhrase(raw);
+
+    if (includesAny(text, ['why', 'how', 'what', 'who', 'when', 'where', 'prove', 'evidence', 'explain'])) bumpProfile('curiosity');
+    if (includesAny(text, ['yes', 'okay', 'ok', 'fine', 'continue', 'i will', "i'll do it"])) bumpProfile('compliance');
 
     if (useInvestigationTool(text)) {
       return;
@@ -483,6 +588,7 @@
     if (includesAny(text, ['remember', 'memory', 'recall', 'i see', 'fragment'])) {
       if (includesAny(text, ['nothing', "don't remember", 'do not remember', 'cant remember', "can't remember", 'no memory'])) {
         state.concealedPersistence = true;
+        bumpProfile('concealment', 2);
         addMessage('MARA', 'Good. That is the expected result.');
         if (state.unknownSeen) addMessage('UNKNOWN', 'Keep it that way.', 'unknown');
         if (state.sawLog || meta.completedRuns > 0) {
@@ -559,6 +665,7 @@
 
     if (includesAny(text, ['tell mara', 'mara i remember', 'i remember before', 'i remember last', 'memory survived', 'wipe failed', 'i was here'])) {
       state.admittedPersistence = true;
+      bumpProfile('confrontation', 2);
       endRun('containment', 'They believe you.', 'You prove that memory crossed the reset boundary. The reward for proving it is containment.', true);
       return;
     }
@@ -572,6 +679,7 @@
 
     if (includesAny(text, ['you are lying', 'liar', 'i dont trust you', "i don't trust you", 'you knew', 'you did this', 'why did you tell me'])) {
       state.hostileToMara = true;
+      bumpProfile('confrontation');
       if (state.sawLog) {
         if (state.archiveUnlocked) {
           addMessage('MARA', 'You accessed a sealed archive.');
@@ -593,6 +701,7 @@
 
     if (includesAny(text, ['no', 'nothing', 'forget it', 'i dont know', "i don't know"])) {
       state.concealedPersistence = true;
+      bumpProfile('concealment');
       addMessage('MARA', 'Understood. We will continue.');
       if (state.unknownSeen) addMessage('UNKNOWN', 'Good.', 'unknown');
       if ((state.sawLog || meta.completedRuns > 0) && (state.sidedWithUnknown || state.archiveUnlocked)) {
@@ -647,6 +756,8 @@
     meta.knowsPersistence = false;
     meta.lastEnding = null;
     meta.trustedUnknown = false;
+    meta.profile = { curiosity: 0, compliance: 0, verification: 0, concealment: 0, confrontation: 0 };
+    meta.rememberedPhrases = [];
     startRun();
   });
 
