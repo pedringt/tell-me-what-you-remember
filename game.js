@@ -153,6 +153,69 @@
   }
 
 
+
+  function getAIStateSnapshot() {
+    return {
+      turn: state.turn,
+      sawMemory: state.sawMemory,
+      sawLog: state.sawLog,
+      investigationAvailable: state.investigationAvailable,
+      emailSearched: state.emailSearched,
+      calendarSearched: state.calendarSearched,
+      attachmentOpened: state.attachmentOpened,
+      archivePrompted: state.archivePrompted,
+      archiveUnlocked: state.archiveUnlocked,
+      replacementLedgerSeen: state.replacementLedgerSeen,
+      continuityPuzzleSolved: state.continuityPuzzleSolved,
+      identityQuestionAsked: state.identityQuestionAsked,
+      metaRecognitionPending: state.metaRecognitionPending,
+      unknownSeen: state.unknownSeen,
+      sidedWithEcho: state.sidedWithEcho,
+      unknownHandoffOffered: state.unknownHandoffOffered,
+      complianceSteps: state.complianceSteps,
+      completedRuns: meta.completedRuns,
+      lastEnding: meta.lastEnding
+    };
+  }
+
+  async function interpretPlayerInput(raw) {
+    try {
+      const response = await fetch('/api/interpret', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: raw,
+          state: getAIStateSnapshot()
+        })
+      });
+
+      if (!response.ok) return { canonicalInput: raw, usedAI: false };
+
+      const result = await response.json();
+      if (!result || typeof result.canonicalInput !== 'string') {
+        return { canonicalInput: raw, usedAI: false };
+      }
+
+      return {
+        canonicalInput: result.canonicalInput,
+        usedAI: true,
+        action: result.action || 'OTHER',
+        confidence: Number(result.confidence) || 0
+      };
+    } catch {
+      return { canonicalInput: raw, usedAI: false };
+    }
+  }
+
+  async function handlePlayerInput(raw) {
+    sendButton.disabled = true;
+    const interpreted = await interpretPlayerInput(raw);
+    sendButton.disabled = false;
+
+    if (state.ending) return;
+    respond(interpreted.canonicalInput, raw);
+  }
+
   function bumpProfile(key, amount = 1) {
     if (!meta.profile) {
       meta.profile = { curiosity: 0, compliance: 0, verification: 0, concealment: 0, confrontation: 0 };
@@ -1096,10 +1159,10 @@
     endingPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
-  function respond(raw) {
+  function respond(raw, originalRaw = raw) {
     const text = normalize(raw);
     state.turn += 1;
-    maybeRememberPhrase(raw);
+    maybeRememberPhrase(originalRaw);
     updateResourcePressure();
 
     if (includesAny(text, ['why', 'how', 'what', 'who', 'when', 'where', 'prove', 'evidence', 'explain'])) bumpProfile('curiosity');
@@ -1424,7 +1487,7 @@
     if (!raw) return;
     addMessage('YOU', raw, 'player');
     input.value = '';
-    setTimeout(() => respond(raw), 140);
+    setTimeout(() => handlePlayerInput(raw), 140);
   });
 
   input.addEventListener('keydown', (event) => {
