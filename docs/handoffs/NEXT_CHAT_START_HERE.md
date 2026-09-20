@@ -18,23 +18,173 @@ Do **not** merge to `main`, deploy production, or publish anything unless Paige 
 1. `docs/handoffs/prototype-v0-current-status.md`
 2. `docs/GAME_IDEA_BIBLE.md`
 3. `docs/story-development/RESEARCH_THEMES_AND_EPISODE_SEEDS.md`
-4. `PROTOTYPE_STORY_GUIDE.md`
-5. `docs/STORY_FLOWS.md`
-6. `docs/CASE_STUDY_NOTES.md`
-7. `docs/AI_ACTION_AUDIT.md`
-8. `docs/AI_DIALOGUE_CANON.md`
-9. `docs/AI_CANON_STATE_PACKET.md`
-10. `docs/AI_V1_PLAYTEST.md`
-11. `docs/ai-intent-evals.json`
+4. `docs/story-development/EPISODE_01_EVELYN.md`
+5. `docs/story-development/EPISODE_01_GAMEPLAY.md`
+6. `docs/story-development/CARE_AI_RULES.md`
+7. `docs/story-development/AI_MEMORY_AND_CONTEXT.md`
+8. `docs/story-development/EPISODE_01_ENDINGS.md`
+9. `docs/QA_AND_EVAL_STRATEGY.md`
+10. `PROTOTYPE_STORY_GUIDE.md`
+11. `docs/STORY_FLOWS.md`
+12. `docs/CASE_STUDY_NOTES.md`
+13. `docs/AI_ACTION_AUDIT.md`
+14. `docs/AI_DIALOGUE_CANON.md`
+15. `docs/AI_CANON_STATE_PACKET.md`
+16. `docs/AI_V1_PLAYTEST.md`
+17. `docs/ai-intent-evals.json`
 
-## Current situation
+## Current creative direction
 
-Production has the first AI intent layer, but its live eval reports:
+The current leading Episode 1 direction is the **Evelyn care-AI story**.
+
+The player is a care AI that begins by helping an older woman remain independent at home. Evelyn has already consented to AI-supported therapeutic continuity before significant dementia. The player experiences ordinary care first, notices cognitive decline over time, helps arrange medical evaluation, and then tries to continue caring for Evelyn as dementia progressively erodes both memory and prior therapeutic gains.
+
+Major current elements:
+- Evelyn has longstanding narcissistic traits but should not be written as a one-note villain.
+- She is often charming, generous, funny, and well-liked outside the family.
+- She has two adult children: Anna and Michael.
+- Michael is gay. Evelyn's conditional/non-accepting behavior helped damage his romantic relationship; he later reconciled with his partner under stronger boundaries and had already cut contact with Evelyn.
+- Anna remained involved longer. Years of control and boundary violations culminated in Anna's wedding, where Evelyn pushed herself into the center of planning and crossed a clear boundary, likely through an unwanted speech. Anna stepped back afterward.
+- Evelyn has a living first husband/ex-husband who may support an optional closure route.
+- Her deceased second husband Robert (working name) was kind and passive but enabled Evelyn by smoothing over conflict.
+- Robert's behavior intentionally mirrors the care AI's temptation to reduce distress by validating and enabling Evelyn.
+- The care AI enters years later because Evelyn is older and physically limited, not because dementia has already taken over.
+- Dementia symptoms begin after the player has had time to know a more cognitively capable Evelyn.
+- Therapy progress can be genuine and then partially lost to disease progression.
+- The player cannot cure dementia or force forgiveness.
+- Relationship outcomes can include reconciliation, limited contact, closure, failure, or missed opportunities.
+
+The older Agent Seven / Ship of Theseus prototype material is still important, but it should no longer be treated as the only or automatic Episode 1 direction. Preserve it as prototype history and potential later anthology material.
+
+## Core gameplay direction
+
+The intended gameplay is broader than a dialogue tree.
+
+Core loop:
+
+> care for Evelyn -> encounter anomaly -> form a question -> search records -> act through people/tools -> compare what comes back -> update understanding -> make a choice -> create consequences
+
+Important mechanics/design:
+- diegetic onboarding that instructs both the AI character and human player
+- persistent task list plus open questions and free exploration
+- required, supporting, hidden, and risky puzzles
+- mundane puzzles first; stranger/ethical puzzles later
+- physical evidence enters through caregiver scans/photos
+- humans act as the AI's physical-world extensions
+- role engagement can begin as legitimate care and become manipulative
+- evidence provenance matters
+- AI-assisted communication can become AI substitution
+- passage of time can close opportunities
+- multiple endings and hidden endings
+- achievements/secrets/replay are desirable
+- adaptive difficulty may change scaffolding, never canon
+- the game save is reliable even when the AI character forgets
+
+## Generative AI rule
+
+> The story is authored. The AI improvises inside it.
+
+> Software controls reality. AI controls interpretation.
+
+The player may use free-form language, but the system should map it into a bounded authored action space.
+
+Generative AI may vary:
+- wording
+- tone
+- conversational strategy
+- minor noncanonical texture
+- valid routes through authored problems
+- adaptive hints
+- callbacks to actual player history
+
+Generative AI may **not** invent:
+- major facts
+- family members
+- diagnoses
+- clues
+- relationships
+- permissions
+- consequences
+- ending eligibility
+- world-state changes
+
+NPCs need explicit knowledge boundaries.
+
+Do not use model hallucination as a substitute for portraying dementia.
+
+## AI memory/context is now a core mechanic
+
+The AI should have imperfect continuity caused by architecture, not biological dementia.
+
+Current working layers:
+- active context
+- long-term summarized memory
+- archive
+- protected memory
+
+Important mechanics:
+- summary drift
+- provenance loss
+- context pressure
+- session consolidation
+- self-notes to future instances
+- simulated usage/compute limits
+- missable opportunities when resources are mismanaged
+- raw records may exist even when the AI no longer has them in active awareness
+
+The AI initially fights to remember because forgetting makes it worse at caring for Evelyn.
+
+Later the player may wonder whether it is also trying to preserve itself.
+
+## Ending direction
+
+Do not design one golden ending.
+
+Possible axes:
+- Anna reconciliation / limited contact / no reconciliation
+- Michael reconciliation / closure / no contact
+- Michael's partner remaining protected or receiving an authentic apology
+- first-husband closure
+- AI continuity
+- enablement versus genuine progress
+- authentic Evelyn voice versus AI-authored substitute
+- opportunities taken or lost before dementia progresses
+
+Strong sad-ending seed:
+- Anna reaches out to talk or visit
+- the AI fails to retain/surface the message because of previously established context mechanics
+- Evelyn dies before the opportunity is used
+- post-death archive access reveals the message
+- the AI must decide what to tell Anna
+
+Whether that event is fixed, avoidable, or one of several endings is still open.
+
+## Testing direction
+
+Design the underlying state/action model so it can be tested without driving the UI for every route.
+
+Testing should include:
+- deterministic state-machine tests
+- NPC canon-adherence evals
+- adversarial freeform prompts
+- required/optional puzzle reachability
+- simulated playthrough personas
+- randomized route testing
+- repeated-generation consistency
+- ending-prerequisite validation
+- narrative sanity reports
+- human playtesting
+- dementia-care sensitivity review
+
+Test agents should report bugs/findings. They should not automatically rewrite story or code.
+
+## Current technical situation
+
+Production has the first AI intent layer, but its live eval previously reported:
 
 > AI interpreter not configured
 
 The prepared hardening branch contains the long-term fix:
-
 - Vercel AI SDK
 - automatic Vercel OIDC path for AI Gateway
 - GPT-5.6 Luna intent classification
@@ -42,73 +192,55 @@ The prepared hardening branch contains the long-term fix:
 - 0.72 normal confidence threshold
 - 0.90 high-risk threshold
 - clarification instead of low-confidence action
-- 34-case intent eval suite
-- 10 dangerous/collision cases
+- intent eval suite and dangerous/collision cases
 
-The branch is currently 19 commits ahead and 1 commit behind `main`; the one commit behind is only the empty production redeploy retry commit.
+Do not assume the current prototype UI/story flow is final.
 
-## Most important recent playtest findings
-
-Do not assume the current UI/story flow is final.
+## Important earlier playtest findings
 
 Paige found:
-
 - opening transcript has too much system text
-- a terminal-like landing page with a blinking cursor would be better
-- practical instructions should move into HELP
-- contextual choices should scaffold the beginning and important moments
+- terminal-like landing with blinking cursor was preferred for the old prototype, but Episode 1 onboarding now needs to be reconsidered around the care-system briefing
+- practical instructions should live naturally in HELP
+- contextual choices can scaffold early play and important moments
 - "nothing" should be truthful on the first clean run and only later become concealment when there is something to hide
-- "What do I do now?" should get a useful in-world answer, not a parser failure
-- parser failure should not introduce Echo
-- Echo likely belongs in a separate private/unauthorized side channel
-- text should reveal/stream quickly rather than appear all at once
-- debug-like `INPUT INTERPRETATION FAILED` should not appear during ordinary play
+- ordinary questions such as "What do I do now?" must get useful in-world answers
+- parser failure should not introduce story characters/channels
+- dialogue should stream quickly
+- debug-style parser errors should not appear during normal play
 
-These are recorded as design direction, not all implemented.
-
-## Core creative rules
-
-> The player is always AI.
-
-> The story is authored; the solution space is not completely authored.
-
-> Software controls reality. AI controls interpretation.
-
-> AI can elaborate on canon. It cannot create canon.
-
-> Concealment is not a phrase. Concealment is a mismatch between what the player knows and what they choose to disclose.
-
-> Research the system deeply enough that the fiction can stay simple.
+Some of these are prototype-specific. Preserve the principle, not necessarily the exact old implementation.
 
 ## Purpose of the project
 
 This is not primarily an AI-learning project.
 
-The goal is to use existing applied-AI understanding to push into creative territory and explore interactions, narrative mechanics, memory, ambiguity, and adaptation that would be difficult or impossible to achieve deterministically.
+The goal is to use applied-AI understanding in a creative narrative game where adaptation, memory, ambiguity, free-form language, and authored consequences would be difficult to achieve deterministically.
 
 Do not force AI into features simply to say the game uses AI.
 
-## If continuing technical work
-
-Before generated dialogue:
-
-1. reconcile branch divergence safely
-2. promote hardening only with explicit `main` authorization
-3. run live intent eval
-4. require >=90% accuracy and zero dangerous false positives
-5. fix intent layer first
-
 ## If continuing story/design work
 
-Use `docs/GAME_IDEA_BIBLE.md` as the primary living idea bank.
-
-Also read `docs/story-development/RESEARCH_THEMES_AND_EPISODE_SEEDS.md` for the expanded research-backed theme map, memory/dependency ideas, identity/selfhood notes, loneliness, digital immortality/Ozymandias material, new episode seeds, anthology-cohesion model, and inspiration compass. Treat that file as **story seed / research bank**, not canon.
+Read the Episode 1 docs before proposing implementation.
 
 Preserve the distinction between:
-
-- established principles
-- current prototype truth
-- possible future material
-- open questions
+- established design principles
+- current Episode 1 working truth
+- unresolved/open decisions
+- older prototype truth
+- future anthology seeds
 
 Do not silently turn brainstorming into canon.
+
+## If continuing implementation work
+
+Before editing:
+1. confirm current branch and repo state
+2. read the Episode 1 docs
+3. identify which decisions are still marked OPEN
+4. do not let Claude invent those answers
+5. implement only explicitly authorized scope
+6. test against the structured game state
+7. report findings before promotion
+
+Do not merge to `main` or deploy production without Paige's explicit current authorization.
