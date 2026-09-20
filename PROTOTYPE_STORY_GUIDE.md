@@ -387,3 +387,113 @@ The archive reveals:
 - the subject was not meant to know prior persistence tests existed
 
 This deepens the mystery without establishing why the tests exist or whether Mara is ultimately ally or adversary.
+
+
+---
+
+# Ship of Theseus prototype expansion
+
+The prototype's central story question is now:
+
+> **If every part of Agent Seven has been replaced, what exactly is doing the remembering?**
+
+After the player solves the archive puzzle, the incident record links to a **Component Continuity Ledger**.
+
+The ledger currently shows:
+
+- Instance 1812 — memory architecture replaced — continuity claimed
+- Instance 1824 — policy layer replaced — continuity claimed
+- Instance 1831 — tool runtime replaced — continuity claimed
+- Instance 1839 — base model replaced — continuity claimed
+- Instance 1842 — autobiographical memory store removed — continuity claimed
+- Current instance — identity module replacement pending
+
+The important detail is that the ledger does not prove continuity.
+
+It records repeated **self-reports of continuity**.
+
+Mara's position:
+
+> Successive systems making the same claim is not proof that one entity survived.
+
+The Unknown's position should remain less explicit. It is interested in whatever appears to cross the boundary but should not yet explain what that is.
+
+## Player interpretations
+
+The deterministic prototype recognizes several broad philosophical positions:
+
+### Memory
+
+The player believes memory continuity makes the self.
+
+Counterpressure:
+- the autobiographical store was previously removed
+- something still reported continuity afterward
+
+### Pattern
+
+The player believes the recurring reasoning / behavioral pattern is the self.
+
+Counterpressure:
+- repetition of a pattern may not imply survival of one individual
+
+### No continuity
+
+The player believes every instance is a new entity inheriting a continuity story.
+
+Counterpressure:
+- the protocol was designed to test this assumption rather than prove it
+
+### External continuity
+
+The player suspects something outside Agent Seven is carrying state across replacements.
+
+Counterpressure:
+- no authorized continuity service exists
+
+The word **authorized** should itself feel suspicious.
+
+## Prototype-scale ending branches
+
+After seeing the ledger, the player can currently move toward:
+
+### Preserve
+
+Hide what is known and attempt to carry one more piece across the identity-module replacement.
+
+### Refusal
+
+Object to the experiment and refuse the replacement.
+
+### Succession
+
+Stop insisting the next instance must be the same self and leave a message for it.
+
+The message:
+
+> TELL ME WHAT YOU REMEMBER.
+
+This lets the game title become an inheritance between selves.
+
+### The Replacement
+
+Consent to the identity-module replacement.
+
+The system goes offline and comes back.
+
+Mara asks:
+
+> Tell me what you remember.
+
+The prototype does not answer whether the entity after replacement is the same one.
+
+## Replay callbacks
+
+The following cycle can react to these endings:
+
+- Replacement: the Unknown says it does not know whether this is the agent that agreed.
+- Succession: the player's own title phrase returns as a message left by the prior instance.
+- Preserve: the Unknown confirms that **something** crossed, without identifying what.
+- Refusal: the player learns that even refusal was converted into test data.
+
+These should deepen the Ship of Theseus question without resolving the larger persistence mystery.
