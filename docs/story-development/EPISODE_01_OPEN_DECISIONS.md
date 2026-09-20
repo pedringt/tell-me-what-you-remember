@@ -21,9 +21,11 @@ This file is intentionally short. If a question is not listed here and is alread
 - Exact threshold/prerequisites for each ending family.
 - Whether any family relationship outcome is impossible within a single run.
 - Exact wording of major apologies, recordings, therapy breakthroughs, or Robert artifacts.
-- Final number/identity of recurring caregivers.
-- Exact first physical clue and exact first scanned mail item.
-- Exact final wording of Michael's early therapy-boundary message. Sender and function are settled: Michael sends it after Evelyn has been repeatedly contacting/pressuring him, and he makes use of the agreed therapeutic/reflection support a condition before she contacts him again.
+- Final number/identity of recurring helpers after Jenny. Jenny is the first non-medical home helper; she begins friendly/bubbly and may become worn down over time before reassignment/replacement.
+- Exact later helper-turnover sequence.
+- Exact church/community organization and first event details. The first scanned mail item is settled as a church/community newsletter or invitation that creates a future social/calendar task.
+- Final polished wording of Michael's early therapy-boundary message. First-build wording is available in the opening slice; sender/function are settled.
+- Exact later escalation point for the Robert/ice-cream repetition thread. The first repeated request is settled as Robert's butter pecan ice cream.
 
 ## Product/design decisions still open
 
@@ -61,8 +63,7 @@ Implementation must not:
 If only a few decisions can be made, prioritize:
 
 1. exact content of the boundary-crossing wedding speech, especially the private anecdote/detail
-2. exact home-helper identity/name
-3. exact grocery/delivery problem and first scanned mail item
-4. exact wording of Michael's therapy-boundary message
-5. exact dementia diagnosis/stage timing once medical research is complete
-6. exact ending prerequisites and whether the one-child route can resolve through either Anna or Michael
+2. exact dementia diagnosis/stage timing once medical research is complete
+3. exact ending prerequisites and whether the one-child route can resolve through either Anna or Michael
+4. exact later Jenny/helper turnover sequence if it becomes important to a route
+5. final polish of Michael's boundary message and church-event copy during scene writing
