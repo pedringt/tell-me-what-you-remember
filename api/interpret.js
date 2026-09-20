@@ -65,7 +65,8 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  if (!process.env.AI_GATEWAY_API_KEY) {
+  const gatewayToken = process.env.AI_GATEWAY_API_KEY || process.env.VERCEL_OIDC_TOKEN;
+  if (!gatewayToken) {
     return res.status(503).json({ error: 'AI interpreter not configured' });
   }
 
@@ -96,7 +97,7 @@ export default async function handler(req, res) {
     const gateway = await fetch('https://ai-gateway.vercel.sh/v1/chat/completions', {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${process.env.AI_GATEWAY_API_KEY}`,
+        Authorization: `Bearer ${gatewayToken}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
