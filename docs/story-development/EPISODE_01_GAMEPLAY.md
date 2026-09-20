@@ -43,6 +43,88 @@ Core rule:
 
 HELP should remain available.
 
+## Opening structure: setup -> basic care -> first anomaly
+
+The opening should deliberately orient the player before asking them to investigate anything strange.
+
+### Phase 1: guided client setup
+
+The first 10-20 minutes can function as a heavily scaffolded intake session. The player helps create Evelyn's initial care profile while learning the interface.
+
+Possible setup categories:
+- daily routine
+- medications and appointments
+- food and household preferences
+- mobility limitations
+- important contacts
+- what Evelyn wants help with
+- what she does not want help with
+- emergency and escalation preferences
+- family-contact preferences
+- therapeutic/reflection support permissions
+
+The system may offer explicit suggested next actions during this phase:
+- Ask Evelyn about her morning routine.
+- Confirm who may be contacted in an emergency.
+- Review therapeutic-support consent.
+- Save this answer to the care profile.
+- Mark this information as client-reported.
+
+The player should still be able to type naturally, but the game can be much more directive here than later.
+
+Important story function: the player helps construct the first version of Evelyn's profile. That means later contradictions feel personal. The profile is not "ground truth"; it is a mixture of verified records, Evelyn's own account, and other sourced information.
+
+Example:
+- ANNA - Daughter
+- Relationship: close, limited availability
+- Source: client report
+
+Later evidence may reveal that "limited availability" hides an explicit boundary and years of prior caregiving.
+
+This lets the game teach provenance before provenance becomes a puzzle.
+
+### Phase 2: basic care tasks
+
+After setup, give the player several ordinary tasks so they can practice the care loop without mystery pressure.
+
+Good early tasks include:
+- resolve a grocery delivery issue
+- schedule transportation
+- review scanned mail
+- coordinate a caregiver visit
+- respond to a routine message
+- arrange a simple household service
+
+These teach:
+- TASKS
+- PROFILE
+- CONTACTS
+- INBOX
+- basic record search
+- assigning physical-world tasks
+- caregiver handoffs
+- follow-up questions
+- creating personal follow-ups
+
+The player should feel competent at the job before the story asks them to doubt the system.
+
+### Phase 3: first small inconsistency
+
+Only after the player understands the normal workflow should the first anomaly appear.
+
+Example:
+- caregiver summary: "Evelyn asked three times whether Anna was coming today"
+- profile: "Anna - daughter, limited availability"
+- Evelyn: "She's just busy"
+
+Nothing needs to be dramatic yet. The player may ignore it and continue routine care.
+
+The intended progression is:
+
+> setup -> routine competence -> tiny inconsistency -> curiosity -> investigation
+
+The onboarding scaffolding can then fade as the player demonstrates familiarity. Early play may explicitly recommend the next action; later the system should trust the player to decide what matters.
+
 ## Player-facing operational surfaces
 
 Likely recurring surfaces:
