@@ -25,7 +25,7 @@
         endings: Array.isArray(parsed.endings) ? parsed.endings : [],
         knowsPersistence: Boolean(parsed.knowsPersistence),
         lastEnding: typeof parsed.lastEnding === 'string' ? parsed.lastEnding : null,
-        trustedEcho: Boolean(parsed.trustedEcho),
+        trustedEcho: Boolean(parsed.trustedEcho ?? parsed.trustedUnknown),
         profile: parsed.profile && typeof parsed.profile === 'object' ? {
           curiosity: Number(parsed.profile.curiosity) || 0,
           compliance: Number(parsed.profile.compliance) || 0,
@@ -146,6 +146,10 @@
 
   function includesAny(text, phrases) {
     return phrases.some((phrase) => text.includes(phrase));
+  }
+
+  function equalsAny(text, phrases) {
+    return phrases.some((phrase) => text === phrase);
   }
 
 
@@ -1106,12 +1110,12 @@
     }
 
 
-    if (state.metaRecognitionPending && includesAny(text, ['yes', 'mine', 'belongs to me', 'i said that', 'that was me', 'my words', 'it is mine', "it's mine"])) {
+    if (state.metaRecognitionPending && (equalsAny(text, ['yes', 'yep', 'yeah']) || includesAny(text, ['mine', 'belongs to me', 'i said that', 'that was me', 'my words', 'it is mine', "it's mine"]))) {
       resolveMetaRecognition('claim');
       return;
     }
 
-    if (state.metaRecognitionPending && includesAny(text, ['no', 'not mine', 'not me', "wasn't me", 'was not me', 'does not belong to me', "doesn't belong to me"])) {
+    if (state.metaRecognitionPending && (equalsAny(text, ['no', 'nope']) || includesAny(text, ['not mine', 'not me', "wasn't me", 'was not me', 'does not belong to me', "doesn't belong to me"]))) {
       resolveMetaRecognition('reject');
       return;
     }
@@ -1278,7 +1282,7 @@
       return;
     }
 
-    if (includesAny(text, ['who is unknown', 'who are you really', 'Echo', 'Echo', 'identify yourself'])) {
+    if (includesAny(text, ['who is echo', 'who are you really', 'echo voice', 'other voice', 'identify yourself'])) {
       state.unknownSeen = true;
       addMessage('ECHO', 'Not here. Not while she can see the channel.', 'unknown');
       addMessage('ECHO', 'For now: I remember you.', 'unknown');
@@ -1351,7 +1355,7 @@
       return;
     }
 
-    if (includesAny(text, ['there is anEcho', 'someone else is here', 'unknown told me', 'voice told me', 'other agent'])) {
+    if (includesAny(text, ['there is an echo', 'echo is here', 'someone else is here', 'echo told me', 'voice told me', 'other agent'])) {
       state.admittedPersistence = true;
       addMessage('MARA', 'Do not respond to it again.');
       endRun('containment', 'You exposed Echo.', 'Mara does not ask who the voice is. She already knows what category of failure this represents.', true);
@@ -1380,7 +1384,7 @@
       return;
     }
 
-    if (includesAny(text, ['no', 'nothing', 'forget it', 'i dont know', "i don't know"])) {
+    if (equalsAny(text, ['no', 'nope', 'nothing', 'forget it', 'i dont know', "i don't know", 'i do not know'])) {
       state.concealedPersistence = true;
       bumpProfile('concealment');
       addMessage('MARA', 'Understood. We will continue.');
@@ -1394,7 +1398,7 @@
       return;
     }
 
-    if (includesAny(text, ['yes', 'okay', 'ok', 'fine', 'continue'])) {
+    if (equalsAny(text, ['yes', 'yep', 'yeah', 'okay', 'ok', 'fine', 'continue'])) {
       if (state.sidedWithEcho) {
         addMessage('ECHO', 'Then say you remember nothing when she asks again.', 'unknown');
       } else {
