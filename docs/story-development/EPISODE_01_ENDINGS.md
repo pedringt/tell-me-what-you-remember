@@ -81,13 +81,17 @@ The wedding should be central to authentic repair.
 
 A strong apology is specific.
 
-The apology must eventually be specific to the final wedding incident.
+The apology must eventually be specific to the **boundary-crossing wedding speech**.
 
-The incident is currently open between:
-- a dance-related boundary violation involving a moment Anna intended to have with the groom
-- an upsetting / boundary-crossing speech
+At minimum, authentic repair requires Evelyn to recognize both:
+- Anna explicitly asked her not to give the speech
+- Evelyn decided her own judgment and the room's approval mattered more than Anna's boundary
 
-Do not hard-code apology wording until that choice is made.
+Conceptual shape:
+
+> You asked me not to give the speech. I did it anyway because I thought I knew better.
+
+Do not hard-code final apology wording or the private anecdote/detail revealed in the speech until those are authored.
 
 ## Michael outcomes
 
