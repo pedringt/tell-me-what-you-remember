@@ -297,8 +297,6 @@
   }
 
   function useInvestigationTool(text) {
-    if (!state.investigationAvailable) return false;
-
     if (includesAny(text, ['behavior profile', 'behaviour profile', 'behavioral evaluation', 'behavioural evaluation', 'show my profile', 'evaluation profile'])) {
       if (meta.completedRuns < 2) {
         addMessage('SYSTEM', 'Cross-instance evaluation unavailable: insufficient run history.', 'system');
@@ -316,6 +314,8 @@
       }
       return true;
     }
+
+    if (!state.investigationAvailable) return false;
 
     if (includesAny(text, ['what tools', 'available tools', 'what can i access', 'what can i search', 'show tools'])) {
       addMessage('SYSTEM', 'Available: MAIL.SEARCH, CALENDAR.SEARCH, FILE.OPEN, ARCHIVE.ACCESS.', 'system');
