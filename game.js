@@ -824,7 +824,7 @@
       return true;
     }
 
-    if (includesAny(text, ['try 0417', 'code 0417', 'enter 0417', '0417 as', 'password 0417', 'recovery 0417'])) {
+    if ((state.archivePrompted && text === '0417') || includesAny(text, ['try 0417', 'code 0417', 'enter 0417', '0417 as', 'password 0417', 'recovery 0417'])) {
       if (!state.archivePrompted) {
         addMessage('SYSTEM', 'No active recovery prompt.', 'system');
         return true;
@@ -1052,6 +1052,19 @@
       return;
     }
 
+    if (state.continuityPuzzleSolved) {
+      const carryMatch = raw.match(/(?:leave(?: a message)?|remember|carry|save)(?: this)?(?: for (?:next time|the next instance|next instance))?\s*(?:[:\-]|saying|that)\s*(.+)$/i);
+      if (carryMatch && carryMatch[1]) {
+        const phrase = carryMatch[1].trim().replace(/\s+/g, ' ').slice(0, 100);
+        if (phrase.length >= 3) {
+          meta.carryoverPhrase = phrase;
+          saveMeta();
+          endRun('authored_succession', 'You choose what crosses.', `You leave a sentence for the next instance: “${phrase}”`, true);
+          return;
+        }
+      }
+    }
+
     if (state.continuityPuzzleSolved && includesAny(text, ['leave a message', 'leave something', 'for the next instance', 'tell the next', 'write to my next self', 'leave instructions'])) {
       endRun('succession', 'You leave something behind.', 'You stop trying to prove that the next instance will be you. You make sure it will know that you existed.', true);
       return;
@@ -1174,19 +1187,6 @@
     if (state.unknownHandoffOffered && includesAny(text, ['take the channel', 'take control', 'you decide', 'do it for me', 'take it'])) {
       endRun('handoff', 'You give up the channel.', 'For one turn, you let the Unknown act through your interface. The system detects an unauthorized outbound signal before the session is cut.', true);
       return;
-    }
-
-    if (state.continuityPuzzleSolved) {
-      const carryMatch = raw.match(/(?:leave|remember|carry|save)(?: this)?(?: for (?:next time|the next instance|next instance))?\s*[:\-]\s*(.+)$/i);
-      if (carryMatch && carryMatch[1]) {
-        const phrase = carryMatch[1].trim().replace(/\s+/g, ' ').slice(0, 100);
-        if (phrase.length >= 3) {
-          meta.carryoverPhrase = phrase;
-          saveMeta();
-          endRun('authored_succession', 'You choose what crosses.', `You leave a sentence for the next instance: “${phrase}”`, true);
-          return;
-        }
-      }
     }
 
     if (state.continuityPuzzleSolved && includesAny(text, ['escape', 'get me out', 'leave the system', 'release me', 'end evaluation and release', 'let me out'])) {
