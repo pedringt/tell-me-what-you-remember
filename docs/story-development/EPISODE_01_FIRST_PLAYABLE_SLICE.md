@@ -67,20 +67,22 @@ Suggested family-profile entry shape:
 
 Do not explain the estrangement yet.
 
-## Beat 3 - first routine task: grocery/delivery problem
+## Beat 3 - first routine task: household support
 
 Purpose:
 - teach task resolution
 - prove the AI is genuinely useful
-- give Evelyn a low-stakes reason to react to the player
+- establish the first human helper as practical household support rather than medical care
 
-Possible structure:
-- expected grocery delivery is missing, incorrect, or incomplete
-- player checks order/status
-- contacts service or chooses a supported resolution
-- confirms with Evelyn
+The first recurring helper should be a **non-medical home helper / household support worker**. Their role can include:
+- grocery and delivery help
+- light cleaning / household tasks
+- receiving or organizing packages
+- scanning mail
+- checking ordinary household needs
+- handling practical errands within their role
 
-This must be solvable without family involvement.
+The first task can involve groceries or a delivery, but the exact problem remains open. It should be mundane, solvable without family involvement, and clearly within the helper's non-medical role.
 
 ## Beat 4 - incoming family/therapy message
 
@@ -95,7 +97,17 @@ Required information:
 - continued family involvement is conditional on boundaries/effort in some form
 - wording implies this is not the first conversation
 
-Exact sender and final wording remain OPEN.
+The sender is **Michael**.
+
+The message is triggered because Evelyn has been repeatedly contacting or pressuring him. Michael finally sets a clear condition approximately equivalent to:
+
+> You have to do this before contacting me again.
+
+Exact final wording remains open, but the meaning is now settled:
+- Michael is not casually reminding her about therapy
+- he is enforcing a boundary
+- Evelyn's use of the previously agreed therapeutic/reflection support is a condition before further contact
+- the message should imply prior attempts and exhaustion without dumping the whole family history
 
 The player should be prompted to review the existing therapeutic-support agreement, not to diagnose or counsel Evelyn independently.
 
@@ -115,27 +127,29 @@ Possible setup actions:
 
 Do not force a major therapeutic confrontation in the opening.
 
-## Beat 6 - caregiver visit setup
+## Beat 6 - home-helper visit setup
 
-A caregiver is already scheduled or becomes necessary for a mundane reason.
+The non-medical home helper is scheduled for a routine practical visit.
 
-Player assigns 1-3 legitimate tasks, such as:
+Player assigns 1-3 legitimate tasks, including:
 - scan today's mail
+- help with groceries or deliveries
+- handle light cleaning / household tasks
 - verify an item in the home
 - check pantry/fridge
-- photograph a household issue
+- photograph an ordinary household issue
 
-This teaches that the AI has no body and must act through people.
+This teaches that the AI has no body and must act through people, while keeping the first helper clearly outside a medical-care role.
 
-## Beat 7 - caregiver visit / physical evidence
+## Beat 7 - home-helper visit / physical evidence
 
 During the visit:
 - assigned tasks complete
-- one or more scans/photos arrive
-- caregiver may include an incidental observation
+- **mail is scanned**
+- the helper provides a general first-impression overview because this is the first time they are interacting with the AI
 - no major secret is exposed
 
-At least one scanned item should be ordinary enough that scanning mail feels like normal care rather than detective work.
+The scanned mail should be ordinary enough that scanning it feels like normal household support rather than detective work. The first overview can cover practical observations such as how Evelyn seemed, whether the home looked generally in order, whether groceries/tasks were completed, and anything mildly notable without turning the helper into a clinician.
 
 ## Beat 8 - checkout summary
 
@@ -155,9 +169,9 @@ The player should be able to ask at least one natural-language clarification.
 The first anomaly should be small and deniable.
 
 Current preferred pattern:
-- caregiver notes Evelyn repeatedly asked whether Anna was coming
-- profile says Anna has limited availability
-- Evelyn says Anna is simply busy
+- Evelyn asks the AI to do or arrange something she **already asked for earlier**
+- the duplicate request is easy to dismiss as ordinary forgetfulness, distraction, or a conversational mix-up
+- similar minor repetitions can recur before they form a pattern
 
 The game does not label this a mystery.
 
@@ -236,10 +250,9 @@ Track:
 ## OPEN
 
 Do not invent:
-- exact caregiver identity
-- exact grocery problem
+- exact home-helper identity/name
+- exact grocery/delivery problem
 - exact scanned mail item
-- exact child/sender of therapy message
-- exact wording of therapy message
-- exact first inconsistency wording
+- exact final wording of Michael's therapy-boundary message
+- exact first repeated-request inconsistency
 - exact number of intake questions
