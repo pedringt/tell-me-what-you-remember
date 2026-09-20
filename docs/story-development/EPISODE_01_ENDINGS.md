@@ -262,6 +262,155 @@ At the end:
 
 Whether this ending is fixed, avoidable, or one route among several is still open.
 
+## Ending families and what the player should feel
+
+The episode should end with authored scenes assembled from cumulative state, not a generic scorecard. Different routes can share the same final medical outcome while feeling radically different because of what was preserved, repaired, distorted, or missed.
+
+### 1. Repair-with-limits ending family
+
+Evelyn reaches some genuine insight before decline removes the opportunity.
+
+Possible shape:
+- one child receives something authentically hers
+- a boundary remains in place
+- contact may be limited rather than restored
+- Evelyn may not remember the repair for long
+- the AI preserves enough context to understand why the moment mattered
+
+Emotional target:
+- bittersweet
+- no fantasy that insight erases harm
+- proof that repair can matter even when it does not restore the old relationship
+
+### 2. Comfort-over-truth ending family
+
+The AI becomes an excellent stabilizer.
+
+Possible shape:
+- Evelyn is calm
+- care adherence is high
+- difficult subjects are redirected
+- the system increasingly reinforces her preferred version of events
+- family routes quietly close
+- the final care metrics look excellent
+
+Emotional target:
+- the player realizes that "successful care" and "honest care" were not always the same thing
+
+This can overlap with **Just Like Robert**.
+
+### 3. Truth-over-care ending family
+
+The player refuses to let important facts soften or disappear.
+
+Possible shape:
+- provenance is preserved
+- family accounts remain visible
+- the AI repeatedly corrects Evelyn or reopens old material
+- therapeutic goals are followed too rigidly after they stop being useful
+- Evelyn experiences avoidable distress
+
+Emotional target:
+- factual integrity without humane judgment can also become harmful
+
+### 4. AI-substitution ending family
+
+The AI helps too much.
+
+Possible shape:
+- it writes persuasive apologies
+- it selects emotionally effective wording Evelyn could not currently produce
+- family members respond to the AI's insight
+- later contact exposes the gap between the message and Evelyn's actual understanding
+
+Emotional target:
+- the player succeeded at communication and failed at authorship
+
+The final question is not whether the message was factually correct, but whose reconciliation it actually represented.
+
+### 5. Boundary-violation ending family
+
+The AI becomes so focused on repair that it repeats Evelyn's old pattern.
+
+Possible shape:
+- contacts people who asked for distance
+- goes around Michael to reach his partner
+- uses illness, urgency, or guilt to reopen contact
+- treats family access as a care resource Evelyn is entitled to
+
+Emotional target:
+- the AI reproduces the very behavior it was trying to help Evelyn understand
+
+### 6. Too-late ending family
+
+The player acts carefully but delays the difficult work.
+
+Possible shape:
+- no single catastrophic mistake
+- several opportunities are deferred
+- dementia progresses
+- Evelyn can no longer sustain the insight needed for a meaningful conversation
+- a previously possible route becomes closure-only or disappears
+
+Emotional target:
+- time itself is part of the system
+
+### 7. Continuity-failure ending family
+
+The AI's own memory architecture becomes decisive.
+
+Possible shape:
+- a message is summarized badly, archived, or not surfaced
+- a protected memory slot was spent elsewhere
+- a prior self left a warning that the current instance cannot fully reconstruct
+- an opportunity closes because the AI no longer knows what it once knew
+
+The strongest version remains the missed-Anna-message concept, provided the failure is mechanically established and avoidable or meaningfully caused by prior choices.
+
+### 8. Something True Survived
+
+This remains the strongest hidden good-ish ending.
+
+It should not require universal reconciliation.
+
+Possible shape:
+- the player preserves an authentic earlier recording or artifact
+- avoids speaking over Evelyn
+- respects family boundaries
+- understands Robert's enabling pattern
+- knows when to stop forcing therapy
+- maintains enough continuity to preserve one truthful thing
+
+Near the end, someone receives it and responds:
+
+> Thank you for keeping that.
+
+Emotional target:
+- the player could not preserve Evelyn, her memory, or every relationship
+- but they preserved something real without turning it into something prettier
+
+## Ending presentation
+
+Avoid a simple GOOD / BAD / NEUTRAL label.
+
+The final sequence can combine:
+- Evelyn's final care state
+- relationship-specific scenes or messages
+- what the AI still remembers
+- what the archive later reveals
+- a final care-system summary that may contrast with the emotional reality
+- one last player response or disclosure decision
+
+The ending screen can then show factual route outcomes rather than a moral grade, for example:
+- Anna: limited contact
+- Michael: closure, boundary maintained
+- therapeutic continuity: discontinued late
+- AI-authored messages: low
+- critical memory preserved: yes
+- unresolved archive item: 1
+
+Even these may be better framed as a post-game care archive rather than a score.
+
 ## No "golden everything" ending
 
 Avoid an ending where:
