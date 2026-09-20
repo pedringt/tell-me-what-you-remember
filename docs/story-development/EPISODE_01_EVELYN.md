@@ -196,21 +196,16 @@ Anna compromises repeatedly.
 
 ### Wedding incident
 
-The exact scene can still be refined, but the current preferred shape is:
+The exact incident remains open between **two leading versions**:
 
-- Anna explicitly does not want Evelyn to give a speech, or sets a firm boundary around it
-- Evelyn finds a way to make herself the center of attention anyway
-- the speech is charming enough that much of the room likes it
-- it includes at least one boundary violation or humiliating/private story
-- Evelyn interprets audience approval as proof that Anna's objection is unreasonable
+1. a **dance-related boundary violation** involving a moment Anna intended to have with the groom, where Evelyn inserts herself or overrides what Anna wanted; or
+2. an **upsetting / boundary-crossing speech** that Evelyn gives despite Anna's wishes.
 
-Private confrontation:
-
-Anna:
-> I asked you not to do that.
-
-Evelyn:
-> Everyone loved it.
+The final scene should preserve the same deeper structure:
+- Anna clearly communicates what she wants
+- Evelyn overrides it because she believes her own judgment is better
+- outsiders may see Evelyn's behavior as charming, loving, funny, or harmless
+- Evelyn uses that outside approval to minimize Anna's objection
 
 The deeper wound is:
 
@@ -301,9 +296,17 @@ Exact wording is open.
 
 The existence and meaning of this earlier consent are important canon-level facts for the working episode.
 
-An early family communication should naturally introduce or reinforce this feature. A child may tell the care system that if Evelyn wants continued family involvement, she needs to actually use the therapeutic/reflection support she previously agreed to. The message should imply history rather than explain it all, for example by using language like "this time" or "she knows what we mean."
+An early family communication should naturally introduce or reinforce this feature. **Michael sends it after Evelyn has been repeatedly contacting or pressuring him.** He finally sets a clear boundary approximately equivalent to:
 
-That communication can become one of the first clues that the AI has entered a family system with unresolved history rather than merely an aging-in-place service.
+> You have to do this before contacting me again.
+
+Exact final wording is not locked. The meaning is:
+- Michael is exhausted rather than casually reminding her
+- he is enforcing a boundary
+- using the therapeutic/reflection support Evelyn already agreed to is a condition before further contact
+- the message implies prior history without explaining the whole family conflict
+
+That communication becomes one of the first clues that the AI has entered a family system with unresolved history rather than merely an aging-in-place service.
 
 ## Game opening and onset of dementia
 
@@ -320,10 +323,13 @@ The opening should include ordinary care:
 
 Evelyn should be entertaining, opinionated, and recognizably herself.
 
-After a period of play, subtle cognitive problems begin.
+After a period of play, subtle cognitive problems begin. The progression should be **gradual**, with small inconveniences that do not initially read as a dramatic medical event.
+
+The preferred earliest signal is simple repetition: Evelyn asks the AI to do or arrange something she already asked for. At first this can plausibly look like distraction, ordinary forgetfulness, or a conversational mix-up.
 
 Examples:
 - repeats a recent request
+- asks for a task that has already been completed or scheduled
 - insists an appointment was on another day
 - forgets why a caregiver is arriving
 - confuses which husband a story involved
