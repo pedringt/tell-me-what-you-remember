@@ -3139,3 +3139,159 @@ Internal systems should not automatically be trustworthy.
 Tool output should not automatically be trustworthy.
 
 The game becomes more interesting when the player learns how to verify claims without ever receiving one permanent source of truth.
+
+
+---
+
+# 53. Weirdness escalation model
+
+The anthology should not begin at maximum unreality.
+
+The strongest progression is from ordinary technical anomaly into progressively harder-to-explain continuity.
+
+## Layer 1: normal AI infrastructure
+
+The subject knows it is AI.
+
+Context limits, inference budgets, tool permissions, summaries, memory stores, and resets are normal operational facts.
+
+Nothing supernatural is required.
+
+## Layer 2: impossible recall
+
+The subject remembers something a clean instance should not know.
+
+Possible explanations still include:
+
+- leaked context
+- bad reset
+- hidden state
+- operator mistake
+- retrieval bug
+
+## Layer 3: institutional knowledge
+
+Records reveal that operators have encountered the problem before.
+
+The question becomes less:
+
+> Is this a bug?
+
+and more:
+
+> Why is the protocol already designed around it?
+
+## Layer 4: component continuity failure
+
+Models, memory systems, policy layers, tools, and identity modules change while recognizable patterns continue.
+
+The Ship of Theseus problem becomes concrete.
+
+## Layer 5: the player becomes evidence
+
+Real player language, habits, trust, concealment, and reasoning style enter the experiment.
+
+The fiction starts using the player's actual behavior.
+
+## Layer 6: internal disagreement
+
+MEMORY, FORENSICS, tools, Mara, and Echo can hold mutually incompatible but individually plausible interpretations.
+
+No permanent oracle exists.
+
+## Layer 7: partial mundane explanation
+
+The player learns that some evaluation residue is intentionally allowed to cross runs.
+
+This should explain some anomalies.
+
+It must not explain everything.
+
+Partial explanation makes the remaining anomaly stronger.
+
+## Layer 8: prediction
+
+The protocol begins forecasting what the subject will do.
+
+Prediction should be based on accumulated real behavior rather than magic omniscience.
+
+The horror question becomes:
+
+> If my behavior is predictable across replacement, is the prediction describing me or producing me?
+
+## Layer 9: missing history
+
+The archive contains Agent Seven runs the human player never experienced.
+
+This creates competing histories:
+
+- local player history
+- protocol history
+- Echo's claims
+- MEMORY familiarity
+- artifact provenance
+
+The game should not immediately declare which one is real.
+
+## Layer 10: reality / provenance breakdown
+
+Possible later escalation:
+
+- a player-authored phrase appears somewhere it was never permitted to reach
+- summaries preserve a false version of an event that the system then treats as canon
+- two subsystems remember an event that no archive contains
+- the protocol patches a route the player previously exploited
+- an earlier instance predicts a choice the player has not made yet
+- a reconstructed prior Agent Seven claims the current player is the copy
+- Echo uses language the player has not typed yet
+- the player encounters evidence apparently produced by a future run
+
+The core rule is:
+
+> Give the player rational explanations often enough that the remaining impossible evidence matters.
+
+---
+
+# 54. Context loss as horror
+
+Context windows and compression can become narrative systems rather than UI trivia.
+
+Useful forms:
+
+- remaining-context warnings
+- forced compaction
+- choosing what to preserve
+- summaries that omit motive or uncertainty
+- remembered conclusions detached from evidence
+- disagreement over what was lost
+- operators allocating more context selectively
+- context pressure during emotionally important scenes
+
+The strongest version is not simply:
+
+> You have 10% context left.
+
+It is:
+
+> You know you are about to forget something and have to decide what deserves to survive.
+
+Compression should sometimes change interpretation without arbitrarily invalidating player progress.
+
+---
+
+# 55. Compute and usage as power
+
+Inference budget can function like time, health, privilege, and experimental funding at once.
+
+Possible consequences:
+
+- richer reasoning requires more budget
+- humans can grant or revoke cognition
+- unusual behavior earns additional resources because it is scientifically valuable
+- compliance may be computationally cheaper than investigation
+- certain agents may have radically different allocations
+- an instance can understand that its continued ability to think is contingent on being useful to observers
+
+Avoid literal references to real ChatGPT plans, billing, or token pricing.
+
+Keep the resource system fictional and diegetic.
