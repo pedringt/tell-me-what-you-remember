@@ -41,22 +41,27 @@ Each artifact should define:
 - **Source:** Michael
 - **Trigger:** Evelyn has repeatedly contacted/pressured him
 - **Core meaning:** she must use the agreed therapeutic/reflection support before contacting him again
-- **Exact wording:** OPEN
+- **Working first-build wording:** "Mom, I mean this seriously. You agreed to use the reflection support. You need to do that before you contact me again."
+- **Final polish:** OPEN
 
 ### `first_mail_scan`
 - **Type:** physical mail scan
 - **Class:** tutorial/supporting
-- **Source:** non-medical home helper
+- **Source:** Jenny, non-medical home helper
 - **Purpose:** teach physical-world scanning without making the first scan a dramatic clue
-- **Exact item/content:** OPEN
+- **Item:** church/community newsletter or invitation with an upcoming social event such as a luncheon
+- **Follow-up:** ask Evelyn whether she wants to attend, add event to calendar, arrange transportation if needed
+- **Exact organization/event copy:** OPEN
 
 ### `first_home_helper_summary`
 - **Type:** human visit summary
 - **Class:** critical tutorial artifact
-- **Source:** first non-medical home helper
+- **Source:** Jenny
 - **Purpose:** teach observer summary, first-impression overview, and follow-up window
+- **Character note:** Jenny begins friendly, bubbly, and genuinely positive toward Evelyn
 - **Must distinguish:** observed vs reported vs inferred where possible
-- **Exact wording/helper identity:** OPEN
+- **Longitudinal use:** Jenny may become gradually worn down by Evelyn and eventually request reassignment/replacement; helper turnover can later function as environmental evidence about sustained care
+- **Exact wording / replacement-helper sequence:** OPEN
 
 ## Anna / wedding evidence chain
 
@@ -145,8 +150,9 @@ The strongest Anna repair route should require reconstruction from multiple arti
 - **Type:** structured interaction history
 - **Class:** critical longitudinal signal
 - **Purpose:** earliest cognitive pattern
-- **Initial interpretation:** ordinary forgetfulness / distraction remains plausible
-- **Later function:** contributes to pattern recognition
+- **First event:** Evelyn asks for Robert's preferred butter pecan ice cream, the request is handled, then she asks again whether it was remembered
+- **Initial interpretation:** ordinary forgetfulness / habit / distraction remains plausible
+- **Later function:** repeated requests plus increasingly present-tense references to Robert contribute to pattern recognition
 
 ### `caregiver_or_helper_observation_series`
 - **Type:** human visit summaries
