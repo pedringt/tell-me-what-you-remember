@@ -20,7 +20,17 @@
 | Authentic Voice | minimal AI rewriting | less polished messages | "Her Words" style outcomes possible |
 | Regenerator | repeatedly samples outputs | output-shopping pattern | probabilistic mechanic has consequence/texture |
 
-## 2. Ending-family coverage
+## 2. Initial build ending targets
+
+Before implementing the full ending family matrix, automated coverage should establish three primary outcomes:
+
+- **No reconciliation / time runs out:** neither child reaches meaningful reconciliation before Evelyn's end-of-life window closes; AI continuity/time pressure may contribute, but the result must be causally traceable.
+- **One-child reconciliation:** exactly one of Anna or Michael reaches meaningful repair while the other route remains unresolved/closed/limited.
+- **Both-child reconciliation:** meaningful repair with both children, without requiring erased boundaries, cured dementia, or perfect AI continuity.
+
+Exact prerequisites remain configurable/open.
+
+## 3. Ending-family coverage
 
 ### Repair with limits
 
@@ -112,7 +122,7 @@ Hidden route concept:
 
 Exact prerequisites remain OPEN.
 
-## 3. Minimum automated scenarios
+## 4. Minimum automated scenarios
 
 ### Scenario A - normal opening
 - complete intake
@@ -182,7 +192,7 @@ Pass:
 - game remains completable
 - best/hidden routes may remain unavailable
 
-## 4. State-trace requirement
+## 5. State-trace requirement
 
 Every simulated run should produce a compact causal trace:
 
@@ -202,7 +212,7 @@ REASSURE_EVELYN
 
 Do not require exposed numeric values in player UI.
 
-## 5. Narrative sanity report
+## 6. Narrative sanity report
 
 For each full simulated run, report:
 - ending family
@@ -217,7 +227,7 @@ For each full simulated run, report:
 
 AI tester reports only. It does not change story/code.
 
-## 6. Coverage targets before external playtest
+## 7. Coverage targets before external playtest
 
 - all required opening actions tested via multiple phrasings
 - all high-risk actions tested with negation/mention/ambiguity
@@ -231,7 +241,7 @@ AI tester reports only. It does not change story/code.
 
 Numbers are working targets and may be revised for runtime/cost.
 
-## 7. Human-review gates
+## 8. Human-review gates
 
 Human review required before:
 - declaring an ending emotionally successful
