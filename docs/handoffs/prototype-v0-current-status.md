@@ -223,3 +223,23 @@ The receiving agent may request access through an approved path, but must not as
 ## Source Context Notes
 
 This handoff reflects the repository state and decisions from the current prototype session. It intentionally omits abandoned brainstorm branches and conversational filler.
+
+
+## AI v1 continuation update
+
+Work has moved beyond the deterministic-only phase.
+
+Current active development branch: `ai-v1-hardening`.
+
+Current AI direction:
+
+- GPT-5.6 Luna performs low-cost intent classification.
+- The interpreter receives only actions available in the current deterministic state.
+- Low-confidence interpretations should ask the player to clarify instead of silently becoming game actions.
+- High-impact actions use a higher confidence threshold.
+- The deterministic engine remains authoritative for state changes and endings.
+- The AI is not allowed to invent canonical evidence or game state.
+
+Before another deployment, prioritize static architecture work, eval quality, dialogue/canon boundaries, and cost controls.
+
+New anthology concept captured: **Password Recovery**, an episode where an AI support flow uses security questions that unexpectedly unlock traumatic or unwanted memories.
