@@ -65,6 +65,8 @@ Core loop:
 > care for Evelyn -> encounter anomaly -> form a question -> search records -> act through people/tools -> compare what comes back -> update understanding -> make a choice -> create consequences
 
 Important mechanics/design:
+- opening progression: guided client setup -> ordinary care tasks -> first small inconsistency
+- the player helps build Evelyn's initial care profile, learning provenance and controls before the profile itself becomes suspect
 - diegetic onboarding that instructs both the AI character and human player
 - persistent task list plus open questions and free exploration
 - required, supporting, hidden, and risky puzzles
@@ -139,6 +141,16 @@ Later the player may wonder whether it is also trying to preserve itself.
 ## Ending direction
 
 Do not design one golden ending.
+
+Current ending families include:
+- repair with limits
+- comfort over truth / enablement
+- truth over care / over-correction
+- AI substitution
+- boundary violation in the name of repair
+- delay / too late
+- AI continuity failure
+- hidden "Something True Survived" route
 
 Possible axes:
 - Anna reconciliation / limited contact / no reconciliation
