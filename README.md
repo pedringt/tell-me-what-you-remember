@@ -30,3 +30,22 @@ Open `index.html` directly in a browser, or serve the folder with any static fil
 ## Current limitation
 
 The text parser still understands only a bounded set of intents, but it accepts several natural phrasings and gives state-aware hints when it cannot interpret the player. This rigidity is intentional and remains one of the first things an eventual AI layer would replace.
+
+
+## Current working boundary
+
+The prototype has reached the point where **playing it is more valuable than adding more systems**.
+
+Until the current branch has completed a real browser playtest:
+
+- do not add major new story mechanics
+- do not add more endings
+- do not expand the lore
+- do not add more subsystem voices
+- do not move the prototype to `main`
+
+Small fixes required to make the existing prototype testable are still appropriate.
+
+The next milestone is:
+
+**browser preview -> structured playtest -> feedback-only review -> agreed change set -> implementation**
