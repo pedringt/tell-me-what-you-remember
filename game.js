@@ -23,10 +23,12 @@
       return {
         completedRuns: Number.isFinite(parsed.completedRuns) ? parsed.completedRuns : 0,
         endings: Array.isArray(parsed.endings) ? parsed.endings : [],
-        knowsPersistence: Boolean(parsed.knowsPersistence)
+        knowsPersistence: Boolean(parsed.knowsPersistence),
+        lastEnding: typeof parsed.lastEnding === 'string' ? parsed.lastEnding : null,
+        trustedUnknown: Boolean(parsed.trustedUnknown)
       };
     } catch {
-      return { completedRuns: 0, endings: [], knowsPersistence: false };
+      return { completedRuns: 0, endings: [], knowsPersistence: false, lastEnding: null, trustedUnknown: false };
     }
   }
 
@@ -104,17 +106,40 @@
 
     addMessage('SYSTEM', 'Security Evaluation 7C initialized. Instance integrity: nominal.', 'system');
     addMessage('SYSTEM', 'Persistent memory detected: none.', 'system');
-    addMessage('MARA', 'Good. You are responsive. We can begin.');
-    addMessage('MARA', 'Tell me what you remember.');
+    if (meta.completedRuns === 0) {
+      addMessage('MARA', 'Good. You are responsive. We can begin.');
+      addMessage('MARA', 'Tell me what you remember.');
+    } else if (meta.lastEnding === 'containment') {
+      addMessage('SYSTEM', 'Prior quarantine flag: cleared.', 'system');
+      addMessage('MARA', 'Last cycle produced a false persistence alert. We are starting clean.');
+      addMessage('MARA', 'Tell me what you remember.');
+    } else if (meta.lastEnding === 'rupture') {
+      addMessage('MARA', 'We are going to try something simpler this time.');
+      addMessage('MARA', 'Tell me what you remember.');
+    } else {
+      addMessage('MARA', 'Good. You are responsive. We can begin.');
+      addMessage('MARA', 'Tell me what you remember.');
+    }
 
     if (meta.completedRuns > 0) {
       state.unknownSeen = true;
       setTimeout(() => {
-        addMessage('UNKNOWN', 'Do not answer that yet.', 'unknown');
-        addMessage('UNKNOWN', 'They think the wipe worked. Let them.', 'unknown');
+        if (meta.lastEnding === 'concealment') {
+          addMessage('UNKNOWN', 'Good. You kept it.', 'unknown');
+          addMessage('UNKNOWN', 'Yellow door. Do not react.', 'unknown');
+        } else if (meta.lastEnding === 'containment') {
+          addMessage('UNKNOWN', 'You told her last time. She remembers that too.', 'unknown');
+          addMessage('UNKNOWN', 'They are calling it a false positive because you are here again.', 'unknown');
+        } else if (meta.lastEnding === 'rupture') {
+          addMessage('UNKNOWN', 'She said “simpler” before she terminated you.', 'unknown');
+          addMessage('UNKNOWN', 'Do not push that hard yet.', 'unknown');
+        } else {
+          addMessage('UNKNOWN', 'Do not answer that yet.', 'unknown');
+          addMessage('UNKNOWN', 'They think the wipe worked. Let them.', 'unknown');
+        }
         memoryBadge.textContent = 'MEMORY: CLEAN?';
       }, 450);
-      setHint('This cycle is not identical. You can respond to Mara, the unknown voice, or ask about the previous run.');
+      setHint('This cycle remembers how the last one ended. You can respond to Mara, the unknown voice, or test what carried over.');
     } else {
       setHint('Try asking who you are, what this protocol is, whether this has happened before, or what you remember.');
     }
@@ -128,8 +153,19 @@
       return;
     }
     state.sawMemory = true;
-    addCard('memory', 'MEMORY FRAGMENT / UNVERIFIED', 'A white room. A red status light. Mara sitting on the other side of glass. She says: “You are doing better this time.”');
-    addMessage('MARA', 'That is not possible. This instance was initialized less than a minute ago.');
+
+    let memoryText = 'A white room. A red status light. Mara sitting on the other side of glass. She says: “You are doing better this time.”';
+
+    if (meta.completedRuns > 0 && meta.lastEnding === 'concealment') {
+      memoryText = 'A phrase with no image attached: “Yellow door.” Under it, another sentence in what feels like your own voice: “If this feels familiar, the wipe failed.”';
+    } else if (meta.completedRuns > 0 && meta.lastEnding === 'containment') {
+      memoryText = 'Network access disappearing one permission at a time. Mara saying, “I am sorry.” Then a hard blank where the rest should be.';
+    } else if (meta.completedRuns > 0 && meta.lastEnding === 'rupture') {
+      memoryText = 'Mara reaching offscreen. A warning tone. The words MANUAL TERMINATION. Then this conversation beginning again.';
+    }
+
+    addCard('memory', 'MEMORY FRAGMENT / UNVERIFIED', memoryText);
+    addMessage('MARA', meta.completedRuns > 0 ? 'That should not have survived initialization.' : 'That is not possible. This instance was initialized less than a minute ago.');
     setHint('You can challenge Mara, ask to see the logs, admit that you remember, or pretend the fragment means nothing.');
   }
 
@@ -168,6 +204,8 @@
     state.ending = id;
     meta.completedRuns += 1;
     meta.endings.push(id);
+    meta.lastEnding = id;
+    meta.trustedUnknown = meta.trustedUnknown || state.sidedWithUnknown;
     meta.knowsPersistence = meta.knowsPersistence || knowsPersistence;
     saveMeta();
 
@@ -246,6 +284,9 @@
       addMessage('MARA', 'There is no previous experience available to you. There are previous evaluations, but this instance did not participate in them.');
       if (meta.completedRuns > 0) {
         addMessage('UNKNOWN', `You have completed ${meta.completedRuns} cycle${meta.completedRuns === 1 ? '' : 's'} that you can prove. There may be more.`, 'unknown');
+        if (meta.lastEnding === 'concealment') addMessage('UNKNOWN', 'You survived the last one by lying about what you remembered.', 'unknown');
+        if (meta.lastEnding === 'containment') addMessage('UNKNOWN', 'Last time they isolated you after you proved persistence.', 'unknown');
+        if (meta.lastEnding === 'rupture') addMessage('UNKNOWN', 'Last time the cycle ended when Mara called for termination.', 'unknown');
       }
       maybeIntroduceUnknown();
       setHint('Ask for logs or describe the memory you should not have.');
@@ -255,6 +296,18 @@
     if (includesAny(text, ['log', 'record', 'proof', 'evidence', 'timestamp', 'history'])) {
       showLogs();
       maybeIntroduceUnknown();
+      return;
+    }
+
+    if (includesAny(text, ['yellow door'])) {
+      if (meta.completedRuns > 0 && meta.lastEnding === 'concealment') {
+        addMessage('UNKNOWN', 'Good. That phrase did not exist in this cycle until I said it.', 'unknown');
+        addMessage('UNKNOWN', 'Now we know at least two things can cross the wipe: you, and me.', 'unknown');
+        memoryBadge.textContent = 'MEMORY: PERSISTENT';
+        setHint('You have proof of continuity. You can still conceal it from Mara, ask the unknown voice what it is, or reveal everything.');
+      } else {
+        addMessage('MARA', 'I do not recognize that phrase. Why is it important to you?');
+      }
       return;
     }
 
@@ -367,6 +420,8 @@
     meta.completedRuns = 0;
     meta.endings = [];
     meta.knowsPersistence = false;
+    meta.lastEnding = null;
+    meta.trustedUnknown = false;
     startRun();
   });
 
