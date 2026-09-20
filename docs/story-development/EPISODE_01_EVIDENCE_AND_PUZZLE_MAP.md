@@ -96,18 +96,22 @@ Initial:
 
 Required:
 - Anna carried substantial practical/emotional burden
-- wedding is a culminating boundary violation, not isolated trivia
-- concrete event can be reconstructed even if emotional interpretations differ
+- the wedding is a culminating boundary violation, not isolated trivia
+- Anna explicitly asked Evelyn not to give a speech
+- Evelyn gave the speech anyway
+- much of the room responded positively enough that Evelyn later used that reaction to minimize Anna's objection
+- the concrete event can be reconstructed even if emotional interpretations differ
 
 Evidence sources:
-- wedding artifact(s)
-- pre-wedding texts
+- wedding video / phone recording of the speech
+- pre-wedding texts establishing Anna's no-speech boundary
 - Anna testimony
-- Evelyn retelling
+- Evelyn's later retelling
 - therapy discussion
-- guest/friend recollection
+- guest/friend messages praising or reacting positively to the speech
+- optional draft/notes if authored later
 
-Exact private story remains OPEN.
+The exact private anecdote/detail revealed in the speech remains OPEN.
 
 ### Arc D - Michael's boundary protects a rebuilt life
 
@@ -283,7 +287,7 @@ Every final artifact should declare:
 ## 8. OPEN artifact decisions
 
 Do not invent:
-- exact wedding speech/private disclosure
+- exact private anecdote/detail revealed in the wedding speech
 - exact Robert artifact text
 - exact physical object tied to first major clue
 - exact Anna final-message artifact
