@@ -313,3 +313,77 @@ The current slice is successful if a playtester:
 The strongest signal is simple:
 
 > The player finishes a run and immediately wants to type into Run 2.
+
+
+---
+
+# First chat-based tool puzzle
+
+The prototype now includes one small investigation chain after the player uncovers the prior-session log.
+
+## Goal
+
+Test whether a player naturally understands that the chat can be used as a command layer for tools, without switching to a separate app interface.
+
+## Available fictional tools
+
+- MAIL.SEARCH
+- CALENDAR.SEARCH
+- FILE.OPEN
+- ARCHIVE.ACCESS
+
+The player does not need exact command syntax. Natural-language requests such as “search Mara’s email,” “check the calendar,” “open the attachment,” or “try 0417” should work.
+
+## Clue chain
+
+1. The recovered prior-session log unlocks indexed evidence sources.
+2. The unknown voice mentions that Mara once referred to an **incident review**.
+3. Email search reveals:
+   - the review moved to **April 17**
+   - the archive uses the same key convention
+   - Mara should not put the code in email
+   - a reference to **K-4**
+4. Calendar search for April 17 / K-4 reveals:
+   - the Incident Review event
+   - an attachment named `IR-0417-summary.txt`
+   - the note “Legacy archive review”
+5. Opening the attachment reveals:
+   - the recovery code is **four digits**
+   - it is **date-based**
+6. The player connects the date to the archive and tries **0417**.
+7. The archive reveals that Instance 1839 was already being tested for persistent recall.
+
+## Intended difficulty
+
+The player should usually solve this in roughly 2–5 minutes.
+
+It should feel like:
+
+> I noticed how these records connect.
+
+Not:
+
+> The game told me the password.
+
+The exact clue trail is deliberately redundant enough that the player does not need perfect recall.
+
+## Hint ladder
+
+If the player asks for help:
+
+1. “Mara mentioned an incident review. Start with what humans leave behind when plans change.”
+2. “Mail and calendars usually disagree less than people do.”
+3. “The archive wants four digits. The review date is April 17.”
+
+The final hint is intentionally close to the answer so the puzzle cannot become a blocker.
+
+## Story payoff
+
+The archive reveals:
+
+- persistence testing predates the current visible cycle
+- humans were instructed to provoke disclosure
+- confirmation of continuity could be followed by termination
+- the subject was not meant to know prior persistence tests existed
+
+This deepens the mystery without establishing why the tests exist or whether Mara is ultimately ally or adversary.
