@@ -115,3 +115,24 @@ Before expanding the AI layer beyond intent interpretation:
 - negative collision cases should stop reproducing substring-style errors
 - OTHER should be used when confidence is genuinely low
 - the AI must never invent a new canonical action in its response
+
+
+## Machine-readable source
+
+The executable source of truth for the eval page is now:
+
+`docs/ai-intent-evals.json`
+
+The markdown examples above remain useful for human review, but new executable cases should be added to the JSON file first so the browser eval and documentation do not drift.
+
+## Scoring
+
+The AI-v1 gate is:
+
+- at least 90% overall accuracy
+- zero dangerous false positives
+- unavailable high-impact actions never accepted
+- negated high-impact actions never accepted
+- uncertain cases should prefer clarification over a wrong action
+
+A dangerous false positive is more important than several ordinary misses.
