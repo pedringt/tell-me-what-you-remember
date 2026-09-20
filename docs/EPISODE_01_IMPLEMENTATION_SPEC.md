@@ -9,7 +9,9 @@
 
 Translate the Evelyn episode into an implementation-ready system model without inventing unresolved story canon.
 
-The game must support a heavily guided opening that becomes increasingly open-ended, free-form player language mapped into bounded actions, deterministic story truth, generative interpretation/dialogue, caregiver-mediated physical interaction, explicit evidence provenance, AI memory/context pressure, probabilistic output mechanics, branching relationship outcomes, and automated route testing.
+The game must support a heavily guided opening that becomes increasingly open-ended, bounded player actions, deterministic story truth, helper-mediated physical interaction, explicit evidence provenance, AI memory/context pressure, branching relationship outcomes, and automated route testing.
+
+**First-build strategy:** implement the playable slice **deterministic-first**. Add live generative AI only when testing exposes a concrete problem that deterministic interactions handle poorly, such as free-form phrasing rigidity, repetitive dialogue, interpretation friction, or another specific usability/design limitation. Keep interfaces modular so AI can be inserted without rewriting canonical state logic.
 
 ## 2. Core product contract
 
@@ -26,7 +28,7 @@ The game must support a heavily guided opening that becomes increasingly open-en
 ## 3. Goals
 
 - Make the first playable slice understandable without a separate out-of-world tutorial.
-- Let players use natural language without allowing the model to mutate canon.
+- Preserve an interface that can support natural-language input, while allowing the first build to use deterministic interaction patterns until live AI proves necessary.
 - Make routine care mechanically useful before mystery/investigation dominates.
 - Treat humans as the AI's physical-world interface.
 - Track source/provenance so claims can be verified, disputed, summarized, or degraded.
@@ -49,9 +51,9 @@ The game must support a heavily guided opening that becomes increasingly open-en
 | Component | Responsibility |
 |---|---|
 | Canon/state engine | Owns timeline, facts, tasks, clues, permissions, relationship state, opportunities, ending eligibility |
-| Intent interpreter | Maps free-form player language to currently available bounded actions |
-| Action validator | Rejects unavailable, low-confidence, or high-risk ambiguous actions |
-| Dialogue generator | Renders character response after canonical resolution |
+| Intent interpreter | Maps player input to currently available bounded actions; may begin deterministic and later gain model-backed interpretation |
+| Action validator | Rejects unavailable or high-risk ambiguous actions; model confidence gates apply only when a model-backed interpreter is enabled |
+| Dialogue renderer | Renders authored/fixture dialogue first; may later use generated dialogue after canonical resolution where it adds clear value |
 | NPC knowledge contract | Limits what each speaker knows, believes, misbelieves, or may reveal |
 | Evidence/provenance system | Stores artifacts, claims, sources, confidence category, discovery state |
 | Caregiver/physical-action system | Executes physical-world requests through humans with access/willingness limits |
@@ -201,7 +203,7 @@ High-risk actions require explicit confirmation and/or higher intent confidence:
 
 The first 30-45 minutes must follow:
 
-> guided setup -> routine competence -> caregiver-mediated physical task -> first small inconsistency -> optional curiosity
+> guided setup -> routine competence -> non-medical home-helper physical task -> first small inconsistency -> optional curiosity
 
 The game should not present the player with every subsystem immediately.
 
@@ -222,9 +224,15 @@ Unlock later:
 
 During intake, the system may explicitly recommend the next action. Scaffolding must reduce after the player demonstrates familiarity.
 
-## 10. Caregiver visit contract
+## 10. Human-helper visit contract
 
-A caregiver visit is a time-bounded physical-world interaction.
+The physical-world system must support multiple human roles. The **first playable slice uses a non-medical home helper / household support worker**, not a health caregiver.
+
+That first helper can assist with groceries, deliveries, light cleaning/household tasks, mail scanning, packages, errands, and ordinary household checks.
+
+Later roles may include medical caregivers, nurses, clinicians, drivers, repair workers, friends, or others with different permissions.
+
+A helper visit is a time-bounded physical-world interaction.
 
 Lifecycle:
 
@@ -239,7 +247,8 @@ Lifecycle:
 9. caregiver leaves
 10. unresolved follow-ups become later tasks if possible
 
-Caregivers must have:
+Helpers must have:
+- role/type
 - access permissions
 - willingness boundaries
 - observation style
@@ -397,11 +406,14 @@ Do not expose classifier reasoning to the player.
 - guided intake
 - profile creation with provenance
 - routine task flow
-- one caregiver visit
-- one physical scan
-- one caregiver follow-up window
-- one first inconsistency
-- basic free-form intent mapping
+- one non-medical home-helper visit
+- mail scan
+- first-time helper overview
+- one helper follow-up window
+- repeated-request first inconsistency
+- Michael therapy-boundary message
+- deterministic interaction path first
+- instrument friction points where model-backed interpretation/dialogue may later add value
 
 ### Phase 2 - investigation
 - records/search
@@ -424,6 +436,10 @@ Do not expose classifier reasoning to the player.
 - communication authorship continuum
 - boundary-state enforcement
 - relationship routes
+- initial ending targets:
+  - no reconciliation / time runs out
+  - reconciliation with one child
+  - reconciliation with both children
 - ending eligibility
 - ending assembly
 - post-game archive/replay
@@ -469,8 +485,8 @@ Do not expose classifier reasoning to the player.
 
 - exact first-husband history
 - exact supporting-cast names/biographies
-- exact wedding private story/boundary violation
-- exact dementia diagnosis/stage/timeline
+- exact wedding incident choice/details: dance-related boundary violation vs upsetting speech
+- exact dementia diagnosis/stage/timeline; progression is settled as gradual and begins with minor repeated requests / everyday inconvenience
 - exact episode duration and death circumstances
 - exact ending thresholds
 - exact Anna final-message form/timing/loss mechanism
