@@ -60,6 +60,8 @@ The player may have to choose what future instances must not lose.
 
 A key mechanic.
 
+Summarization is also probabilistic. Two reasonable summaries of the same raw event can preserve different details. The game may use this deliberately, while keeping the original event itself fixed.
+
 Example raw event:
 
 > Evelyn became distressed because the AI incorrectly told her Anna would visit.
