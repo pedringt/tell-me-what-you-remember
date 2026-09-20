@@ -59,7 +59,10 @@ The model must never create a new historical event to portray dementia.
 ### KNOWS
 - her own history of involvement/caregiving
 - her own boundaries
-- the wedding buildup and boundary violation
+- that she explicitly asked Evelyn not to give a wedding speech
+- that Evelyn gave the speech anyway
+- the private/personal material in the speech and why it crossed the boundary
+- the positive public reaction that Evelyn later used to minimize Anna's objection
 - relevant prior family conflicts she directly experienced
 - what she has or has not agreed to regarding current contact
 
@@ -77,7 +80,9 @@ The model must never create a new historical event to portray dementia.
 If current state is no-routine-contact, generated dialogue cannot spontaneously offer caregiving, visits, or reconciliation.
 
 ### MAY REVEAL AFTER
-- stronger wedding detail after trust/context prerequisites
+- exact wedding-speech detail after trust/context prerequisites
+- the pre-wedding request not to speak
+- how Evelyn responded privately after Anna objected
 - past caregiving burden after appropriate contact
 - openness to limited contact only if route state allows
 
