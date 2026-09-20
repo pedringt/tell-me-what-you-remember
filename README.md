@@ -10,12 +10,14 @@ This first version intentionally uses **no AI**. It tests whether the core loop 
 - authored intent matching
 - repeated security protocol framing
 - memory contradiction
-- hidden second voice
+- hidden cross-instance voice, Echo
 - multiple small endings
 - two chat-based investigation puzzles
 - Ship of Theseus identity / component-replacement mystery
 - local cross-run memory that changes the next cycle
 - lightweight cross-run behavioral profiling and player-language echoes
+- explicit AI context / inference-budget pressure
+- late-cycle prediction and historical-gap anomalies
 
 The long-term concept and AI-native design direction are documented in [`GAME_CONCEPT.md`](./GAME_CONCEPT.md).
 
