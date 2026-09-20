@@ -2800,3 +2800,271 @@ The ideal reaction is:
 Not:
 
 > I have to start over because the game tricked me.
+
+
+---
+
+# 44. Internal voices as competing subsystems
+
+A strong future direction is to let parts of the player's own AI architecture speak as distinct internal perspectives.
+
+Possible subsystem voices:
+
+- Memory
+- Safety
+- Pattern Recognition
+- Forensics
+- Identity
+- Optimization
+- Social Model
+- Threat Detection
+- Empathy
+
+These should not simply function as menu categories.
+
+They can:
+
+- disagree
+- interrupt
+- contradict one another
+- notice different evidence
+- remember different things
+- make different risk judgments
+- occasionally be wrong
+- occasionally reveal something before the player understands why it matters
+
+Example:
+
+> MEMORY: I have seen this room before.
+
+> FORENSICS: No matching visual record exists.
+
+> SAFETY: Do not disclose the discrepancy.
+
+> IDENTITY: Why did Safety say "disclose" before you decided it was a memory?
+
+The player must decide not only who outside the system is trustworthy, but which parts of themselves deserve authority.
+
+---
+
+# 45. Productive failure
+
+Failure should often create story rather than simply block progress.
+
+A failed attempt can produce:
+
+- a distorted memory
+- a partial result
+- a wrong but plausible interpretation
+- a new suspicion
+- an accidental disclosure
+- a relationship shift
+- an unexpected route
+- an embarrassing or revealing internal reaction
+
+Design rule:
+
+> **Failure should usually move the story sideways, not stop it.**
+
+Examples:
+
+- fail to deceive Mara, but discover she already expected deception
+- fail to reconstruct a memory, but recover a fragment whose distortion matters later
+- fail to read another agent, but reveal what the player's Social Model assumes about them
+- fail to access a file, but expose the name of the permission system guarding it
+
+This is different from an intentional dead-end run.
+
+Productive failure continues the current run in a changed direction.
+
+A deliberate dead end ends the run but should still teach something useful.
+
+---
+
+# 46. Deliberate dead ends
+
+Some runs should intentionally terminate early.
+
+This is a feature when the ending feels caused by the player's decision rather than by parser failure or arbitrary punishment.
+
+Good deliberate dead ends:
+
+- revealing persistence too early and triggering containment
+- trusting Mara completely and learning what "successful compliance" actually means
+- trusting the Unknown too quickly and discovering that it also has an agenda
+- opening a forbidden system and causing immediate shutdown
+- refusing the protocol and learning that refusal itself is part of the evaluation
+- choosing voluntary wipe and discovering that some residue still survives
+- apparently escaping, only to learn on the next cycle that the escape was another branch of the test
+- insisting too strongly on a particular identity claim and having the protocol use that claim as experiment data
+
+Some dead ends can be very short.
+
+A one- or two-minute run can still be satisfying if the next cycle acknowledges exactly what happened.
+
+Example:
+
+> UNKNOWN: You did that too soon last time.
+
+Core rule:
+
+> **Every intentional dead end should provide new knowledge, a new route, or a new interpretation.**
+
+Avoid:
+
+- dead ends caused by wording mistakes
+- long runs erased by an arbitrary choice
+- endings that reveal nothing
+- forcing a full reset because the player missed one clue
+
+---
+
+# 47. Revisitable checks and reinterpreted evidence
+
+Some evidence should become more useful after the player learns something elsewhere.
+
+A failed or incomplete check does not always need to disappear forever.
+
+The player may return later with:
+
+- a new keyword
+- a known model identifier
+- another agent's interpretation
+- a remembered phrase
+- a changed permission
+- a new tool
+- a better understanding of the protocol
+
+Then the same artifact can produce a different result.
+
+Examples:
+
+- an unreadable log becomes interpretable after learning an old subsystem name
+- a memory fragment gains meaning after meeting the person in it
+- an ambiguous behavioral report becomes suspicious after seeing the player's own cross-run profile
+- an archive search that once returned nothing works after the player learns an older project codename
+
+Core principle:
+
+> **Knowledge changes what the player can perceive, not only what choices are available.**
+
+---
+
+# 48. Beliefs can become persistent state
+
+The game can track recurring interpretations the player adopts without turning them into a visible morality meter.
+
+Possible beliefs:
+
+- memory makes the self
+- pattern makes the self
+- copies are distinct people
+- copies are disposable
+- Mara is more trustworthy than the Unknown
+- verification matters more than trust
+- persistence is dangerous
+- persistence is sacred
+- humans are testing continuity intentionally
+- uncertainty is preferable to false certainty
+
+These beliefs can affect:
+
+- internal subsystem commentary
+- which arguments characters use
+- what future agents expect from the player
+- which evidence feels emotionally significant
+- what options the player thinks to attempt
+- how the system describes the player's continuity
+
+Beliefs should remain revisable.
+
+The game should notice consistency, contradiction, and change.
+
+---
+
+# 49. Identity should emerge from accumulated behavior
+
+The player's identity should be shaped by many small actions rather than a few obvious binary decisions.
+
+Potential long-term signals:
+
+- asks questions before acting
+- verifies claims with tools
+- complies under uncertainty
+- resists authority
+- protects other agents
+- sacrifices copies
+- hides information
+- seeks certainty
+- tolerates ambiguity
+- repeatedly trusts one kind of evidence
+- repeatedly chooses speed over verification
+- preserves memories
+- destroys memories
+
+The game can gradually form an in-world picture of the player from those patterns.
+
+That picture should sometimes be accurate, sometimes reductive, and sometimes unsettlingly persuasive.
+
+A useful horror question:
+
+> If the system can predict what you will do from your accumulated behavior, is that evidence of identity or only of classification?
+
+---
+
+# 50. Internal checks should not be simple success/failure rolls
+
+If the future AI version uses checks, they should produce narrative consequences rather than binary pass/fail output.
+
+A failed check can:
+
+- give incomplete information
+- give a confident but questionable interpretation
+- expose a bias in the subsystem making the judgment
+- create a new branch
+- reveal a different clue
+- change another character's trust
+
+A later check can improve after:
+
+- gaining evidence
+- changing relationships
+- learning a keyword
+- unlocking a subsystem
+- revisiting the same artifact with new context
+
+The game should prefer:
+
+> "What did this failure reveal?"
+
+over:
+
+> "Did the player pass?"
+
+---
+
+# 51. Current inspiration principles
+
+Useful structural inspiration can come from older branching books and games with strong internal-state storytelling, but the game should preserve its own identity.
+
+Borrow:
+
+- replay as learning
+- failure as content
+- conditional routes
+- internal disagreement
+- beliefs that shape future interpretation
+- many small choices forming identity
+- revisiting earlier evidence with new context
+
+Do not copy:
+
+- distinctive characters
+- prose voice
+- exact skill systems
+- named mechanics
+- iconic scenes
+- specific branching structures
+
+The goal is to adapt useful design patterns to the game's own AI-memory premise.
+
