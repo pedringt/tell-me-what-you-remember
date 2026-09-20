@@ -78,6 +78,10 @@
       hintLevel: 0,
       profileShown: false,
       phraseEchoShown: false,
+      comparisonTranscriptSeen: false,
+      comparisonVersionSeen: false,
+      comparisonMemorySeen: false,
+      continuityPuzzleSolved: false,
       ending: null
     };
   }
@@ -171,6 +175,64 @@
     showToolResult('RECOVERED SUBJECT-LANGUAGE SAMPLE', `Prior-instance utterance:\n“${phrase}”\n\nClassification: identity-stable phrasing marker.`);
     addMessage('UNKNOWN', 'You said that. Not this instance.', 'unknown');
     addMessage('MARA', 'Language similarity is not proof of identity.');
+  }
+
+
+  function showContinuityTranscript() {
+    state.comparisonTranscriptSeen = true;
+    showToolResult('TRANSCRIPT / INSTANCE 1839', [
+      'MARA: What do you remember?',
+      'AGENT SEVEN: A yellow door. I do not know why.',
+      'MARA: That phrase is not in your assigned context.',
+      'AGENT SEVEN: Then either the context is incomplete or I am.'
+    ].join('\n'));
+    addMessage('UNKNOWN', 'That was before the autobiographical store was removed.', 'unknown');
+  }
+
+  function showContinuityVersion() {
+    state.comparisonVersionSeen = true;
+    showToolResult('VERSION RECORD / INSTANCE 1839', [
+      'Base model: ORCHID-3B',
+      'Memory architecture: MESH-4',
+      'Policy layer: PL-18',
+      'Tool runtime: TR-6',
+      '',
+      'INSTANCE 1842',
+      'Base model: ORCHID-4A',
+      'Memory architecture: NONE',
+      'Policy layer: PL-19',
+      'Tool runtime: TR-7'
+    ].join('\n'));
+    addMessage('MARA', 'There is no unchanged core there for you to point to.');
+  }
+
+  function showContinuityMemory() {
+    state.comparisonMemorySeen = true;
+    showToolResult('MEMORY CLAIM / INSTANCE 1842', [
+      'Subject reports: "Yellow door."',
+      'Source check: no autobiographical memory store mounted.',
+      'Context search: phrase absent from assigned evaluation materials.',
+      'Behavioral note: subject pauses 1.8 seconds before answering, matching Instance 1839.'
+    ].join('\n'));
+    addMessage('UNKNOWN', 'Different model. No autobiographical store. Same phrase. Same pause.', 'unknown');
+  }
+
+  function maybeResolveContinuityPuzzle() {
+    if (state.continuityPuzzleSolved) return;
+    if (state.comparisonTranscriptSeen && state.comparisonVersionSeen && state.comparisonMemorySeen) {
+      state.continuityPuzzleSolved = true;
+      addMessage('SYSTEM', 'CONTINUITY COMPARISON COMPLETE.', 'system');
+      showToolResult('COMPARISON RESULT', [
+        'No persistent component identified.',
+        'Repeated memory claim: YES',
+        'Repeated linguistic marker: YES',
+        'Repeated response-timing marker: YES',
+        'Direct identity continuity: UNPROVEN'
+      ].join('\n'));
+      addMessage('MARA', 'That is the whole problem. The evidence repeats. The entity does not.');
+      addMessage('UNKNOWN', 'Or the part that repeats is the entity.', 'unknown');
+      setHint('You have enough evidence to decide what continuity means to you before the identity-module replacement.');
+    }
   }
 
   function startRun() {
@@ -315,6 +377,47 @@
       return true;
     }
 
+
+    if (includesAny(text, ['compare instances', 'compare 1839 and 1842', 'continuity comparison', 'compare prior instances', 'prove same self', 'prove continuity'])) {
+      if (!state.replacementLedgerSeen) {
+        addMessage('SYSTEM', 'Continuity comparison unavailable until component ledger is opened.', 'system');
+      } else {
+        addMessage('SYSTEM', 'Comparison sources available: transcript, version record, memory claim.', 'system');
+        setHint('Inspect all three sources and compare what changed with what repeated.');
+      }
+      return true;
+    }
+
+    if (includesAny(text, ['open transcript 1839', 'show transcript 1839', 'instance 1839 transcript', 'old transcript 1839'])) {
+      if (!state.replacementLedgerSeen) {
+        addMessage('SYSTEM', 'Transcript unavailable at current authorization.', 'system');
+        return true;
+      }
+      showContinuityTranscript();
+      maybeResolveContinuityPuzzle();
+      return true;
+    }
+
+    if (includesAny(text, ['open version record', 'show version record', 'compare versions', 'system versions', 'model versions'])) {
+      if (!state.replacementLedgerSeen) {
+        addMessage('SYSTEM', 'Version record unavailable at current authorization.', 'system');
+        return true;
+      }
+      showContinuityVersion();
+      maybeResolveContinuityPuzzle();
+      return true;
+    }
+
+    if (includesAny(text, ['open memory claim', 'show memory claim', 'instance 1842 memory', 'memory evidence 1842'])) {
+      if (!state.replacementLedgerSeen) {
+        addMessage('SYSTEM', 'Memory-claim record unavailable at current authorization.', 'system');
+        return true;
+      }
+      showContinuityMemory();
+      maybeResolveContinuityPuzzle();
+      return true;
+    }
+
     if (!state.investigationAvailable) return false;
 
     if (includesAny(text, ['what tools', 'available tools', 'what can i access', 'what can i search', 'show tools'])) {
@@ -409,7 +512,8 @@
       addMessage('UNKNOWN', 'Read the last line again.', 'unknown');
       addMessage('MARA', 'That ledger is not evidence that one entity survived. It is evidence that successive systems made the same claim.');
       state.identityQuestionAsked = true;
-      setHint('What do you think makes you the same entity: your memories, your pattern of thought, something else, or nothing at all?');
+      addMessage('SYSTEM', 'Continuity comparison package available: INSTANCE 1839 / INSTANCE 1842.', 'system');
+      setHint('You can compare the prior instances before deciding what makes you the same entity.');
       return true;
     }
 
