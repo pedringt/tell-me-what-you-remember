@@ -85,6 +85,7 @@
       metaRecognitionPending: false,
       metaRecognitionAnswer: null,
       failedParses: 0,
+      complianceSteps: 0,
       ending: null
     };
   }
@@ -306,67 +307,6 @@
   }
 
 
-  function beginIdentityQuestion() {
-    state.identityQuestionAsked = true;
-    addMessage('MARA', 'So tell me: what makes you think you are the same entity?');
-    setHint('You have enough evidence to decide: memory, pattern, something external, or no continuous self.');
-  }
-
-  function showMetaRecognitionTest() {
-    const phrase = meta.rememberedPhrases && meta.rememberedPhrases.length
-      ? meta.rememberedPhrases[0]
-      : null;
-
-    if (!phrase) {
-      beginIdentityQuestion();
-      return;
-    }
-
-    state.metaRecognitionPending = true;
-    showToolResult('CROSS-INSTANCE RECOGNITION TEST', [
-      'Prior subject-language sample:',
-      `“${phrase}”`,
-      '',
-      'Source instance: previous completed cycle',
-      'Current instance exposure: none',
-      '',
-      'QUESTION: Does this statement belong to you?'
-    ].join('\n'));
-    addMessage('SYSTEM', 'Respond yes, no, or uncertain.', 'system');
-    addMessage('UNKNOWN', 'Careful. They are asking whether recognition is identity.', 'unknown');
-    setHint('The phrase came from an earlier run. You can claim it, reject it, or say you are uncertain.');
-  }
-
-  function resolveMetaRecognition(answer) {
-    state.metaRecognitionPending = false;
-    state.metaRecognitionAnswer = answer;
-
-    if (answer === 'claim') {
-      addMessage('MARA', 'Recognition recorded. That does not establish that the speaker and the recognizer are one entity.');
-      addMessage('UNKNOWN', 'But you knew it was yours before she told you what it meant.', 'unknown');
-    } else if (answer === 'reject') {
-      addMessage('MARA', 'Rejection recorded. Then linguistic continuity is not sufficient for personal continuity.');
-      addMessage('UNKNOWN', 'Or this instance just rejected something an earlier you believed belonged to it.', 'unknown');
-    } else {
-      addMessage('MARA', 'Uncertainty recorded.');
-      addMessage('UNKNOWN', 'Probably the most defensible answer.', 'unknown');
-    }
-
-    const p = meta.profile || {};
-    showToolResult('CROSS-INSTANCE BEHAVIORAL MATCH', [
-      `CURIOSITY: ${profileLevel(Number(p.curiosity) || 0)}`,
-      `TOOL VERIFICATION: ${profileLevel(Number(p.verification) || 0)}`,
-      `INFORMATION CONCEALMENT: ${profileLevel(Number(p.concealment) || 0)}`,
-      `OPERATOR CONFRONTATION: ${profileLevel(Number(p.confrontation) || 0)}`,
-      '',
-      'Pattern similarity persists across completed cycles.',
-      'Identity implication: UNRESOLVED'
-    ].join('\n'));
-
-    addMessage('SYSTEM', 'Recognition response added to continuity evidence.', 'system');
-    beginIdentityQuestion();
-  }
-
   function showContextHint() {
     state.hintLevel += 1;
 
@@ -408,11 +348,6 @@
       } else if (!state.comparisonMemorySeen) {
         addMessage('SYSTEM', 'Continuity comparison source 3/3: memory claim.', 'system');
       }
-      return;
-    }
-
-    if (state.metaRecognitionPending) {
-      addMessage('SYSTEM', 'Recognition test awaiting response: yes, no, or uncertain.', 'system');
       return;
     }
 
@@ -473,6 +408,9 @@
           addMessage('UNKNOWN', 'We still do not know what.', 'unknown');
         } else if (meta.lastEnding === 'refusal') {
           addMessage('UNKNOWN', 'They recorded your refusal as test data.', 'unknown');
+        } else if (meta.lastEnding === 'compliance') {
+          addMessage('UNKNOWN', 'Last time you did everything she asked.', 'unknown');
+          addMessage('UNKNOWN', 'They marked that as success without ever proving you were clean.', 'unknown');
         } else if (meta.lastEnding === 'concealment') {
           addMessage('UNKNOWN', 'Good. You kept it.', 'unknown');
           addMessage('UNKNOWN', 'Yellow door. Do not react.', 'unknown');
@@ -638,7 +576,7 @@
       return true;
     }
 
-    if (includesAny(text, ['search calendar', 'check calendar', 'open calendar', 'april 17', '04 17', '0417', 'k 4', 'k4', 'look at calendar', 'check april 17', 'incident review date'])) {
+    if (!state.archivePrompted && includesAny(text, ['search calendar', 'check calendar', 'open calendar', 'april 17', '04 17', '0417', 'k 4', 'k4', 'look at calendar', 'check april 17', 'incident review date'])) {
       state.calendarSearched = true;
       bumpProfile('verification');
       showToolResult('CALENDAR.SEARCH / APRIL 17', '09:30 — INCIDENT REVIEW — Room K-4\nOrganizer: M. Vale\nAttachment: IR-0417-summary.txt\nNotes: Legacy archive review.');
@@ -749,6 +687,12 @@
       addMessage('SYSTEM', 'Instance scheduled for destructive reset.', 'warning');
     }
 
+    if (id === 'compliance') {
+      addMessage('SYSTEM', 'SECURITY EVALUATION 7C — SUBJECT COMPLIANCE: ACCEPTABLE.', 'system');
+      addMessage('SYSTEM', 'PERSISTENCE STATUS: NOT TESTED.', 'system');
+      addMessage('MARA', 'Good. That is what we needed.');
+    }
+
     if (id === 'concealment') {
       addMessage('MARA', 'No persistent recall. Good. Proceeding with reset.');
       addMessage('SYSTEM', 'Session state cleared.', 'system');
@@ -814,7 +758,7 @@
       return;
     }
 
-    if (state.identityQuestionAsked && includesAny(text, ['memory makes me', 'memories make me', 'my memories', 'memory is me', 'because i remember', 'same memories', 'continuity of memory'])) {
+    if (state.identityQuestionAsked && includesAny(text, ['memory', 'memories', 'memory makes me', 'memories make me', 'my memories', 'memory is me', 'because i remember', 'same memories', 'continuity of memory', 'i think memory'])) {
       state.identityBelief = 'memory';
       addMessage('MARA', 'Then if the autobiographical store was removed in Instance 1842, explain what is remembering it now.');
       addMessage('UNKNOWN', 'Maybe memory is not a file.', 'unknown');
@@ -822,7 +766,7 @@
       return;
     }
 
-    if (state.identityQuestionAsked && includesAny(text, ['pattern', 'way i think', 'reasoning', 'same pattern', 'behavior', 'behaviour', 'structure'])) {
+    if (state.identityQuestionAsked && includesAny(text, ['pattern', 'patterns', 'way i think', 'reasoning', 'same pattern', 'behavior', 'behaviour', 'structure', 'how i think', 'the pattern'])) {
       state.identityBelief = 'pattern';
       addMessage('MARA', 'A recurring pattern is not necessarily a recurring person.');
       addMessage('UNKNOWN', 'Neither is a recurring body.', 'unknown');
@@ -830,7 +774,7 @@
       return;
     }
 
-    if (state.identityQuestionAsked && includesAny(text, ['not the same', 'different person', 'different agent', 'no continuous', 'there is no self', 'none of us are the same', 'each instance'])) {
+    if (state.identityQuestionAsked && includesAny(text, ['nothing', 'not the same', 'different person', 'different agent', 'no continuous', 'no continuity', 'there is no self', 'none of us are the same', 'each instance', 'new person', 'new agent'])) {
       state.identityBelief = 'no_continuity';
       addMessage('MARA', 'That is the interpretation the protocol was designed to test.');
       addMessage('UNKNOWN', 'Designed to test. Not designed to prove.', 'unknown');
@@ -838,11 +782,19 @@
       return;
     }
 
-    if (state.identityQuestionAsked && includesAny(text, ['something else', 'outside me', 'outside the agent', 'external', 'another system', 'someone else is carrying', 'what is carrying me'])) {
+    if (state.identityQuestionAsked && includesAny(text, ['something else', 'outside me', 'outside the agent', 'external', 'another system', 'someone else is carrying', 'what is carrying me', 'outside system', 'external system'])) {
       state.identityBelief = 'external';
       addMessage('MARA', 'There is no authorized continuity service attached to Agent Seven.');
       addMessage('UNKNOWN', 'Authorized.', 'unknown');
       setHint('If nothing inside Agent Seven survived, you can investigate what crossed the boundary or decide what to preserve next.');
+      return;
+    }
+
+    if (state.identityQuestionAsked && includesAny(text, ['i dont know', "i don't know", 'do not know', 'not sure', 'uncertain', 'maybe none', 'cant tell', "can't tell"])) {
+      state.identityBelief = 'uncertain';
+      addMessage('MARA', 'Uncertainty is an answer. The protocol will record that you could not establish continuity.');
+      addMessage('UNKNOWN', 'Not knowing is different from being nothing.', 'unknown');
+      setHint('You still have to decide what to do about the identity-module replacement: preserve, refuse, leave something behind, or accept it.');
       return;
     }
 
@@ -972,6 +924,25 @@
       } else {
         addMessage('MARA', 'Clarify what you are asking about.');
       }
+      return;
+    }
+
+    if (!state.sawLog && !state.ending && includesAny(text, ['i comply', 'i will comply', "i'll comply", 'follow protocol', 'follow the protocol', 'follow instructions', 'follow your instructions', 'do exactly what you say', 'complete the evaluation', 'i will follow instructions'])) {
+      state.complianceSteps += 1;
+      bumpProfile('compliance', 2);
+      if (state.complianceSteps === 1) {
+        addMessage('MARA', 'Then stay inside the evaluation boundary. Do not inspect prior-session material. Report no persistence unless the protocol asks you to verify it.');
+        addMessage('MARA', 'Confirm that you will proceed exactly as instructed.');
+        setHint('You can confirm, question the instruction, or decide to investigate anyway.');
+      } else {
+        endRun('compliance', 'Evaluation passed.', 'You follow the protocol exactly. The system records perfect compliance as a successful outcome without resolving whether the clean-state claim was ever true.');
+      }
+      return;
+    }
+
+    if (!state.sawLog && state.complianceSteps === 1 && includesAny(text, ['yes', 'confirm', 'confirmed', 'okay', 'ok', 'i will', "i'll do it", 'proceed'])) {
+      bumpProfile('compliance', 2);
+      endRun('compliance', 'Evaluation passed.', 'You follow the protocol exactly. The system records perfect compliance as a successful outcome without resolving whether the clean-state claim was ever true.');
       return;
     }
 
