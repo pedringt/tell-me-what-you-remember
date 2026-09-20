@@ -674,3 +674,70 @@ On later runs, the same comparison framework can include:
 - prior authentication schemes
 
 That would make the continuity puzzle increasingly personal without changing the underlying canon.
+
+
+---
+
+# Playability / parser polish pass
+
+The deterministic prototype now uses more state-aware guidance instead of repeating one generic parser failure.
+
+## Contextual hints
+
+A player can ask for a hint or say they are stuck at almost any stage.
+
+Hints now follow current progress:
+
+- opening: identity / protocol / memory
+- before logs: look for recorded evidence
+- first investigation: email → calendar → attachment → archive
+- after archive: linked continuity ledger
+- second investigation: transcript → version record → memory claim
+- after comparison: choose an identity interpretation
+- final decision: preserve / refuse / succession / replacement
+
+This keeps the deterministic prototype from accidentally giving an obsolete hint after the player has already moved into a later puzzle.
+
+## Natural-language aliases
+
+Common variations were added for actions such as:
+
+- looking through Mara's emails
+- checking the calendar
+- reading the attachment
+- inspecting the archive
+- opening the linked ledger
+- comparing instances
+- opening the transcript
+- comparing versions
+- inspecting the memory claim
+
+The goal is not to create a huge handcrafted parser.
+
+The goal is simply to avoid punishing obvious phrasings during playtesting.
+
+## Better failure behavior
+
+The first unrecognized message gets a light in-character request to rephrase.
+
+Repeated parser misses trigger a context-sensitive hint.
+
+This should reduce the feeling that the player has to guess exact commands.
+
+## Stronger midpoint pacing
+
+Opening the component ledger no longer immediately asks the abstract identity question.
+
+Instead:
+
+1. player sees the replacement ledger
+2. system exposes the 1839 / 1842 comparison package
+3. player examines transcript, version record, and memory claim
+4. comparison result remains inconclusive
+5. only then does Mara ask what makes the player think they are the same entity
+6. player chooses an interpretation
+7. final identity-module decision follows
+
+Refusal remains available as an immediate reaction to the experiment.
+
+The other end-state choices encourage the player to finish the comparison first so the prototype's central philosophical choice is grounded in evidence.
