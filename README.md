@@ -50,3 +50,19 @@ Until that version begins:
 - do not expand parser phrase coverage broadly
 - do not add major new story systems
 - do not add more endings or subsystem voices solely to the deterministic build
+
+
+## AI v1 architecture
+
+Current development is moving toward a hybrid model:
+
+**player language -> AI intent classification -> confidence/state gate -> deterministic game action**
+
+Key safety rule:
+
+- uncertain classifications ask for clarification
+- high-impact actions require stronger confidence
+- unavailable actions are never offered to the model
+- deterministic code remains authoritative
+
+The active offline hardening work is tracked on `ai-v1-hardening`.
