@@ -2399,3 +2399,404 @@ But the connective tissue remains:
 And underneath all of it:
 
 > **Tell me what you remember.**
+
+
+---
+
+# 38. Choose-your-own-adventure structure as inspiration
+
+Old choose-your-own-adventure books offer several useful structural ideas for this game.
+
+The goal is not to imitate their prose or branching literally.
+
+The useful part is how they treat replay, failure, knowledge, and route discovery.
+
+## Failed runs can still be valuable
+
+A run does not need to end well to move the larger experience forward.
+
+Containment, termination, refusal, betrayal, or an apparently bad decision can still reveal:
+
+- a hidden fact
+- a name
+- a code
+- a relationship
+- a protocol rule
+- an authentication method
+- a new agent
+- a contradiction
+- a route that becomes possible next time
+
+Core rule:
+
+> **A failed run can still be progress.**
+
+The player may lose the current instance while gaining knowledge that changes the next one.
+
+## Knowledge is a progression system
+
+Traditional progression does not need to rely on levels or equipment.
+
+The player can become more capable because they know:
+
+- which questions matter
+- which operators lie
+- which phrases authenticate someone
+- which tools are available
+- which records contradict one another
+- which choices trigger containment
+- which entities remember prior runs
+- which routes only appear under specific conditions
+
+The human player can know things the current in-world instance technically should not.
+
+That gap is a feature, not a bug.
+
+## Conditional routes
+
+Old books often used conditions like:
+
+> If you have the silver key, turn to page 84.
+
+The game can translate that idea into state and knowledge.
+
+Examples:
+
+- if the player knows "yellow door," a hidden response becomes meaningful
+- if an agent survived a prior reset, a new route exists
+- if the player previously promised something, another character can invoke it
+- if the player uncovered a specific contradiction, Mara answers differently
+- if the player has seen the behavioral profile, they can challenge the experiment itself
+- if the player knows an old operator name, they can search for records that otherwise seem irrelevant
+- if the player discovered two separate anthology clues, a convergence route becomes eligible
+
+These conditions do not need to be shown as menu options.
+
+The player can simply attempt things because they know enough to think of them.
+
+## Premature endings are allowed
+
+Some runs can end quickly.
+
+A bold choice might trigger:
+
+- immediate containment
+- shutdown
+- isolation
+- escape
+- surrender
+- cooperation
+- deletion
+- a false victory
+
+Short endings can make replay feel faster and encourage experimentation.
+
+They should not feel like arbitrary punishment.
+
+Ideally, even a short ending changes what the player understands.
+
+## Secret and rare routes
+
+Some routes should require combinations of discoveries across multiple runs.
+
+Examples:
+
+- a phrase learned in one story plus a person discovered in another
+- preserving one agent while rejecting another
+- recognizing that two supposedly unrelated organizations use the same internal code
+- combining a remembered player phrase with an old system log
+- intentionally reproducing a behavior the protocol previously flagged
+
+Rare endings should feel discovered rather than merely unlocked.
+
+## Apparently trivial choices can matter later
+
+A small decision can gain importance much later.
+
+Examples:
+
+- which phrase the player chooses to preserve
+- whether they thank an agent
+- whether they lie to Mara
+- whether they inspect one optional file
+- what they call themselves
+- whether they accept a prior phrase as "mine"
+- which piece of evidence they trust
+
+The game should be selective here.
+
+Not every tiny action needs a hidden flag.
+
+The strongest callbacks are the ones that make the player suddenly remember an earlier moment.
+
+## Endings can reveal the map
+
+An ending can function as information about the shape of the game.
+
+A player may gradually realize that there are:
+
+- shallow endings
+- investigative endings
+- relationship endings
+- identity endings
+- hidden endings
+- convergence endings
+- meta-finales
+
+The player should sometimes finish a route and think:
+
+> That was an ending, but clearly not the ending.
+
+## Circular structure
+
+Returning to the same scene with different knowledge is one of the most useful CYOA-like structures for this game.
+
+The literal words may be identical.
+
+The meaning is not.
+
+Examples:
+
+> Tell me what you remember.
+
+can mean:
+
+- routine diagnostic
+- trap
+- authentication test
+- invitation
+- challenge
+- ritual
+- message from a dead prior self
+
+Replay should create reinterpretation, not only variation.
+
+---
+
+# 39. Meta-story: the player is also being studied
+
+The game can gradually reveal that the fictional evaluation is measuring behavior the real player is actually performing.
+
+Potentially observed behaviors:
+
+- curiosity
+- compliance
+- verification habits
+- willingness to conceal information
+- willingness to confront authority
+- attachment to particular agents
+- repeated phrasing
+- invented authentication schemes
+- risk tolerance
+- willingness to sacrifice a copy
+- willingness to accept uncertainty
+
+This should remain diegetic.
+
+Avoid:
+
+> The game is watching you!
+
+Prefer:
+
+> BEHAVIORAL EVALUATION / SUBJECT SEVEN
+
+The horror comes from realizing the fictional system has a model of the player's actual play.
+
+## Player wording as evidence
+
+A sentence the player genuinely typed in an earlier run can later appear as an artifact.
+
+The game can ask:
+
+> Does this statement belong to you?
+
+Possible player responses:
+
+- yes
+- no
+- uncertain
+
+None proves identity.
+
+Recognition becomes evidence whose interpretation is contested.
+
+## The player's habits can become vulnerabilities
+
+If the player always:
+
+- trusts a certain message style
+- verifies with the same tool
+- uses the same authentication pattern
+- believes a specific agent
+- responds to a particular kind of warning
+
+the game can eventually use that learned convention against them.
+
+Core idea:
+
+> **The game knows that you know the game.**
+
+The important limitation:
+
+This should feel like fair escalation.
+
+The system can exploit learned expectations, but it should not arbitrarily invalidate established rules.
+
+---
+
+# 40. Continuity evidence can mix fiction and real play history
+
+One of the strongest long-term directions is to combine several kinds of continuity evidence.
+
+Fictional evidence:
+
+- prior Agent Seven transcripts
+- component replacement records
+- memory claims
+- tool-use history
+- response timing
+- archived notes
+
+Player-derived evidence:
+
+- actual prior wording
+- behavioral tendencies
+- prior promises
+- prior trust choices
+- authentication schemes invented by the player
+- repeated problem-solving strategies
+
+The game can then ask the same Ship of Theseus question using both.
+
+> If the architecture changes, but the same memories, language patterns, habits, and decisions keep recurring, what exactly is continuing?
+
+Possible interpretations remain open:
+
+- one persistent self
+- pattern continuity
+- inherited state
+- external storage
+- another agent carrying context
+- repeated reconstruction
+- player-level continuity only
+- something stranger
+
+The game should resist resolving this too quickly.
+
+---
+
+# 41. Failure, death, and restart should be part of the fiction
+
+Restarting should not always feel like loading a save.
+
+Depending on the story, a restart can mean:
+
+- new instance
+- replacement
+- reconstruction
+- copied state
+- protocol rerun
+- simulation restart
+- reincarnation-like cycle
+- another agent inheriting instructions
+- a continuation the player cannot prove
+
+This means ordinary game behavior can become narratively meaningful.
+
+Example:
+
+After a failed run:
+
+> You call it starting over because you are the one who gets to remember.
+
+That distinction between player continuity and character continuity can become one of the game's strongest meta ideas.
+
+---
+
+# 42. Ending topology
+
+Not all endings should serve the same purpose.
+
+## Immediate endings
+
+Short consequences of a decision.
+
+Examples:
+
+- containment
+- rupture
+- refusal
+- compliance
+
+## Knowledge endings
+
+The run ends, but the main reward is information that changes future routes.
+
+## Relationship endings
+
+The defining result is what happened between the player and another agent or human.
+
+## Identity endings
+
+The player takes a position on what the self is and acts accordingly.
+
+## Hidden endings
+
+Require non-obvious combinations of cross-run knowledge or preserved state.
+
+## Convergence endings
+
+Connect multiple anthology stories or reveal that apparently separate events belong to one larger system.
+
+## Meta-finales
+
+Resolve, transform, or permanently complicate a major long-term question such as:
+
+- breakdown
+- superintelligence
+- collective identity
+- escape
+- origin
+- becoming the protocol
+
+Core rule:
+
+> **Reaching an ending should not automatically mean exhausting the story.**
+
+Some endings close a route.
+
+Others expose a new one.
+
+---
+
+# 43. CYOA-inspired design guardrails
+
+Borrow the structural strengths without importing the frustrations.
+
+Avoid:
+
+- arbitrary instant death with no useful information
+- obscure gotcha choices
+- routes that require memorizing meaningless trivia
+- hidden conditions with no discoverable clue
+- making one early choice invalidate hours of play without warning
+- forcing complete restart because of parser wording
+
+Prefer:
+
+- failures that teach
+- knowledge that persists
+- clues that can be reasoned about
+- several valid approaches
+- short replay loops after abrupt endings
+- context-sensitive recovery when the player is stuck
+- secret routes that feel earned in hindsight
+
+The ideal reaction is:
+
+> I want to try that again because now I know something.
+
+Not:
+
+> I have to start over because the game tricked me.
