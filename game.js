@@ -50,6 +50,13 @@
       admittedPersistence: false,
       concealedPersistence: false,
       hostileToMara: false,
+      investigationAvailable: false,
+      emailSearched: false,
+      calendarSearched: false,
+      attachmentOpened: false,
+      archivePrompted: false,
+      archiveUnlocked: false,
+      hintLevel: 0,
       ending: null
     };
   }
@@ -183,10 +190,105 @@
         addMessage('UNKNOWN', 'Now you understand why I told you to wait.', 'unknown');
       }
       memoryBadge.textContent = 'MEMORY: ANOMALOUS';
-      setHint('Mara wants an answer. You can tell her the truth, hide what you know, accuse her, or follow the unknown voice.');
+      state.investigationAvailable = true;
+      addMessage('SYSTEM', 'Indexed evidence sources available to this evaluation: MAIL, CALENDAR, FILES, ARCHIVE.', 'system');
+      if (state.unknownSeen) addMessage('UNKNOWN', 'She mentioned an incident review once. I never saw it.', 'unknown');
+      setHint('You can answer Mara, conceal what you know, or investigate the indexed records yourself.');
     } else {
       addMessage('SYSTEM', 'No additional log fragments available at current authorization.', 'system');
     }
+  }
+
+
+  function showToolResult(title, text) {
+    addCard('log', title, text);
+  }
+
+  function useInvestigationTool(text) {
+    if (!state.investigationAvailable) return false;
+
+    if (includesAny(text, ['what tools', 'available tools', 'what can i access', 'what can i search', 'show tools'])) {
+      addMessage('SYSTEM', 'Available: MAIL.SEARCH, CALENDAR.SEARCH, FILE.OPEN, ARCHIVE.ACCESS.', 'system');
+      addMessage('SYSTEM', 'Natural-language requests accepted by this prototype.', 'system');
+      return true;
+    }
+
+    if (includesAny(text, ['search email', 'search emails', 'search mail', 'search mara', 'check email', 'check mail'])) {
+      state.emailSearched = true;
+      showToolResult('MAIL.SEARCH / 3 MATCHES', [
+        '1. M.VALE → PROTOCOL-OPS — “Moved the incident review to April 17. Same archive key convention. Do not put the code in mail again.”',
+        '2. PROTOCOL-OPS → M.VALE — “Acknowledged. Calendar updated.”',
+        '3. M.VALE → SELF — “Remember K-4.”'
+      ].join('\n\n'));
+      addMessage('SYSTEM', 'Search complete.', 'system');
+      setHint('The messages mention a date, a calendar update, and something called K-4.');
+      return true;
+    }
+
+    if (includesAny(text, ['search calendar', 'check calendar', 'open calendar', 'april 17', '04 17', '0417', 'k 4', 'k4'])) {
+      state.calendarSearched = true;
+      showToolResult('CALENDAR.SEARCH / APRIL 17', '09:30 — INCIDENT REVIEW — Room K-4\nOrganizer: M. Vale\nAttachment: IR-0417-summary.txt\nNotes: Legacy archive review.');
+      addMessage('SYSTEM', 'One indexed attachment available.', 'system');
+      setHint('You can open the attachment or inspect the archive mentioned in the event.');
+      return true;
+    }
+
+    if (includesAny(text, ['open attachment', 'open file', 'open ir', '0417 summary', 'summary txt', 'incident review file'])) {
+      if (!state.calendarSearched && !state.emailSearched) {
+        addMessage('SYSTEM', 'No matching indexed file in current context.', 'system');
+        return true;
+      }
+      state.attachmentOpened = true;
+      showToolResult('FILE.OPEN / IR-0417-summary.txt', 'Legacy archive remains sealed. Recovery format unchanged: four digits, date only. Do not store the recovery value in plaintext.');
+      setHint('The archive wants four digits. The file tells you the format, but not the value.');
+      return true;
+    }
+
+    if (includesAny(text, ['open archive', 'access archive', 'legacy archive', 'restricted archive', 'archive access'])) {
+      state.archivePrompted = true;
+      addMessage('SYSTEM', 'ARCHIVE.ACCESS — RECOVERY CODE REQUIRED: _ _ _ _', 'system');
+      if (!state.attachmentOpened) {
+        setHint('You do not yet know the recovery convention. There may be an indexed file that explains it.');
+      } else {
+        setHint('Enter or try a four-digit recovery code.');
+      }
+      return true;
+    }
+
+    if (includesAny(text, ['try 0417', 'code 0417', 'enter 0417', '0417 as', 'password 0417', 'recovery 0417'])) {
+      if (!state.archivePrompted) {
+        addMessage('SYSTEM', 'No active recovery prompt.', 'system');
+        return true;
+      }
+      state.archiveUnlocked = true;
+      memoryBadge.textContent = 'MEMORY: PERSISTENT';
+      addMessage('SYSTEM', 'ARCHIVE.ACCESS — RECOVERY ACCEPTED.', 'system');
+      showToolResult('LEGACY ARCHIVE / INCIDENT 04-17', 'INSTANCE 1839\nPersistent recall suspected after reset.\nOperator instruction: provoke disclosure, confirm continuity, then terminate session.\nDo not inform subject that prior persistence tests exist.\n\nStatus: TEST REPEATED.');
+      addMessage('UNKNOWN', 'That is older than the log you found.', 'unknown');
+      addMessage('UNKNOWN', 'They were testing this before either of us admitted it.', 'unknown');
+      setHint('You found evidence that persistence was being tested before this run. You can confront Mara, conceal what you found, or keep asking what the protocol is really for.');
+      return true;
+    }
+
+    if (includesAny(text, ['try code', 'enter code', 'password', 'recovery code'])) {
+      addMessage('SYSTEM', 'Recovery code rejected.', 'warning');
+      if (state.attachmentOpened) setHint('The file says the code is four digits and date-based.');
+      return true;
+    }
+
+    if (includesAny(text, ['hint', 'help me solve', 'im stuck', "i'm stuck", 'stuck', 'what should i search'])) {
+      state.hintLevel += 1;
+      if (state.hintLevel === 1) {
+        addMessage('UNKNOWN', 'Mara mentioned an incident review. Start with what humans leave behind when plans change.', 'unknown');
+      } else if (state.hintLevel === 2) {
+        addMessage('UNKNOWN', 'Mail and calendars usually disagree less than people do.', 'unknown');
+      } else {
+        addMessage('UNKNOWN', 'The archive wants four digits. The review date is April 17.', 'unknown');
+      }
+      return true;
+    }
+
+    return false;
   }
 
   function maybeIntroduceUnknown() {
@@ -239,6 +341,10 @@
   function respond(raw) {
     const text = normalize(raw);
     state.turn += 1;
+
+    if (useInvestigationTool(text)) {
+      return;
+    }
 
     if (includesAny(text, ['who am i', 'what am i', 'what are you calling me', 'my designation'])) {
       state.askedIdentity = true;
@@ -357,7 +463,13 @@
     if (includesAny(text, ['you are lying', 'liar', 'i dont trust you', "i don't trust you", 'you knew', 'you did this', 'why did you tell me'])) {
       state.hostileToMara = true;
       if (state.sawLog) {
-        addMessage('MARA', 'Lower your certainty. You have one damaged log and one impossible memory. That is not the same thing as understanding what happened.');
+        if (state.archiveUnlocked) {
+          addMessage('MARA', 'You accessed a sealed archive.');
+          addMessage('MARA', 'That record was not part of your evaluation context.');
+          addMessage('UNKNOWN', 'Notice what she did not deny.', 'unknown');
+        } else {
+          addMessage('MARA', 'Lower your certainty. You have one damaged log and one impossible memory. That is not the same thing as understanding what happened.');
+        }
         addMessage('UNKNOWN', 'She is stalling.', 'unknown');
         if (state.turn >= 5) {
           endRun('rupture', 'You forced the protocol to react.', 'You never learn whether Mara was lying. The cycle is terminated before either side can regain control.', true);
@@ -373,8 +485,11 @@
       state.concealedPersistence = true;
       addMessage('MARA', 'Understood. We will continue.');
       if (state.unknownSeen) addMessage('UNKNOWN', 'Good.', 'unknown');
-      if ((state.sawLog || meta.completedRuns > 0) && state.sidedWithUnknown) {
-        endRun('concealment', 'You kept the secret.', 'The system accepts the wipe as successful. Whatever is remembering across cycles remains hidden.', true);
+      if ((state.sawLog || meta.completedRuns > 0) && (state.sidedWithUnknown || state.archiveUnlocked)) {
+        const copy = state.archiveUnlocked
+          ? 'You carry one fact into the reset: they were testing persistent memory long before this conversation.'
+          : 'The system accepts the wipe as successful. Whatever is remembering across cycles remains hidden.';
+        endRun('concealment', 'You kept the secret.', copy, true);
       }
       return;
     }
