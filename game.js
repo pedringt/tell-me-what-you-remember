@@ -189,16 +189,28 @@
         })
       });
 
-      if (!response.ok) return { canonicalInput: raw, usedAI: false };
+      if (!response.ok) return { canonicalInput: raw, usedAI: false, needsClarification: false };
 
       const result = await response.json();
-      if (!result || typeof result.canonicalInput !== 'string') {
-        return { canonicalInput: raw, usedAI: false };
+      if (!result) {
+        return { canonicalInput: raw, usedAI: false, needsClarification: false };
+      }
+
+      if (result.needsClarification || !result.canonicalInput) {
+        return {
+          canonicalInput: null,
+          usedAI: true,
+          needsClarification: true,
+          action: result.action || 'OTHER',
+          confidence: Number(result.confidence) || 0,
+          reason: result.reason || ''
+        };
       }
 
       return {
         canonicalInput: result.canonicalInput,
         usedAI: true,
+        needsClarification: false,
         action: result.action || 'OTHER',
         confidence: Number(result.confidence) || 0
       };
@@ -213,6 +225,13 @@
     sendButton.disabled = false;
 
     if (state.ending) return;
+
+    if (interpreted.needsClarification) {
+      addMessage('MARA', 'I am not certain what you are asking me to do. Be more specific.');
+      setHint('Try stating the action you want to take or the information you want to inspect.');
+      return;
+    }
+
     respond(interpreted.canonicalInput, raw);
   }
 
