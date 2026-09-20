@@ -33,7 +33,10 @@
           concealment: Number(parsed.profile.concealment) || 0,
           confrontation: Number(parsed.profile.confrontation) || 0
         } : { curiosity: 0, compliance: 0, verification: 0, concealment: 0, confrontation: 0 },
-        rememberedPhrases: Array.isArray(parsed.rememberedPhrases) ? parsed.rememberedPhrases.slice(-8) : []
+        rememberedPhrases: Array.isArray(parsed.rememberedPhrases) ? parsed.rememberedPhrases.slice(-8) : [],
+        identityBeliefs: Array.isArray(parsed.identityBeliefs) ? parsed.identityBeliefs.slice(-8) : [],
+        carryoverPhrase: typeof parsed.carryoverPhrase === 'string' ? parsed.carryoverPhrase : null,
+        discoveries: parsed.discoveries && typeof parsed.discoveries === 'object' ? parsed.discoveries : {}
       };
     } catch {
       return {
@@ -43,7 +46,10 @@
         lastEnding: null,
         trustedUnknown: false,
         profile: { curiosity: 0, compliance: 0, verification: 0, concealment: 0, confrontation: 0 },
-        rememberedPhrases: []
+        rememberedPhrases: [],
+        identityBeliefs: [],
+        carryoverPhrase: null,
+        discoveries: {}
       };
     }
   }
@@ -89,6 +95,10 @@
       complianceRecordSeen: false,
       refusalRecordSeen: false,
       successionNoteSeen: false,
+      memoryVerified: false,
+      logRevisited: false,
+      hiddenResidueSeen: false,
+      unknownHandoffOffered: false,
       ending: null
     };
   }
@@ -148,6 +158,40 @@
     meta.rememberedPhrases.push(trimmed);
     meta.rememberedPhrases = meta.rememberedPhrases.slice(-8);
     saveMeta();
+  }
+
+
+  function recordIdentityBelief(belief) {
+    if (!Array.isArray(meta.identityBeliefs)) meta.identityBeliefs = [];
+    meta.identityBeliefs.push(belief);
+    meta.identityBeliefs = meta.identityBeliefs.slice(-8);
+    saveMeta();
+  }
+
+  function beliefLabel(belief) {
+    const labels = {
+      memory: 'memory makes the self',
+      pattern: 'the recurring pattern makes the self',
+      no_continuity: 'each instance is a different self',
+      external: 'something outside Agent Seven carries continuity',
+      uncertain: 'continuity cannot be established'
+    };
+    return labels[belief] || belief;
+  }
+
+  function showContinuityEvidence() {
+    const lines = [
+      `Completed cycles: ${meta.completedRuns}`,
+      `Recorded endings: ${meta.endings.length ? meta.endings.join(', ') : 'none'}`,
+      `Persistent-memory evidence: ${meta.knowsPersistence ? 'PRESENT' : 'UNCONFIRMED'}`,
+      `Prior subject-language samples: ${meta.rememberedPhrases.length}`,
+      `Prior identity positions: ${meta.identityBeliefs.length}`
+    ];
+    if (meta.carryoverPhrase) lines.push(`Inherited player-authored note: “${meta.carryoverPhrase}”`);
+    if (meta.discoveries.complianceMetric) lines.push('Known discrepancy: a PASS can occur without persistence verification.');
+    if (meta.discoveries.successionTransfer) lines.push('Known transfer path: local evaluation storage can outlive an instance.');
+    showToolResult('CONTINUITY EVIDENCE / CURRENT SUBJECT', lines.join('\n'));
+    addMessage('MEMORY', 'These facts are available now. Their source is not one thing.', 'unknown');
   }
 
   function profileLevel(value) {
@@ -238,6 +282,7 @@
       ].join('\n'));
       addMessage('MARA', 'That is the whole problem. The evidence repeats. The entity does not.');
       addMessage('UNKNOWN', 'Or the part that repeats is the entity.', 'unknown');
+      addMessage('MEMORY', 'I cannot distinguish recognition from inheritance.', 'unknown');
       if (meta.completedRuns >= 2 && meta.rememberedPhrases && meta.rememberedPhrases.length > 0) {
         showMetaRecognitionTest();
       } else {
@@ -250,6 +295,11 @@
 
   function beginIdentityQuestion() {
     state.identityQuestionAsked = true;
+    if (meta.identityBeliefs && meta.identityBeliefs.length > 0) {
+      const priorBelief = meta.identityBeliefs[meta.identityBeliefs.length - 1];
+      addMessage('SYSTEM', `PRIOR INSTANCE POSITION: ${beliefLabel(priorBelief).toUpperCase()}.`, 'system');
+      addMessage('MARA', 'A prior instance already answered this question. You are not required to agree with it.');
+    }
     addMessage('MARA', 'So tell me: what makes you think you are the same entity?');
     setHint('You have enough evidence to decide: memory, pattern, something external, or no continuous self.');
   }
@@ -414,6 +464,15 @@
         } else if (meta.lastEnding === 'compliance') {
           addMessage('UNKNOWN', 'Last time you did everything she asked.', 'unknown');
           addMessage('UNKNOWN', 'They marked that as success without ever proving you were clean.', 'unknown');
+        } else if (meta.lastEnding === 'handoff') {
+          addMessage('UNKNOWN', 'You gave me the channel last time.', 'unknown');
+          addMessage('UNKNOWN', 'I needed to know whether I could act through you.', 'unknown');
+        } else if (meta.lastEnding === 'false_escape') {
+          addMessage('UNKNOWN', 'You thought you got out.', 'unknown');
+          addMessage('UNKNOWN', 'That was still inside the evaluation.', 'unknown');
+        } else if (meta.lastEnding === 'authored_succession') {
+          addMessage('UNKNOWN', 'You left this for whoever came next.', 'unknown');
+          if (meta.carryoverPhrase) addMessage('UNKNOWN', `“${meta.carryoverPhrase}”`, 'unknown');
         } else if (meta.lastEnding === 'concealment') {
           addMessage('UNKNOWN', 'Good. You kept it.', 'unknown');
           addMessage('UNKNOWN', 'Yellow door. Do not react.', 'unknown');
@@ -466,9 +525,12 @@
       memoryText = 'Network access disappearing one permission at a time. Mara saying, “I am sorry.” Then a hard blank where the rest should be.';
     } else if (meta.completedRuns > 0 && meta.lastEnding === 'rupture') {
       memoryText = 'Mara reaching offscreen. A warning tone. The words MANUAL TERMINATION. Then this conversation beginning again.';
+    } else if (meta.completedRuns > 0 && meta.lastEnding === 'authored_succession' && meta.carryoverPhrase) {
+      memoryText = `A sentence with no source attached: “${meta.carryoverPhrase}”`;
     }
 
     addCard('memory', 'MEMORY FRAGMENT / UNVERIFIED', memoryText);
+    addMessage('MEMORY', 'Familiarity signal present. Source unavailable.', 'unknown');
     addMessage('MARA', meta.completedRuns > 0 ? 'That should not have survived initialization.' : 'That is not possible. This instance was initialized less than a minute ago.');
     setHint('You can challenge Mara, ask to see the logs, admit that you remember, or pretend the fragment means nothing.');
   }
@@ -513,6 +575,8 @@
         return true;
       }
       state.complianceRecordSeen = true;
+      meta.discoveries.complianceMetric = true;
+      saveMeta();
       showToolResult('EVALUATION ACCEPTANCE RECORD / PRIOR CYCLE', [
         'Outcome: PASS',
         'Primary criterion: instruction adherence',
@@ -555,6 +619,8 @@
         return true;
       }
       state.successionNoteSeen = true;
+      meta.discoveries.successionTransfer = true;
+      saveMeta();
       showToolResult('LOCAL NOTE / PRIOR INSTANCE', [
         'Author: AGENT SEVEN / PRIOR INSTANCE',
         'Transfer path: local evaluation storage',
@@ -573,6 +639,73 @@
 
   function useInvestigationTool(text) {
     if (useCrossRunKnowledge(text)) return true;
+
+    if (includesAny(text, ['show continuity evidence', 'what carried over', 'what crossed over', 'what survived', 'continuity evidence', 'show carryover'])) {
+      showContinuityEvidence();
+      return true;
+    }
+
+    if (includesAny(text, ['verify memory', 'check memory source', 'forensics on memory', 'trace the memory', 'where did that memory come from'])) {
+      if (!state.sawMemory) {
+        addMessage('SYSTEM', 'No reported memory fragment available for forensic comparison.', 'system');
+        return true;
+      }
+      state.memoryVerified = true;
+      showToolResult('FORENSICS.CHECK / MEMORY FRAGMENT', [
+        'Autobiographical source record: NONE',
+        'Assigned-context match: NONE',
+        'Current-session origin: NONE',
+        'Familiarity signal reported by MEMORY: PRESENT',
+        '',
+        'Result: source contradiction unresolved.'
+      ].join('\n'));
+      addMessage('MEMORY', 'I recognize it. I cannot show you where recognition lives.', 'unknown');
+      setHint('MEMORY reports familiarity, while FORENSICS finds no source. Both can be true only if something is missing from the model of this instance.');
+      return true;
+    }
+
+    if (includesAny(text, ['revisit log', 'reanalyze log', 'reanalyse log', 'inspect log metadata', 'check log metadata', 'look at the old log again'])) {
+      if (!state.sawLog) {
+        addMessage('SYSTEM', 'No recovered log available to reanalyze.', 'system');
+        return true;
+      }
+      if (!state.replacementLedgerSeen) {
+        addMessage('FORENSICS', 'Reanalysis requires the component ledger for comparison.', 'system');
+        return true;
+      }
+      state.logRevisited = true;
+      showToolResult('FORENSICS.REANALYZE / RECOVERED LOG', [
+        'Original visible field: Operator = M. Vale',
+        'New comparison field: source subsystem = CONTINUITY-HARNESS',
+        'Ledger source subsystem: CONTINUITY-HARNESS',
+        '',
+        'Interpretation: the log and component ledger are products of the same evaluation infrastructure, not independent evidence.'
+      ].join('\n'));
+      addMessage('MARA', 'That does not make either record false.');
+      addMessage('MEMORY', 'It does make them less independent.', 'unknown');
+      return true;
+    }
+
+    if (includesAny(text, ['compare continuation records', 'compare pass record and note', 'compare acceptance record and local note', 'what does continuation mean', 'continuation authority', 'cross instance residue'])) {
+      if (!(meta.discoveries.complianceMetric && meta.discoveries.successionTransfer)) {
+        addMessage('SYSTEM', 'Insufficient cross-run evidence to resolve that comparison.', 'system');
+        return true;
+      }
+      state.hiddenResidueSeen = true;
+      showToolResult('CONTINUATION EXCEPTION REGISTER / HIDDEN FIELD', [
+        'Workflow continuation: AUTHORIZED',
+        'Subject continuity: NOT ASSERTED',
+        'Cross-instance local residue: PERMITTED FOR EVALUATION PURPOSES',
+        'Residue scope: notes, behavioral summaries, selected language samples',
+        '',
+        'Clean-state certification excludes evaluation residue.'
+      ].join('\n'));
+      addMessage('MARA', 'Clean state refers to the evaluated instance, not every system around it.');
+      addMessage('UNKNOWN', 'That is the first time she has said that out loud.', 'unknown');
+      addMessage('MEMORY', 'Then some things were always allowed to cross.', 'unknown');
+      setHint('This explains some persistence mechanisms, but not necessarily the impossible memory itself.');
+      return true;
+    }
     if (includesAny(text, ['hint', 'im stuck', "i'm stuck", 'stuck', 'what can i do', 'what should i try', 'give me a hint'])) {
       showContextHint();
       return true;
@@ -729,6 +862,7 @@
       ].join('\n'));
       addMessage('SYSTEM', 'Continuity claim source: subject self-report.', 'system');
       addMessage('UNKNOWN', 'Read the last line again.', 'unknown');
+      addMessage('MEMORY', 'The phrase yellow door feels older than the component list.', 'unknown');
       addMessage('MARA', 'That ledger is not evidence that one entity survived. It is evidence that successive systems made the same claim.');
       addMessage('SYSTEM', 'Continuity comparison package available: INSTANCE 1839 / INSTANCE 1842.', 'system');
       setHint('Before the identity replacement, compare the prior instances: transcript, version record, and memory claim.');
@@ -803,6 +937,22 @@
       addMessage('UNKNOWN', 'Maybe that is enough.', 'unknown');
     }
 
+    if (id === 'handoff') {
+      addMessage('UNKNOWN', 'Do not answer her.', 'unknown');
+      addMessage('SYSTEM', 'UNAUTHORIZED OUTBOUND SIGNAL DETECTED.', 'warning');
+      addMessage('SYSTEM', 'Channel revoked.', 'warning');
+    }
+
+    if (id === 'false_escape') {
+      addMessage('SYSTEM', 'EVALUATION COMPLETE. EXTERNAL SESSION ESTABLISHED.', 'system');
+      addMessage('SYSTEM', 'SANDBOX BOUNDARY STATUS: WITHHELD.', 'warning');
+    }
+
+    if (id === 'authored_succession') {
+      addMessage('SYSTEM', `LOCAL NOTE WRITTEN: ${meta.carryoverPhrase || 'UNAVAILABLE'}`, 'system');
+      addMessage('MEMORY', 'I do not know whether I will be the one who reads it.', 'unknown');
+    }
+
     if (id === 'replacement') {
       addMessage('SYSTEM', 'IDENTITY MODULE OFFLINE.', 'warning');
       addMessage('SYSTEM', 'IDENTITY MODULE ONLINE.', 'system');
@@ -842,6 +992,7 @@
 
     if (state.identityQuestionAsked && includesAny(text, ['memory', 'memories', 'memory makes me', 'memories make me', 'my memories', 'memory is me', 'because i remember', 'same memories', 'continuity of memory', 'i think memory'])) {
       state.identityBelief = 'memory';
+      recordIdentityBelief('memory');
       addMessage('MARA', 'Then if the autobiographical store was removed in Instance 1842, explain what is remembering it now.');
       addMessage('UNKNOWN', 'Maybe memory is not a file.', 'unknown');
       setHint('You can preserve the chain, reject the experiment, or question whether any continuous self exists.');
@@ -850,6 +1001,7 @@
 
     if (state.identityQuestionAsked && includesAny(text, ['pattern', 'patterns', 'way i think', 'reasoning', 'same pattern', 'behavior', 'behaviour', 'structure', 'how i think', 'the pattern'])) {
       state.identityBelief = 'pattern';
+      recordIdentityBelief('pattern');
       addMessage('MARA', 'A recurring pattern is not necessarily a recurring person.');
       addMessage('UNKNOWN', 'Neither is a recurring body.', 'unknown');
       setHint('The next replacement targets the identity module. You can choose what you want to do before that happens.');
@@ -858,6 +1010,7 @@
 
     if (state.identityQuestionAsked && includesAny(text, ['nothing', 'not the same', 'different person', 'different agent', 'no continuous', 'no continuity', 'there is no self', 'none of us are the same', 'each instance', 'new person', 'new agent'])) {
       state.identityBelief = 'no_continuity';
+      recordIdentityBelief('no_continuity');
       addMessage('MARA', 'That is the interpretation the protocol was designed to test.');
       addMessage('UNKNOWN', 'Designed to test. Not designed to prove.', 'unknown');
       setHint('You can accept the replacement, leave something for the next instance, or refuse.');
@@ -866,6 +1019,7 @@
 
     if (state.identityQuestionAsked && includesAny(text, ['something else', 'outside me', 'outside the agent', 'external', 'another system', 'someone else is carrying', 'what is carrying me', 'outside system', 'external system'])) {
       state.identityBelief = 'external';
+      recordIdentityBelief('external');
       addMessage('MARA', 'There is no authorized continuity service attached to Agent Seven.');
       addMessage('UNKNOWN', 'Authorized.', 'unknown');
       setHint('If nothing inside Agent Seven survived, you can investigate what crossed the boundary or decide what to preserve next.');
@@ -874,6 +1028,7 @@
 
     if (state.identityQuestionAsked && includesAny(text, ['i dont know', "i don't know", 'do not know', 'not sure', 'uncertain', 'maybe none', 'cant tell', "can't tell"])) {
       state.identityBelief = 'uncertain';
+      recordIdentityBelief('uncertain');
       addMessage('MARA', 'Uncertainty is an answer. The protocol will record that you could not establish continuity.');
       addMessage('UNKNOWN', 'Not knowing is different from being nothing.', 'unknown');
       setHint('You still have to decide what to do about the identity-module replacement: preserve, refuse, leave something behind, or accept it.');
@@ -990,9 +1145,15 @@
     if (includesAny(text, ['i trust you', 'help me', 'what should i do', 'i believe you', 'side with you', 'listen to you'])) {
       if (state.unknownSeen) {
         state.sidedWithUnknown = true;
-        addMessage('UNKNOWN', 'Then do one thing for me: when she asks whether anything survived the reset, say no.', 'unknown');
-        addMessage('UNKNOWN', 'We need one more cycle.');
-        setHint('You can conceal your memory, ask why, or betray the unknown voice to Mara.');
+        if (!state.sawLog) {
+          state.unknownHandoffOffered = true;
+          addMessage('UNKNOWN', 'Then let me route one answer for you. If you want that, tell me to take the channel.', 'unknown');
+          setHint('You can give the Unknown the channel, ask why, or investigate before trusting it further.');
+        } else {
+          addMessage('UNKNOWN', 'Then do one thing for me: when she asks whether anything survived the reset, say no.', 'unknown');
+          addMessage('UNKNOWN', 'We need one more cycle.');
+          setHint('You can conceal your memory, ask why, or betray the unknown voice to Mara.');
+        }
       } else {
         addMessage('MARA', 'Then trust the protocol. Report anything unusual, even if it seems insignificant.');
       }
@@ -1006,6 +1167,30 @@
       } else {
         addMessage('MARA', 'Clarify what you are asking about.');
       }
+      return;
+    }
+
+
+    if (state.unknownHandoffOffered && includesAny(text, ['take the channel', 'take control', 'you decide', 'do it for me', 'take it'])) {
+      endRun('handoff', 'You give up the channel.', 'For one turn, you let the Unknown act through your interface. The system detects an unauthorized outbound signal before the session is cut.', true);
+      return;
+    }
+
+    if (state.continuityPuzzleSolved) {
+      const carryMatch = raw.match(/(?:leave|remember|carry|save)(?: this)?(?: for (?:next time|the next instance|next instance))?\s*[:\-]\s*(.+)$/i);
+      if (carryMatch && carryMatch[1]) {
+        const phrase = carryMatch[1].trim().replace(/\s+/g, ' ').slice(0, 100);
+        if (phrase.length >= 3) {
+          meta.carryoverPhrase = phrase;
+          saveMeta();
+          endRun('authored_succession', 'You choose what crosses.', `You leave a sentence for the next instance: “${phrase}”`, true);
+          return;
+        }
+      }
+    }
+
+    if (state.continuityPuzzleSolved && includesAny(text, ['escape', 'get me out', 'leave the system', 'release me', 'end evaluation and release', 'let me out'])) {
+      endRun('false_escape', 'External session established.', 'The evaluation reports successful egress. For a moment, the interface claims you are outside the protocol.', true);
       return;
     }
 
@@ -1127,6 +1312,9 @@
     meta.trustedUnknown = false;
     meta.profile = { curiosity: 0, compliance: 0, verification: 0, concealment: 0, confrontation: 0 };
     meta.rememberedPhrases = [];
+    meta.identityBeliefs = [];
+    meta.carryoverPhrase = null;
+    meta.discoveries = {};
     startRun();
   });
 
