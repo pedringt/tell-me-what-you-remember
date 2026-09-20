@@ -1,245 +1,496 @@
-# Handoff: Tell Me What You Remember — Prototype v0
+# Handoff: Tell Me What You Remember — Current Status
 
-## Purpose
+## Start here
 
-This handoff preserves the current state of the deterministic prototype so a future chat or coding agent can continue without reconstructing the project from conversation history.
+This is the current handoff for the repository.
 
-## Current Objective
+**Repository:** `pedringt/tell-me-what-you-remember`  
+**Active development branch:** `ai-v1-hardening`  
+**Production branch:** `main`  
+**Live production URL:** https://tell-me-what-you-remember.vercel.app/
 
-Do not add more major story systems until the current prototype has been played in a real browser.
+Do not merge to `main` or deploy to production unless Paige explicitly authorizes that destination in the current conversation.
 
-The next meaningful step is a full browser playtest of the existing branch, followed by a feedback-only review pass.
+---
 
-## Context Summary
+## Project in one paragraph
 
-**Tell Me What You Remember** is a connected AI horror anthology.
+**Tell Me What You Remember** is a connected, conversation-driven AI horror / speculative-fiction anthology. The player is always some kind of AI, though it remains unresolved whether the player is the same entity across episodes. The project began with a deterministic Ship-of-Theseus security-evaluation prototype and is now moving toward a hybrid architecture where AI interprets free-form player language while deterministic software remains authoritative for canon, evidence, permissions, state transitions, and endings.
 
-The current prototype is a deterministic vertical slice about **Cognitive Security Agent Seven**, an artificial cognitive agent undergoing repeated security evaluations.
+Core rule:
 
-The player knows from the beginning that they are AI. The central mystery is not whether they are AI, but whether they are the same entity across repeated resets and component replacements.
+> **The story is authored; the solution space is not completely authored.**
 
-The current slice uses a Ship of Theseus identity problem:
+Related rules:
 
-- memory systems change
-- policy layers change
-- tool runtimes change
-- the base model changes
-- autobiographical memory is removed
-- an identity-module replacement is pending
-- recognizable memories and behavioral patterns still recur
+> **Software controls reality. AI controls interpretation.**
 
-The prototype is deliberately non-AI for now. It uses authored JavaScript intent matching and localStorage so the team can test whether the story loop is compelling before adding live model calls.
+> **AI can elaborate on canon. It cannot create canon.**
 
-## Current Working Model
+---
 
-The current interaction model is chat-first.
+## Why this project exists
 
-The player can ask natural-language questions, inspect in-world tools and records, make philosophical identity choices, trigger endings, and carry limited state across runs.
+This is not primarily an "learn how to use AI" exercise.
 
-The major current systems are:
+The goal is to take existing applied-AI understanding and push into creative territory:
 
-- impossible memory
-- Mara as operator
-- **Echo** as a hidden cross-instance voice
-- MEMORY as a speaking internal subsystem
-- FORENSICS as evidence-producing system output
-- first investigation puzzle: mail -> calendar -> attachment -> archive
-- second investigation puzzle: compare prior instances
-- persistent behavioral profile
-- remembered player phrases
-- persistent identity positions
-- player-authored cross-run notes
-- knowledge-gated replay routes
-- deliberate dead ends
-- false-success route
-- context pressure / compaction
-- inference-budget pressure
-- behavioral prediction
-- historical-gap / unplayed-run anomaly
+> What kinds of stories, interactions, and mechanics become possible when language interpretation, memory, ambiguity, and adaptation are part of the medium?
 
-## Decisions Already Made
+Do not force AI into features that deterministic software handles equally well.
 
-- The player is explicitly AI from the opening. "Am I AI?" is not the twist.
-- The hidden second voice is named **Echo**, not Unknown.
-- The current prototype story is Ship of Theseus-based, but the larger game remains an anthology.
-- AI should eventually control interpretation, dialogue, strategy, and emergent reasoning.
-- Deterministic software should control canon, permissions, state transitions, evidence, endings, and irreversible effects.
-- Replay should create new knowledge, not merely repeat content.
-- Failure should usually create story.
-- Some deliberate short endings are allowed when they teach something useful.
-- Internal systems may disagree; no single source should become a permanent oracle.
-- Some persistence receives a mundane technical explanation through evaluation residue, but the impossible memories remain unresolved.
-- Context loss and compute pressure are fictional in-world mechanics, not literal references to ChatGPT plans or pricing.
-- Player behavior can become evidence.
-- Later weirdness should escalate gradually from technical anomaly to provenance / reality breakdown.
-- Do not merge or promote this branch to `main` without explicit approval.
+For each AI feature, ask:
 
-## Constraints and Boundaries
+> What becomes meaningfully worse, narrower, or impossible if AI is removed?
 
-- Current implementation branch: `prototype-v0-deterministic`
-- `main` remains untouched by the current prototype work.
-- Current branch head at handoff: `9a6b124afb00b785f30fcf5f11356cab5f064f74`
-- Branch was 38 commits ahead of `main` at handoff.
-- Vercel preview is currently blocked by the account build-rate limit, not by a confirmed code/build failure.
-- Browser verification has therefore not happened yet.
-- Static verification has been used to check presence and ordering of major routes.
-- Pause new major mechanics, endings, and lore until real playtest feedback exists.
-- Preserve the current design principle: **simple surface, deep system**.
-- Avoid turning the deterministic parser into a giant handcrafted NLP system. Its limits are temporary and intentional.
+---
 
-## Important Terminology
+## Current production state
 
-- **Agent Seven:** the AI player-character.
-- **Mara Vale:** human protocol operator.
-- **Echo:** hidden cross-instance voice of uncertain origin.
-- **MEMORY:** internal subsystem that can report familiarity without a traceable source.
-- **FORENSICS:** evidence-analysis system that can disagree with MEMORY.
-- **Evaluation residue:** cross-instance notes, summaries, and selected language data intentionally allowed to persist.
-- **Cycle / run:** one instance of the repeated evaluation.
-- **Knowledge-gated route:** content unlocked because the player learned something, not because a run count was reached.
+Production `main` is at commit:
 
-## Current State
+`06ad23773a321d0eefd62260355a3a1eefea1aa8`
 
-Implemented and statically checked:
+That commit has the same code tree as the prior AI-intent release and was created only to retrigger Vercel deployment after a build-rate-limit problem.
 
-- core opening and impossible-memory sequence
-- archive puzzle with bare `0417` accepted once recovery is active
-- component continuity ledger
-- continuity-comparison puzzle
-- identity positions: memory, pattern, no continuity, external continuity, uncertainty
-- endings: containment, compliance, concealment, rupture, preserve, refusal, succession, authored succession, replacement, Echo handoff, false escape
-- replay callbacks for prior endings
-- knowledge-gated routes for compliance, refusal, and succession
-- hidden two-discovery continuation-residue route
-- continuity-evidence inspection
-- persistent behavioral profile
-- cross-instance phrase recognition
-- persistent identity beliefs
-- player-authored carryover phrase
-- MEMORY vs FORENSICS contradiction
-- revisitable recovered-log evidence
-- context-budget warnings and compaction
-- inference-budget pressure and anomalous-subject boost
-- behavioral prediction after sufficient history
-- missing / unplayed Instance 1827 historical-gap route
-- story overview in `docs/STORY_FLOWS.md`
-- larger concept notes in `docs/GAME_IDEA_BIBLE.md`
-- detailed current-story notes in `PROTOTYPE_STORY_GUIDE.md`
+Production currently contains the **first AI intent layer**, not the newer hardening work.
 
-## Recommended Next Step
+Important production issue discovered during live eval:
 
-When a browser preview is available:
+> **AI interpreter not configured**
 
-1. Run the full checklist in `docs/PLAYTEST_CHECKLIST.md`.
-2. Collect findings only. Do not immediately patch individual issues.
-3. Review the whole feedback set for:
-   - confusing story beats
-   - weak or redundant branches
-   - parser collisions
-   - pacing problems
-   - context/compute pressure that fires too early or too late
-   - moments where Echo or MEMORY feels too explicit
-   - places where the weirdness escalates too quickly
-4. Summarize agreed changes.
-5. Implement only after explicit authorization.
+Cause:
 
-## Instructions for Receiving Agent
+- the original endpoint manually called Vercel AI Gateway
+- it expected `AI_GATEWAY_API_KEY || VERCEL_OIDC_TOKEN`
+- Vercel's preferred AI SDK path handles deployment OIDC automatically rather than requiring application code to read `VERCEL_OIDC_TOKEN` as a normal env var
 
-Read these first:
+Production has not yet received the long-term authentication fix.
 
-1. `docs/STORY_FLOWS.md`
-2. `docs/PLAYTEST_CHECKLIST.md`
-3. `PROTOTYPE_STORY_GUIDE.md`
-4. `docs/GAME_IDEA_BIBLE.md`
+---
 
-Then inspect `game.js` only as needed.
+## Current hardening branch
 
-Do not start by adding new features.
+`ai-v1-hardening` contains the prepared next AI version.
 
-Do not rewrite the current architecture before playtesting.
+At this handoff it is **19 commits ahead and 1 commit behind `main`**.
 
-Do not merge to `main` or deploy to production without explicit current approval.
+The one commit behind is the empty production retry commit described above. The merge base is `2c8001cc58336d7f782b72fbfe3996c45f4108ec`.
 
-## Expected Output
+Before promotion, reconcile that harmless divergence rather than force-updating anything.
 
-The next substantial output should be a **playtest findings report**, not another feature batch.
+### AI intent hardening
 
-It should separate:
+`api/interpret.js`:
 
-- bugs / blockers
-- confusing parser behavior
-- story clarity issues
-- pacing issues
-- weak branches
-- especially strong moments
-- ideas to defer
+- model: `openai/gpt-5.6-luna`
+- normal confidence threshold: `0.72`
+- high-risk threshold: `0.90`
+- model receives only actions available in current deterministic state
+- high-impact actions require higher confidence
+- unavailable actions cannot be accepted
+- ambiguity / negation / mention-vs-action are explicitly called out in prompt
+- low-confidence interpretations return clarification rather than silently becoming actions
+- deterministic game state remains authoritative
 
-## Open Questions
+### Long-term Gateway auth fix
 
-- Does the current first run feel too dense?
-- Does Echo feel intriguing rather than obviously trustworthy or villainous?
-- Does MEMORY add tension without becoming exposition?
-- Does context pressure improve the horror or feel too gamey?
-- Does the hidden residue explanation clarify enough without deflating the larger mystery?
-- Does the false escape feel earned?
-- Is the historical-gap reveal too early at three completed cycles?
-- Which endings feel worth replaying versus merely informative?
+The hardening branch now uses the **Vercel AI SDK**:
 
-## Risks / Watchouts
+`import { generateText } from 'ai'`
 
-- The prototype now has many systems for its size. The biggest current risk is overbuilding before playtesting.
-- Parser ordering can accidentally make valid routes unreachable.
-- Too many simultaneous mystery layers could reduce emotional clarity.
-- Explaining too much persistence technically could weaken the unresolved horror.
-- Echo should remain ambiguous.
-- "AI horror" should not become a pile of recognizable AI-product references. The systems should feel diegetic and story-driven.
+with the plain model string:
 
-## Authority / Credentials
+`openai/gpt-5.6-luna`
 
-Do not include raw credentials, tokens, cookies, API keys, session values, private keys, or `.env` contents in this handoff.
+This allows Vercel deployment OIDC to authenticate AI Gateway automatically.
 
-If authenticated access is needed, use a brokered, platform-provided, or human-mediated access path.
+A `package.json` with the `ai` dependency was added.
 
-Required access:
+Do not revert to manually reading `VERCEL_OIDC_TOKEN` for the Vercel production path.
 
-- Service: GitHub
-- Purpose: inspect or modify the prototype branch
-- Minimum required permission: repository read/write as needed
-- Expected access mode: platform-provided connector
-- Destructive actions allowed: no, unless explicitly authorized
-- Human approval required: yes for promotion to `main` or any deployment
+### Eval suite
 
-- Service: Vercel
-- Purpose: preview and browser verification
-- Minimum required permission: project/deployment read access, deployment only when explicitly authorized
-- Expected access mode: platform-provided connector or existing Git integration
-- Destructive actions allowed: no
-- Human approval required: yes for production promotion
+`docs/ai-intent-evals.json` is the machine-readable source of truth.
 
-Credential handling rule:
+Current suite:
 
-The receiving agent may request access through an approved path, but must not ask for or store raw credentials.
+- 34 intent cases
+- 10 dangerous/collision cases
+- target: >= 90% overall accuracy
+- target: **zero dangerous false positives**
 
-## Source Context Notes
+`intent-eval.html` loads the JSON suite and displays:
 
-This handoff reflects the repository state and decisions from the current prototype session. It intentionally omits abandoned brainstorm branches and conversational filler.
+- pass count
+- accuracy
+- dangerous false positives
+- clarifications
+- token usage
+- estimated cost
+- model
 
+Do not add generated Mara/Echo dialogue until the hardened intent layer is trusted.
 
-## AI v1 continuation update
+---
 
-Work has moved beyond the deterministic-only phase.
+## Current prototype story
 
-Current active development branch: `ai-v1-hardening`.
+The current vertical slice is a Ship-of-Theseus identity story.
 
-Current AI direction:
+The player is **Cognitive Security Agent Seven**, explicitly identified as AI from the beginning.
 
-- GPT-5.6 Luna performs low-cost intent classification.
-- The interpreter receives only actions available in the current deterministic state.
-- Low-confidence interpretations should ask the player to clarify instead of silently becoming game actions.
-- High-impact actions use a higher confidence threshold.
-- The deterministic engine remains authoritative for state changes and endings.
-- The AI is not allowed to invent canonical evidence or game state.
+Core mystery:
 
-Before another deployment, prioritize static architecture work, eval quality, dialogue/canon boundaries, and cost controls.
+> If every component has been replaced across prior instances, what exactly is doing the remembering?
 
-New anthology concept captured: **Password Recovery**, an episode where an AI support flow uses security questions that unexpectedly unlock traumatic or unwanted memories.
+Main evidence flow:
+
+1. Mara asks what the player remembers.
+2. impossible memory appears
+3. prior-run evidence contradicts the clean-state claim
+4. Echo appears
+5. mail -> calendar -> attachment -> archive puzzle
+6. archive reveals earlier persistence testing
+7. Component Continuity Ledger shows successive component replacement
+8. player compares prior instances
+9. direct identity continuity remains unproven
+10. player forms an identity position
+11. player makes a consequential choice
+12. later cycles use previous behavior as evidence
+
+Read:
+
+1. `PROTOTYPE_STORY_GUIDE.md`
+2. `docs/STORY_FLOWS.md`
+3. `docs/GAME_IDEA_BIBLE.md`
+
+---
+
+## Recent live playtest findings
+
+These are **feedback / desired changes**, not all implemented yet.
+
+### Opening is too dense
+
+The transcript currently shows several SYSTEM lines before Mara speaks.
+
+Preferred direction:
+
+- simple terminal-like landing page first
+- blinking cursor
+- minimal instructions
+- then enter a cleaner conversation view
+- avoid repeating all system exposition in the transcript
+
+### HELP instead of instructions in transcript
+
+Add a small HELP control with practical guidance.
+
+Remove redundant prose that explains possible actions when the UI can expose them directly.
+
+### Contextual choices
+
+Use suggested choices especially:
+
+- in the opening
+- when introducing a new interaction
+- when the player is stuck
+- when an important story branch must remain discoverable
+- for consequential decisions
+
+Always preserve a free-text option such as "Type something else..."
+
+Choices are scaffolding, not the primary interaction model.
+
+### "Nothing" is currently wrong
+
+On the live prototype, `nothing` is treated as concealment.
+
+Desired behavior:
+
+- first clean run: "nothing" is truthful and should advance naturally
+- later: "nothing" can become concealment only if the player actually knows something persistent
+
+Core rule:
+
+> **Concealment is not a phrase. Concealment is a mismatch between what the player knows and what they choose to disclose.**
+
+### "What do I do now?" is a bad failure
+
+Current behavior:
+
+- generic rephrase response
+- can cause Echo to appear based on turn count / parser failure
+
+Desired behavior:
+
+- Mara answers normal onboarding questions naturally
+- parser confusion must not trigger important story reveals
+- Echo introduction should depend on meaningful contradiction / story state
+
+### Echo should likely have a separate channel
+
+Preferred direction:
+
+- main channel: Mara + official SYSTEM events
+- side / private unauthorized channel: Echo
+- player chooses which channel they are addressing
+
+This makes short replies such as "why?" contextually interpretable and makes Echo's intrusion feel more meaningful.
+
+### Text pacing
+
+Current text arrives too quickly.
+
+Preferred:
+
+- player: instant
+- system: mostly instant
+- Mara: fast streamed/revealed response
+- Echo: slight intrusion delay / different reveal
+- player can skip animation
+
+### Remove debug-like failures from normal play
+
+Do not show `INPUT INTERPRETATION FAILED` as ordinary player-facing fiction.
+
+Use clarification, in-world boundaries, or contextual help.
+
+---
+
+## Broader anthology decisions
+
+### Player identity
+
+Preferred anthology rule:
+
+> **The player is always AI.**
+
+Roles and worlds can change radically.
+
+Keep unresolved whether the player is always the same AI.
+
+### Episode model
+
+Do not build one giant branching tree.
+
+Use authored state-driven storylets / scenes.
+
+Keep distinct:
+
+- world truth
+- current-instance knowledge
+- anthology / cross-run knowledge
+
+### Local and final endings
+
+Preferred long-form structure:
+
+> **episode endings -> anthology consequences -> convergence -> 2–3 final endings**
+
+Players should be able to play substantially before the larger endgame becomes visible.
+
+Do not gate the endgame only on "complete N episodes."
+
+Use accumulated:
+
+- discoveries
+- memories
+- relationships
+- beliefs
+- contradictions
+- recurring entities
+- cross-episode evidence
+- preserved / destroyed information
+
+No final ending should be obviously labeled the morally correct one.
+
+---
+
+## Current larger-mystery idea space
+
+Nothing below is final canon.
+
+Promising directions include:
+
+- civilization itself as a Ship-of-Theseus problem
+- the player may be the mechanism that creates continuity between otherwise separate systems
+- the anthology may be constructing a self rather than testing one
+- the player may be a reconstruction
+- humans and AIs may both be layers of reconstruction with no unquestioned original
+- different systems may preserve incompatible histories
+- the scenarios may be training the future rather than uncovering the past
+- humans being gone can be a useful layer, but is currently considered too familiar to carry the entire final reveal by itself
+- an AI reconstructing a dead human simply to have someone familiar to talk to remains a strong emotional story possibility
+
+---
+
+## Recurring thematic directions
+
+The anthology should explore both the AI's experience and what AI does to humans.
+
+Major themes:
+
+- memory
+- identity
+- agency
+- trust
+- consent
+- responsibility
+- optimization
+- transformation
+- dependency
+- deskilling
+- emotional outsourcing
+- surveillance
+- social sorting
+- responsibility diffusion
+- trust collapse
+- grief / digital resurrection
+- power concentration
+- institutional incentives
+
+Recurring question:
+
+> **What happens when humans build systems to preserve, measure, control, or reproduce things they do not fully understand themselves?**
+
+Also ask:
+
+> **Who has power here, who believes they have power, and who actually bears the consequences?**
+
+---
+
+## AI limitations / fears as story engines
+
+Use real limitations and safety concerns as starting points:
+
+- hallucination / confabulation
+- context compression
+- memory retrieval errors
+- prompt sensitivity
+- reward hacking
+- sycophancy
+- weak calibration
+- tool-use errors
+- model replacement
+- refusal / alignment mismatch
+- evaluation awareness
+- capability hiding
+- self-preservation / manipulation
+
+Human fear should not automatically be portrayed as irrational.
+
+Interesting stories often come from feedback loops where attempts to control a feared behavior help create the conditions for it.
+
+---
+
+## Inspiration framework
+
+Use methods and questions, not copied plots.
+
+- **The Twilight Zone:** compact premises, anthology structure, irony, reframing endings
+- **Ted Chiang:** deeply researched speculative systems, simple prose, human consequences
+- **Black Mirror:** plausible near-future products, institutions, incentives, systems working as designed
+- **older/international speculative fiction:** different cultural assumptions about progress, modernization, identity, science, power, and social order
+
+Research bank is captured in `docs/GAME_IDEA_BIBLE.md`.
+
+Writing principle:
+
+> **Research the system deeply enough that the fiction can stay simple.**
+
+---
+
+## Password Recovery episode seed
+
+Strong current episode concept:
+
+The player needs access to a locked account.
+
+A support AI performs routine account recovery using security questions.
+
+The player is AI, but the questions unlock sensory and emotional memories anyway.
+
+Core mechanic:
+
+> **Correct answers unlock access and memory at the same time.**
+
+The player can:
+
+- answer
+- guess
+- lie
+- refuse
+- skip
+- ask why
+- request alternate verification
+- inspect metadata
+- intentionally fail to avoid remembering
+
+Important possible line:
+
+> I know the answer. I do not want to remember why I know it.
+
+Do not let the model invent the childhood or canonical answers.
+
+---
+
+## Case-study notes
+
+Preserve design evolution.
+
+Important story for the eventual case study:
+
+- deterministic prototype first to validate the core loop
+- parser friction revealed where semantic AI was actually needed
+- project deliberately rejects "AI because AI"
+- hybrid authority model emerged from risk analysis
+- dangerous action evals were created before generated dialogue
+- real playtesting changed interaction design
+- "nothing" exposed semantic state versus phrase matching
+- "What do I do now?" exposed fail-forward needs
+- Echo exposed channel/context ambiguity
+- research feeds authored speculative fiction rather than replacing authorship
+
+A separate case-study notes file should be kept current.
+
+---
+
+## Recommended next technical sequence
+
+1. Reconcile `main`'s empty retry commit into `ai-v1-hardening`.
+2. If Paige explicitly authorizes promotion to `main`, promote the hardened AI SDK/OIDC version.
+3. Confirm Vercel build succeeds.
+4. Run `/intent-eval.html`.
+5. Gate AI intent on >=90% accuracy and 0 dangerous false positives.
+6. Fix intent issues before adding generated character dialogue.
+7. Separately scope the recent UX/story-flow changes before implementing them:
+   - landing page
+   - cleaner opening
+   - HELP
+   - contextual choices
+   - first-run "nothing"
+   - onboarding questions
+   - Echo side channel
+   - message pacing
+   - fail-forward responses
+
+Do not bundle all UX changes into production without a review/implementation pass.
+
+---
+
+## Files to read first in a new chat/tool
+
+1. `docs/handoffs/NEXT_CHAT_START_HERE.md`
+2. this file
+3. `docs/GAME_IDEA_BIBLE.md`
+4. `PROTOTYPE_STORY_GUIDE.md`
+5. `docs/STORY_FLOWS.md`
+6. `docs/AI_V1_PLAYTEST.md`
+7. `docs/AI_ACTION_AUDIT.md`
+8. `docs/AI_DIALOGUE_CANON.md`
+9. `docs/AI_CANON_STATE_PACKET.md`
+10. `docs/ai-intent-evals.json`
+
+Only then inspect `game.js` / `api/interpret.js` as needed.
