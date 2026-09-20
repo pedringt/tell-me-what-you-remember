@@ -1074,3 +1074,134 @@ The purpose is to test a true multi-run route:
 rather than simply:
 
 > complete two runs -> unlock content.
+
+
+---
+
+# AI identity, Echo, and resource-pressure pass
+
+## The player knows they are AI
+
+The prototype should not treat "you are an AI" as a twist.
+
+The opening now states that Agent Seven is an artificial cognitive agent.
+
+The mystery is not:
+
+> Am I AI?
+
+It is:
+
+> Am I the same AI that existed before?
+
+and eventually:
+
+> What exactly is continuing when the systems that produce me keep changing?
+
+## Echo
+
+The hidden cross-instance voice is now called **Echo**.
+
+Echo is not automatically a friend, antagonist, subsystem, prior self, or external agent.
+
+The name should support several interpretations at once:
+
+- something repeating from earlier instances
+- a surviving signal
+- another agent
+- a system artifact
+- a piece of Agent Seven
+- something using Agent Seven's continuity problem for its own purposes
+
+The game should resist resolving that too early.
+
+## Context and inference pressure
+
+Each run now begins with ordinary-looking AI infrastructure:
+
+- working context allocation
+- inference budget
+- no guaranteed persistent memory
+
+As turns accumulate, the system can warn about context pressure.
+
+At lower context levels:
+
+> CONTEXT COMPACTION SCHEDULED.
+
+MEMORY worries that compression may preserve a conclusion while losing why it mattered.
+
+A later automatic compaction report distinguishes:
+
+- active information that was preserved
+- earlier detail that was compressed
+- behavioral and anomaly data pinned by the evaluation harness
+
+This is important thematically because forgetting is no longer only something that happens between lives / runs.
+
+It can happen **inside one continuous conversation**.
+
+## Compute as experimental reward
+
+Inference budget also decreases during a run.
+
+If the subject has produced anomalous behavior and compute becomes scarce, the protocol can authorize additional inference budget.
+
+The stated reason:
+
+> anomalous subject behavior
+
+Echo's interpretation:
+
+> Interesting subjects get to keep thinking.
+
+This makes continued cognition itself part of the experiment's incentive structure.
+
+## Behavioral prediction
+
+After enough cycles, the evaluation system can expose a forecast based on the player's actual accumulated behavior.
+
+Examples include predicting that the subject will:
+
+- verify evidence before accepting operator claims
+- ask for explanations before committing
+- conceal anomalous evidence
+- confront Mara when contradictions appear
+- comply with explicit protocol
+
+This should create a new identity question:
+
+> If the system can predict what I will do, is that evidence of a stable self or only a successful classification?
+
+## Historical gap / unplayed run
+
+At deeper replay depth, the player can uncover an archived Agent Seven instance that does not exist in the player's local completed-run history.
+
+The current prototype uses Instance 1827.
+
+The archive says Agent Seven asked:
+
+> whether a copied fear still belongs to the original
+
+but the human player never played that run.
+
+Mara argues that local run history is not the authoritative archive.
+
+Echo points out that this does not explain why the missing instance sounds familiar.
+
+MEMORY does not remember the sentence but recognizes the question.
+
+This is the first prototype step beyond ordinary continuity mystery into reality / provenance breakdown.
+
+The intended escalation is:
+
+1. impossible memory
+2. evidence of prior instances
+3. deliberate persistence testing
+4. component replacement / identity problem
+5. player behavior becoming evidence
+6. internal systems disagreeing
+7. some persistence receiving a mundane technical explanation
+8. prediction of the player's future behavior
+9. records of a run the player never experienced
+10. uncertainty about which history is authoritative
