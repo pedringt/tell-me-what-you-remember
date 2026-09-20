@@ -20,18 +20,26 @@ Do **not** merge to `main`, deploy production, or publish anything unless Paige 
 3. `docs/story-development/RESEARCH_THEMES_AND_EPISODE_SEEDS.md`
 4. `docs/story-development/EPISODE_01_EVELYN.md`
 5. `docs/story-development/EPISODE_01_GAMEPLAY.md`
-6. `docs/story-development/CARE_AI_RULES.md`
-7. `docs/story-development/AI_MEMORY_AND_CONTEXT.md`
-8. `docs/story-development/EPISODE_01_ENDINGS.md`
-9. `docs/QA_AND_EVAL_STRATEGY.md`
-10. `PROTOTYPE_STORY_GUIDE.md`
-11. `docs/STORY_FLOWS.md`
-12. `docs/CASE_STUDY_NOTES.md`
-13. `docs/AI_ACTION_AUDIT.md`
-14. `docs/AI_DIALOGUE_CANON.md`
-15. `docs/AI_CANON_STATE_PACKET.md`
-16. `docs/AI_V1_PLAYTEST.md`
-17. `docs/ai-intent-evals.json`
+6. `docs/EPISODE_01_IMPLEMENTATION_SPEC.md`
+7. `docs/story-development/EPISODE_01_FIRST_PLAYABLE_SLICE.md`
+8. `docs/story-development/EPISODE_01_STATE_SCHEMA.md`
+9. `docs/story-development/EPISODE_01_ACTION_REGISTRY.md`
+10. `docs/story-development/EPISODE_01_NPC_KNOWLEDGE_CONTRACTS.md`
+11. `docs/story-development/EPISODE_01_EVIDENCE_AND_PUZZLE_MAP.md`
+12. `docs/story-development/CARE_AI_RULES.md`
+13. `docs/story-development/AI_MEMORY_AND_CONTEXT.md`
+14. `docs/story-development/EPISODE_01_ENDINGS.md`
+15. `docs/story-development/EPISODE_01_ROUTE_TEST_MATRIX.md`
+16. `docs/story-development/EPISODE_01_OPEN_DECISIONS.md`
+17. `docs/QA_AND_EVAL_STRATEGY.md`
+18. `PROTOTYPE_STORY_GUIDE.md`
+19. `docs/STORY_FLOWS.md`
+20. `docs/CASE_STUDY_NOTES.md`
+21. `docs/AI_ACTION_AUDIT.md`
+22. `docs/AI_DIALOGUE_CANON.md`
+23. `docs/AI_CANON_STATE_PACKET.md`
+24. `docs/AI_V1_PLAYTEST.md`
+25. `docs/ai-intent-evals.json`
 
 ## Current creative direction
 
@@ -246,10 +254,21 @@ Do not silently turn brainstorming into canon.
 
 ## If continuing implementation work
 
+Start with `docs/EPISODE_01_IMPLEMENTATION_SPEC.md`.
+
+The new implementation-prep package also includes:
+- `EPISODE_01_FIRST_PLAYABLE_SLICE.md` - exact structural shape of the first 30-45 minutes without locking unresolved story content
+- `EPISODE_01_STATE_SCHEMA.md` - proposed structured state and invariants
+- `EPISODE_01_ACTION_REGISTRY.md` - bounded natural-language action space and risk gates
+- `EPISODE_01_NPC_KNOWLEDGE_CONTRACTS.md` - knowledge/boundary rules for generated dialogue
+- `EPISODE_01_EVIDENCE_AND_PUZZLE_MAP.md` - required discovery arcs and dependency rules
+- `EPISODE_01_ROUTE_TEST_MATRIX.md` - automated route/persona coverage
+- `EPISODE_01_OPEN_DECISIONS.md` - creative choices that must remain Paige's
+
 Before editing:
 1. confirm current branch and repo state
-2. read the Episode 1 docs
-3. identify which decisions are still marked OPEN
+2. read the Episode 1 implementation package
+3. check `EPISODE_01_OPEN_DECISIONS.md`
 4. do not let Claude invent those answers
 5. implement only explicitly authorized scope
 6. test against the structured game state
