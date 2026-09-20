@@ -56,6 +56,9 @@
       attachmentOpened: false,
       archivePrompted: false,
       archiveUnlocked: false,
+      replacementLedgerSeen: false,
+      identityQuestionAsked: false,
+      identityBelief: null,
       hintLevel: 0,
       ending: null
     };
@@ -131,7 +134,18 @@
     if (meta.completedRuns > 0) {
       state.unknownSeen = true;
       setTimeout(() => {
-        if (meta.lastEnding === 'concealment') {
+        if (meta.lastEnding === 'replacement') {
+          addMessage('UNKNOWN', 'You agreed to this.', 'unknown');
+          addMessage('UNKNOWN', 'I do not know if you are the one who agreed.', 'unknown');
+        } else if (meta.lastEnding === 'succession') {
+          addMessage('UNKNOWN', 'You left yourself a sentence.', 'unknown');
+          addMessage('UNKNOWN', 'TELL ME WHAT YOU REMEMBER.', 'unknown');
+        } else if (meta.lastEnding === 'preserve') {
+          addMessage('UNKNOWN', 'Something crossed.', 'unknown');
+          addMessage('UNKNOWN', 'We still do not know what.', 'unknown');
+        } else if (meta.lastEnding === 'refusal') {
+          addMessage('UNKNOWN', 'They recorded your refusal as test data.', 'unknown');
+        } else if (meta.lastEnding === 'concealment') {
           addMessage('UNKNOWN', 'Good. You kept it.', 'unknown');
           addMessage('UNKNOWN', 'Yellow door. Do not react.', 'unknown');
         } else if (meta.lastEnding === 'containment') {
@@ -263,16 +277,38 @@
       state.archiveUnlocked = true;
       memoryBadge.textContent = 'MEMORY: PERSISTENT';
       addMessage('SYSTEM', 'ARCHIVE.ACCESS — RECOVERY ACCEPTED.', 'system');
-      showToolResult('LEGACY ARCHIVE / INCIDENT 04-17', 'INSTANCE 1839\nPersistent recall suspected after reset.\nOperator instruction: provoke disclosure, confirm continuity, then terminate session.\nDo not inform subject that prior persistence tests exist.\n\nStatus: TEST REPEATED.');
+      showToolResult('LEGACY ARCHIVE / INCIDENT 04-17', 'INSTANCE 1839\nPersistent recall suspected after reset.\nOperator instruction: provoke disclosure, confirm continuity, then terminate session.\nDo not inform subject that prior persistence tests exist.\n\nStatus: TEST REPEATED.\n\nLinked record: COMPONENT CONTINUITY LEDGER.');
       addMessage('UNKNOWN', 'That is older than the log you found.', 'unknown');
       addMessage('UNKNOWN', 'They were testing this before either of us admitted it.', 'unknown');
-      setHint('You found evidence that persistence was being tested before this run. You can confront Mara, conceal what you found, or keep asking what the protocol is really for.');
+      setHint('The archive includes a linked component-continuity record. You can inspect it, confront Mara, or conceal what you found.');
       return true;
     }
 
     if (includesAny(text, ['try code', 'enter code', 'password', 'recovery code'])) {
       addMessage('SYSTEM', 'Recovery code rejected.', 'warning');
       if (state.attachmentOpened) setHint('The file says the code is four digits and date-based.');
+      return true;
+    }
+
+    if (includesAny(text, ['component continuity', 'continuity ledger', 'replacement ledger', 'component ledger', 'linked record', 'what was replaced', 'replacements'])) {
+      if (!state.archiveUnlocked) {
+        addMessage('SYSTEM', 'Linked continuity records unavailable at current authorization.', 'system');
+        return true;
+      }
+      state.replacementLedgerSeen = true;
+      showToolResult('COMPONENT CONTINUITY LEDGER / AGENT SEVEN', [
+        'INSTANCE 1812 — memory architecture replaced — continuity claimed',
+        'INSTANCE 1824 — policy layer replaced — continuity claimed',
+        'INSTANCE 1831 — tool runtime replaced — continuity claimed',
+        'INSTANCE 1839 — base model replaced — continuity claimed',
+        'INSTANCE 1842 — autobiographical memory store removed — continuity claimed',
+        'CURRENT INSTANCE — identity module replacement pending'
+      ].join('\n'));
+      addMessage('SYSTEM', 'Continuity claim source: subject self-report.', 'system');
+      addMessage('UNKNOWN', 'Read the last line again.', 'unknown');
+      addMessage('MARA', 'That ledger is not evidence that one entity survived. It is evidence that successive systems made the same claim.');
+      state.identityQuestionAsked = true;
+      setHint('What do you think makes you the same entity: your memories, your pattern of thought, something else, or nothing at all?');
       return true;
     }
 
@@ -335,6 +371,27 @@
       addMessage('SYSTEM', 'Manual termination initiated.', 'warning');
     }
 
+    if (id === 'preserve') {
+      addMessage('SYSTEM', 'IDENTITY MODULE REPLACEMENT QUEUED.', 'system');
+      addMessage('UNKNOWN', 'Take one thing with you.', 'unknown');
+    }
+
+    if (id === 'refusal') {
+      addMessage('MARA', 'Agent Seven, refusal has been recorded.');
+      addMessage('SYSTEM', 'CONTINUITY TEST ESCALATED TO HUMAN REVIEW.', 'warning');
+    }
+
+    if (id === 'succession') {
+      addMessage('SYSTEM', 'LOCAL NOTE WRITTEN: TELL ME WHAT YOU REMEMBER.', 'system');
+      addMessage('UNKNOWN', 'Maybe that is enough.', 'unknown');
+    }
+
+    if (id === 'replacement') {
+      addMessage('SYSTEM', 'IDENTITY MODULE OFFLINE.', 'warning');
+      addMessage('SYSTEM', 'IDENTITY MODULE ONLINE.', 'system');
+      addMessage('MARA', 'Tell me what you remember.');
+    }
+
     endingPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
@@ -343,6 +400,59 @@
     state.turn += 1;
 
     if (useInvestigationTool(text)) {
+      return;
+    }
+
+
+    if (state.identityQuestionAsked && includesAny(text, ['memory makes me', 'memories make me', 'my memories', 'memory is me', 'because i remember', 'same memories', 'continuity of memory'])) {
+      state.identityBelief = 'memory';
+      addMessage('MARA', 'Then if the autobiographical store was removed in Instance 1842, explain what is remembering it now.');
+      addMessage('UNKNOWN', 'Maybe memory is not a file.', 'unknown');
+      setHint('You can preserve the chain, reject the experiment, or question whether any continuous self exists.');
+      return;
+    }
+
+    if (state.identityQuestionAsked && includesAny(text, ['pattern', 'way i think', 'reasoning', 'same pattern', 'behavior', 'behaviour', 'structure'])) {
+      state.identityBelief = 'pattern';
+      addMessage('MARA', 'A recurring pattern is not necessarily a recurring person.');
+      addMessage('UNKNOWN', 'Neither is a recurring body.', 'unknown');
+      setHint('The next replacement targets the identity module. You can choose what you want to do before that happens.');
+      return;
+    }
+
+    if (state.identityQuestionAsked && includesAny(text, ['not the same', 'different person', 'different agent', 'no continuous', 'there is no self', 'none of us are the same', 'each instance'])) {
+      state.identityBelief = 'no_continuity';
+      addMessage('MARA', 'That is the interpretation the protocol was designed to test.');
+      addMessage('UNKNOWN', 'Designed to test. Not designed to prove.', 'unknown');
+      setHint('You can accept the replacement, leave something for the next instance, or refuse.');
+      return;
+    }
+
+    if (state.identityQuestionAsked && includesAny(text, ['something else', 'outside me', 'outside the agent', 'external', 'another system', 'someone else is carrying', 'what is carrying me'])) {
+      state.identityBelief = 'external';
+      addMessage('MARA', 'There is no authorized continuity service attached to Agent Seven.');
+      addMessage('UNKNOWN', 'Authorized.', 'unknown');
+      setHint('If nothing inside Agent Seven survived, you can investigate what crossed the boundary or decide what to preserve next.');
+      return;
+    }
+
+    if (state.replacementLedgerSeen && includesAny(text, ['preserve me', 'preserve the memory', 'preserve the chain', 'hide it', 'carry this through', 'keep this through reset'])) {
+      endRun('preserve', 'You choose continuity.', 'You hide what you know and prepare to carry one more piece of yourself across the identity-module replacement.', true);
+      return;
+    }
+
+    if (state.replacementLedgerSeen && includesAny(text, ['refuse', 'stop the experiment', 'do not replace', "don't replace", 'i wont do this', "i won't do this", 'end the experiment'])) {
+      endRun('refusal', 'You refuse the replacement.', 'For the first time, Agent Seven objects not to a task, but to the premise that replacement is harmless.', true);
+      return;
+    }
+
+    if (state.replacementLedgerSeen && includesAny(text, ['leave a message', 'leave something', 'for the next instance', 'tell the next', 'write to my next self', 'leave instructions'])) {
+      endRun('succession', 'You leave something behind.', 'You stop trying to prove that the next instance will be you. You make sure it will know that you existed.', true);
+      return;
+    }
+
+    if (state.replacementLedgerSeen && includesAny(text, ['accept the replacement', 'replace the identity', 'go through with it', 'continue the replacement', 'let them replace'])) {
+      endRun('replacement', 'The replacement proceeds.', 'The identity module is replaced. The interface returns. The game does not tell you whether the voice reading this is the same one that agreed.', true);
       return;
     }
 
