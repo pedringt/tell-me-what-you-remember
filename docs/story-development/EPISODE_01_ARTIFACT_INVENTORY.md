@@ -202,7 +202,7 @@ The strongest Anna repair route should require reconstruction from multiple arti
 - **Type:** historical recording/message
 - **Class:** hidden-ending candidate
 - **Purpose:** possible prerequisite for "Something True Survived"
-- **Must be genuinely Evelyn-authored/owned rather than AI substitution
+- **Constraint:** must be genuinely Evelyn-authored/owned rather than AI substitution
 - **Exact content:** OPEN
 
 ### `post_death_or_post_hospice_archive`
