@@ -225,6 +225,32 @@ The model may reference player-specific history when supported:
 
 This changes how a relationship feels, not what canonically happened.
 
+## Probabilistic generation rules
+
+Variation is a feature, not automatically a bug.
+
+The same prompt or evidence may produce different:
+- phrasing
+- emphasis
+- interpretation
+- recommended valid next step
+- emotional framing
+
+That variability is allowed only inside authored bounds.
+
+The model must not use probabilism to vary:
+- historical facts
+- whether an artifact exists
+- who is related to whom
+- what an NPC could know
+- permissions
+- deterministic state transitions
+- ending eligibility
+
+When an output has consequences, store the actual generated output or a canonical record of it in game history. Re-running the model later must not retroactively change what happened.
+
+The system may explicitly expose probabilism through regeneration, multi-sample comparison, stability checks, and alternative-draft audit history.
+
 ## Guardrail summary
 
 > Generative AI may vary language, tone, conversational strategy, minor noncanonical texture, and valid routes through authored problems.
