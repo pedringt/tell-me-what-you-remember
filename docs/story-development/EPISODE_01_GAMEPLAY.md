@@ -95,6 +95,40 @@ Exploration can create new open questions.
 
 The player may create their own follow-up notes.
 
+## Caregiver visit loop
+
+Caregiver visits should be a recurring physical-world gameplay unit rather than a generic "call caregiver" tool.
+
+A typical visit:
+
+> caregiver arrives -> assigned tasks are completed -> caregiver notices things -> evidence is scanned/photographed -> visit summary is submitted -> short follow-up window opens -> caregiver leaves
+
+Before or during a visit, the AI can assign practical care tasks such as:
+- scan today's mail
+- photograph a handwritten card or note
+- check the fridge or pantry
+- confirm whether an item is actually in the house
+- photograph a repair issue
+- retrieve a document or object Evelyn mentions
+- check whether a package arrived
+- leave something in a specific place
+- photograph both sides of an old photo
+- note anything unusual in the home
+
+At checkout, the caregiver must submit a concise visit summary covering relevant care observations and completed tasks.
+
+The summary is not objective truth. Different caregivers may be meticulous, vague, overly reassuring, alarmist, observant, defensive of Evelyn, or reluctant to speculate.
+
+After the summary arrives, the caregiver remains briefly available for follow-up. This is a natural place for the player to ask:
+- "What did you mean by confused?"
+- "Was she upset before or after the call?"
+- "Can you check the back of that photograph before you leave?"
+- "Did she recognize you?"
+
+This creates fair, diegetic time pressure. If the player ignores an ambiguous note, the caregiver may leave and the chance for immediate clarification can disappear.
+
+Caregivers can refuse requests that exceed their role or feel invasive. The AI can ask, but humans retain agency and boundaries.
+
 ## Passage of time
 
 The episode does not need to run in real time.
@@ -351,6 +385,36 @@ Possible hidden state dimensions:
 Do not expose these as arcade meters by default.
 
 Outcomes should be traceable to player behavior.
+
+## Probabilistic output as a mechanic
+
+The game should deliberately use the fact that generative AI can produce different reasonable outputs from the same evidence.
+
+Core constraint:
+
+> Nondeterminism may vary interpretation and expression. It may not vary historical truth.
+
+Possible mechanics:
+- regenerate a response or interpretation
+- compare several independent analyses
+- identify conclusions that remain stable across samples
+- spend extra compute on an "ensemble" analysis
+- preserve which generated response was actually sent or spoken
+- inspect alternative drafts later through audit history
+
+This creates a temptation to keep regenerating until the AI produces the answer the player prefers. The game can distinguish genuine investigation from output-shopping without moralizing through a score.
+
+Summaries may also vary. Two summaries of the same raw conversation can emphasize different truths. If only one survives into long-term memory, a reasonable but incomplete interpretation may become the authoritative version used by future care decisions.
+
+Once a generated response becomes consequential, the game must persist it as history. Future generations cannot rewrite what Evelyn or another character actually heard.
+
+The player may also gain tools such as:
+- "show me what all five analyses agree on"
+- "separate stable facts from variable interpretation"
+- "show the source for this claim"
+- "compare this summary with the raw interaction"
+
+This should reinforce the larger theme: repeated probabilistic interpretation can shape what later becomes memory.
 
 ## Adaptive difficulty
 
