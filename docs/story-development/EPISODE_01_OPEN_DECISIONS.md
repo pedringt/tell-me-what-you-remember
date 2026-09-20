@@ -9,10 +9,11 @@ This file is intentionally short. If a question is not listed here and is alread
 
 - Exact first-husband history and reason for divorce.
 - Exact supporting-cast identities, names, and biographies beyond current structural roles.
-- Exact Anna wedding incident is still open between two leading shapes:
-  - a dance-related boundary violation involving Anna and the groom
-  - an upsetting / boundary-crossing speech
-  The core requirement is that Anna set a clear boundary and Evelyn overrides it while believing her own judgment is justified.
+- The **form** of Anna's wedding incident is settled: Evelyn gives a boundary-crossing speech after Anna explicitly asked her not to. Still open:
+  - the exact private/humiliating anecdote or detail Evelyn reveals
+  - how much the speech centers Evelyn's sacrifices/role as Anna's mother
+  - exact wording and length of the speech
+  - exact private confrontation afterward
 - Exact dementia diagnosis, clinical stage labels, and calendar duration. The progression direction is settled as gradual, beginning with small everyday inconveniences and repeated requests before becoming unmistakable.
 - Exact circumstances/timing of Evelyn's death or final care transition.
 - Exact form, wording, timing, and loss mechanism of Anna's possible final message.
@@ -59,7 +60,7 @@ Implementation must not:
 
 If only a few decisions can be made, prioritize:
 
-1. exact wedding incident: dance-related boundary violation vs upsetting speech, then the specific details
+1. exact content of the boundary-crossing wedding speech, especially the private anecdote/detail
 2. exact home-helper identity/name
 3. exact grocery/delivery problem and first scanned mail item
 4. exact wording of Michael's therapy-boundary message
