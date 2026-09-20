@@ -66,3 +66,13 @@ Key safety rule:
 - deterministic code remains authoritative
 
 The active offline hardening work is tracked on `ai-v1-hardening`.
+
+
+## Project handoff
+
+For the current technical + creative state, start with:
+
+- [New chat / tool handoff](./docs/handoffs/NEXT_CHAT_START_HERE.md)
+- [Current status](./docs/handoffs/prototype-v0-current-status.md)
+- [Game idea bible](./docs/GAME_IDEA_BIBLE.md)
+- [Case study notes](./docs/CASE_STUDY_NOTES.md)
