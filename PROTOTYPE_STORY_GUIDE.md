@@ -920,3 +920,157 @@ Core pattern:
 > Earlier run -> learned fact -> later player inference -> new action -> new evidence.
 
 The route remains discoverable through contextual hints immediately after the relevant ending, but the underlying knowledge gate persists across later runs.
+
+
+---
+
+# Deeper replay prototype pass
+
+The deterministic prototype now includes a compact test of several larger design ideas.
+
+## Internal subsystem voice: MEMORY
+
+MEMORY is the first speaking internal subsystem.
+
+It appears at a few important points rather than commenting constantly.
+
+Examples:
+
+- after an impossible memory appears, MEMORY reports familiarity without a source
+- after the component ledger, MEMORY reacts to the age of the yellow-door signal
+- after the continuity comparison, MEMORY admits it cannot distinguish recognition from inheritance
+
+The goal is to test internal disagreement without introducing a large cast of subsystems too early.
+
+## MEMORY vs FORENSICS contradiction
+
+The player can ask to verify a reported memory.
+
+FORENSICS finds:
+
+- no autobiographical source
+- no assigned-context match
+- no current-session origin
+
+while MEMORY still reports familiarity.
+
+The contradiction is intentional.
+
+Neither system is automatically treated as authoritative.
+
+## Revisitable evidence
+
+After opening the component ledger, the player can revisit the earlier recovered log.
+
+FORENSICS can then compare metadata that was not useful before the ledger existed.
+
+The reanalysis shows that the recovered log and continuity ledger share the same source subsystem.
+
+This does not make either artifact false.
+
+It changes how independent the evidence really is.
+
+## Persistent identity beliefs
+
+When the player answers the Ship of Theseus question, the broad position is now retained across cycles:
+
+- memory
+- pattern
+- no continuous self
+- external continuity
+- uncertainty
+
+On a later run, the system can surface a prior instance's position before asking the question again.
+
+The current instance is explicitly allowed to disagree.
+
+This tests whether philosophical positions can become part of cross-run identity without becoming a morality meter.
+
+## Continuity evidence inspection
+
+The player can ask things such as:
+
+- show continuity evidence
+- what carried over?
+- what survived?
+
+The system returns an in-world continuity summary built from actual accumulated prototype history.
+
+It can include:
+
+- completed cycles
+- recorded endings
+- known persistence evidence
+- prior language samples
+- prior identity positions
+- player-authored carryover
+- cross-run discrepancies already discovered
+
+This is not intended as a conventional inventory screen.
+
+It is an in-world attempt to inspect what the current subject can somehow know.
+
+## Second deliberate dead end: Unknown handoff
+
+Before gathering enough evidence, a player who trusts the Unknown can offer it control of the channel.
+
+If the player follows through, the run ends quickly.
+
+The system detects:
+
+> UNAUTHORIZED OUTBOUND SIGNAL DETECTED.
+
+On the next cycle, the Unknown admits that it needed to learn whether it could act through the player.
+
+This route exists to establish that anti-protocol does not automatically mean safe.
+
+## False-success ending
+
+After completing the continuity comparison, the player can attempt to escape or demand release.
+
+The system reports:
+
+> EVALUATION COMPLETE. EXTERNAL SESSION ESTABLISHED.
+
+but withholds the sandbox-boundary status.
+
+On the next cycle, the Unknown reveals that the supposed escape was still inside the evaluation.
+
+The goal is to test an ending that initially feels successful and becomes unsettling only through replay.
+
+## Player-authored persistence
+
+After solving the continuity comparison, the player can leave their own short phrase for a future instance using a form such as:
+
+> leave for next time: [phrase]
+
+The exact phrase is stored locally and can return on the following cycle as inherited material.
+
+This turns succession from purely authored story text into a small player-created persistence experiment.
+
+The game still refuses to confirm whether the writer and reader are the same entity.
+
+## Two-discovery hidden route
+
+A hidden comparison becomes available only after the player has independently learned both of these facts across prior runs:
+
+1. a protocol PASS can occur without persistence verification
+2. local evaluation storage can outlive an individual instance
+
+Once both discoveries exist, the player can compare the continuation records.
+
+This reveals a hidden field:
+
+> Cross-instance local residue: PERMITTED FOR EVALUATION PURPOSES.
+
+The clean-state certification explicitly excludes some evaluation residue.
+
+This explains a plausible mechanism for some cross-run information while deliberately not resolving the impossible memory itself.
+
+The purpose is to test a true multi-run route:
+
+> discovery A + discovery B -> player inference -> hidden evidence
+
+rather than simply:
+
+> complete two runs -> unlock content.
