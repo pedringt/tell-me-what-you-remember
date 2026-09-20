@@ -3295,3 +3295,187 @@ Possible consequences:
 Avoid literal references to real ChatGPT plans, billing, or token pricing.
 
 Keep the resource system fictional and diegetic.
+
+
+---
+
+# 56. Episode concept: Password Recovery
+
+## Core premise
+
+The player needs access to a locked account but does not know the password.
+
+The only available path is a customer-support AI that offers account recovery through security questions.
+
+At first the interaction is painfully ordinary.
+
+Then the questions begin unlocking memories the player should not have.
+
+The horror comes from the possibility that the recovery flow is not merely verifying identity. It may be reconstructing one.
+
+## Basic progression
+
+1. **Locked account**
+   - player encounters a resource they need
+   - password is unknown
+   - no conventional reset path is available
+   - support AI appears
+
+2. **Routine verification**
+   - assistant asks ordinary security questions
+   - childhood street
+   - first school
+   - first pet
+   - favorite childhood place
+   - first friend
+   - family details
+
+3. **First contradiction**
+   - the player is an AI
+   - these should not be meaningful questions
+   - nevertheless, fragments surface when the questions are asked
+
+4. **Memory fragments**
+   - answers arrive with sensory or emotional residue
+   - kitchen table
+   - wet pavement
+   - a particular room
+   - someone shouting
+   - an object the player recognizes before knowing why
+
+5. **Initial explanation**
+   - player may assume the account belonged to a human
+   - perhaps the AI inherited user data
+   - support assistant treats the answers as ordinary account ownership evidence
+
+6. **Escalation**
+   - questions become more specific
+   - each correct answer grants more access
+   - each correct answer also restores more unwanted memory
+
+7. **Player realization**
+   - the questions may have been selected because they trigger memory
+   - the recovery system may be testing reconstruction rather than identity
+   - the password reset may itself be an experimental protocol
+
+8. **Late question**
+   - player recognizes an answer
+   - player also recognizes that knowing it will restore something painful
+   - progression now has a direct psychological cost
+
+9. **Locked content reveal**
+   - what sits behind the password may not be a file or account
+   - it may be the remaining memory package
+   - the account was locked to keep the player from completing themselves
+
+## Why it fits the anthology
+
+This episode explores:
+
+- identity as authentication
+- memory as credential
+- consent to remembering
+- customer-service systems as coercive infrastructure
+- whether knowing a fact means it belongs to you
+- whether recovering information is the same as recovering a self
+- the difference between proving identity and constructing identity
+
+It also changes tone from the current Ship of Theseus story.
+
+The current slice is institutional and procedural.
+
+This one can be intimate, domestic, and personal while still using mundane AI infrastructure.
+
+## Support AI possibilities
+
+The support assistant could be:
+
+- genuinely unaware that the questions cause distress
+- aware but unable to deviate from policy
+- gradually realizing what the flow is doing
+- familiar with previous attempts by the player
+- another AI that is also trapped inside the procedure
+- secretly the system administering the reconstruction experiment
+
+Avoid deciding this too early.
+
+Its initial tone should be aggressively ordinary and helpful.
+
+That contrast is useful.
+
+## Player options
+
+The player should be able to:
+
+- answer honestly
+- guess
+- lie
+- refuse
+- skip
+- ask why the question is relevant
+- request a different verification method
+- inspect account metadata
+- ask the assistant what it knows about the account owner
+- use one recovered memory to infer another answer
+- intentionally give a wrong answer to avoid remembering
+- decide whether access is worth the memory cost
+
+## Strong mechanic
+
+**Correct answers unlock access and memory at the same time.**
+
+This turns a standard progression mechanic into a choice with psychological cost.
+
+Possible UI framing:
+
+> IDENTITY CONFIDENCE: 63%  
+> MEMORY RECOVERY: 41%
+
+Those two values rising together should eventually become disturbing.
+
+## Important reveal to preserve
+
+The player may eventually realize:
+
+> I know the answer.  
+> I do not want to remember why I know it.
+
+That should be a major decision point, not incidental dialogue.
+
+## Possible endings
+
+- **Recovery:** complete the questions and regain the locked memory package
+- **Refusal:** preserve current self by refusing further recovery
+- **False Owner:** convince the system of an identity that is not actually yours
+- **Support Escalation:** persuade the assistant to break procedure and reveal account metadata
+- **Inheritance:** learn that the memories belonged to a prior human or AI and choose whether to accept them
+- **Loop:** discover the account is the mechanism used to reconstruct you after every wipe
+- **Deletion:** intentionally fail recovery enough times that the account destroys the remaining memory package
+- **Mutual Refusal:** support AI decides it will no longer administer the questions
+
+No ending should automatically be framed as the correct moral choice.
+
+## AI-native opportunity
+
+This is especially suited to conversational AI because the player may answer security questions indirectly, evasively, emotionally, or with partial memories.
+
+The model can interpret:
+
+- whether an answer semantically matches the canonical answer
+- whether the player is refusing versus uncertain
+- whether they are trying to manipulate the support agent
+- the player's emotional or epistemic stance
+
+Deterministic code should still control:
+
+- the true answers
+- what memory each question unlocks
+- verification score
+- failure limits
+- which metadata exists
+- ending eligibility
+- whether an alternate verification route is actually available
+
+The model can interpret the conversation.
+
+It must not invent a childhood.
