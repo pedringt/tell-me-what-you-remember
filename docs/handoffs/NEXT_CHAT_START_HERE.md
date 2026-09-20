@@ -75,9 +75,11 @@ Core loop:
 
 Important mechanics/design:
 - opening progression: guided client setup -> ordinary care tasks -> first small inconsistency
-- first physical-world worker is a non-medical home helper who handles groceries/deliveries, light household tasks, mail scanning, and a general first-visit overview
-- Michael sends the early therapy-boundary message after Evelyn repeatedly contacts/pressures him; its meaning is "you have to do this before contacting me again"
-- the earliest cognitive inconsistency is repeated requests/tasks that initially look like ordinary forgetfulness
+- first physical-world worker is **Jenny**, a friendly, bubbly non-medical home helper who handles groceries/deliveries, light household tasks, mail scanning, and a general first-visit overview; over time Evelyn may wear her down and helper turnover can become environmental evidence
+- the first grocery thread uses **butter pecan ice cream**, a favorite of Robert's: Evelyn asks for it, the task is handled, then she asks again whether the AI remembered Robert's ice cream
+- the first scanned mail is a church/community newsletter or invitation that creates a simple social/calendar/transportation task and establishes Evelyn's life outside her children
+- Michael sends the early therapy-boundary message after Evelyn repeatedly contacts/pressures him; working first-build wording is: "Mom, I mean this seriously. You agreed to use the reflection support. You need to do that before you contact me again."
+- the earliest cognitive inconsistency is repeated requests that initially look like ordinary forgetfulness; the Robert-food thread can later become more concerning when Evelyn refers to him in the present tense
 - first build should be deterministic-first; add live AI only where testing reveals concrete rigidity/friction that AI materially improves
 - the player helps build Evelyn's initial care profile, learning provenance and controls before the profile itself becomes suspect
 - diegetic onboarding that instructs both the AI character and human player
