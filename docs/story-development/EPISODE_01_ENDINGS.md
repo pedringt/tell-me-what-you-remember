@@ -30,6 +30,26 @@ Relevant dimensions may include:
 - authenticity of apologies
 - Evelyn's disease progression
 
+## Initial ending targets
+
+For the first substantial build, prioritize **three clear relationship outcomes** before expanding into the full ending matrix:
+
+1. **No reconciliation / both run out of time**
+   - Evelyn reaches the end of life before meaningful repair with either child.
+   - The AI also fails to complete the work it was trying to preserve or facilitate before time/continuity closes the window.
+   - Anna and Michael are left with unresolved material rather than a clean final conversation.
+   - A hospice or end-of-life setting is a strong possible final location, with the AI continuing to accompany Evelyn, but the exact death/end-of-life circumstances are not yet locked.
+
+2. **Reconciliation with one child**
+   - Evelyn achieves meaningful repair with either Anna or Michael while the other relationship remains unresolved, boundary-limited, or closed.
+   - Which child can fill this route, and whether both variants exist in the first build, remains open.
+
+3. **Reconciliation with both children**
+   - Evelyn reaches meaningful repair with Anna and Michael before time runs out.
+   - This must not become a simplistic "golden ending": boundaries can remain, dementia still progresses, the AI may still lose continuity, and reconciliation does not erase past harm.
+
+These are the primary ending targets for the first build. The more specialized ending families below remain useful for the full game and may operate as causes, variations, hidden routes, or later expansions.
+
 ## Reconciliation does not always mean restored relationship
 
 Possible successful outcomes include:
@@ -61,11 +81,13 @@ The wedding should be central to authentic repair.
 
 A strong apology is specific.
 
-Conceptually:
+The apology must eventually be specific to the final wedding incident.
 
-> You asked me not to give that speech. I did it anyway because I wanted the room looking at me.
+The incident is currently open between:
+- a dance-related boundary violation involving a moment Anna intended to have with the groom
+- an upsetting / boundary-crossing speech
 
-Exact wording should remain character-authored later.
+Do not hard-code apology wording until that choice is made.
 
 ## Michael outcomes
 
