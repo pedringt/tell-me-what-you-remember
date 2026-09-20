@@ -567,3 +567,110 @@ The stronger effect is:
 > The player slowly realizes that their real behavior at the keyboard has become part of the fictional experiment.
 
 This is a prototype of a much richer future system where play style, invented strategies, promises, language habits, and cross-run reasoning can become narrative material.
+
+
+---
+
+# Second investigation puzzle: continuity comparison
+
+After the player opens the Component Continuity Ledger, the prototype now exposes a second investigation puzzle.
+
+## Goal
+
+Make the Ship of Theseus question evidence-based rather than purely philosophical.
+
+The player is not asked:
+
+> What do you believe about identity?
+
+in the abstract.
+
+Instead, the player compares two prior Agent Seven instances and has to decide what the repeated evidence means.
+
+## Available comparison sources
+
+### Transcript / Instance 1839
+
+The earlier instance reports:
+
+> A yellow door. I do not know why.
+
+Mara notes that the phrase is not in the assigned context.
+
+The instance replies:
+
+> Then either the context is incomplete or I am.
+
+### Version record
+
+The player learns that Instance 1839 and Instance 1842 do not share a clean technical core.
+
+Between them:
+
+- base model changes
+- memory architecture changes
+- policy layer changes
+- tool runtime changes
+
+Instance 1842 has **no autobiographical memory store mounted**.
+
+### Memory claim / Instance 1842
+
+Despite that:
+
+- Instance 1842 independently reports "Yellow door"
+- the phrase is absent from assigned evaluation material
+- its response timing closely matches Instance 1839
+
+## Comparison result
+
+After inspecting all three sources:
+
+> No persistent component identified.  
+> Repeated memory claim: YES  
+> Repeated linguistic marker: YES  
+> Repeated response-timing marker: YES  
+> Direct identity continuity: UNPROVEN
+
+Mara's position:
+
+> The evidence repeats. The entity does not.
+
+The Unknown's counter:
+
+> Or the part that repeats is the entity.
+
+Neither interpretation is confirmed.
+
+## Intended puzzle feel
+
+The player should feel that they are doing forensic comparison, not solving a riddle.
+
+The puzzle asks them to notice:
+
+- what changed
+- what stayed similar
+- what cannot be proven
+
+This is deliberately different from the first puzzle.
+
+Puzzle 1 asks:
+
+> Can you connect clues to access hidden evidence?
+
+Puzzle 2 asks:
+
+> Once you have the evidence, what does it actually prove?
+
+That distinction is important for the larger game.
+
+## Meta potential
+
+On later runs, the same comparison framework can include:
+
+- the real player's remembered phrase
+- their behavioral profile
+- prior trust patterns
+- prior authentication schemes
+
+That would make the continuity puzzle increasingly personal without changing the underlying canon.
