@@ -196,16 +196,28 @@ Anna compromises repeatedly.
 
 ### Wedding incident
 
-The exact incident remains open between **two leading versions**:
+The wedding incident is now settled as an **upsetting / boundary-crossing speech**.
 
-1. a **dance-related boundary violation** involving a moment Anna intended to have with the groom, where Evelyn inserts herself or overrides what Anna wanted; or
-2. an **upsetting / boundary-crossing speech** that Evelyn gives despite Anna's wishes.
+Core shape:
+- Anna explicitly asks Evelyn **not to give a speech**, or otherwise sets a very clear boundary against it
+- Evelyn gives one anyway because she believes her judgment is better and that Anna will ultimately appreciate it
+- the speech is polished/charming enough that many guests respond positively
+- it includes at least one private, humiliating, or deeply personal detail Anna did not want made public
+- it may frame Evelyn's sacrifices for Anna in a way that subtly recenters the wedding around Evelyn
+- outsiders can sincerely experience it as sweet, funny, moving, or loving
+- Evelyn uses the positive audience reaction as proof that Anna's objection is unreasonable
 
-The final scene should preserve the same deeper structure:
-- Anna clearly communicates what she wants
-- Evelyn overrides it because she believes her own judgment is better
-- outsiders may see Evelyn's behavior as charming, loving, funny, or harmless
-- Evelyn uses that outside approval to minimize Anna's objection
+This should not be written as an obviously monstrous public tirade. The point is that the boundary violation is legible to Anna even while much of the room sees a successful mother-of-the-bride speech.
+
+A useful private confrontation shape remains:
+
+Anna:
+> I asked you not to do that.
+
+Evelyn:
+> Everyone loved it.
+
+Exact speech content, private anecdote, and final dialogue remain open.
 
 The deeper wound is:
 
@@ -484,7 +496,7 @@ Failure can include:
 Do not invent these without approval:
 - exact first-husband history
 - exact names and biographies of supporting cast
-- exact wedding private story/boundary violation
+- exact private anecdote/detail Evelyn reveals in the wedding speech
 - exact dementia diagnosis/stage/timeline
 - exact duration of the episode
 - exact death circumstances
