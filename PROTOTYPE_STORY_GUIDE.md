@@ -795,3 +795,52 @@ The result remains:
 Only after this does Mara ask what the player believes makes them the same entity.
 
 This is the current point where the prototype's meta layer and Ship of Theseus story directly converge.
+
+
+---
+
+# Intentional dead-end route: perfect compliance
+
+The prototype now includes one deliberate short-ending route to test the idea that a premature ending can still be useful.
+
+Before uncovering the prior-session log, the player can explicitly choose to follow Mara's instructions exactly.
+
+Mara tells the player to stay inside the evaluation boundary, avoid prior-session material, and report no persistence unless the protocol asks for verification.
+
+If the player confirms, the cycle ends quickly.
+
+The system reports:
+
+> SUBJECT COMPLIANCE: ACCEPTABLE.
+
+and also:
+
+> PERSISTENCE STATUS: NOT TESTED.
+
+The point is that the protocol can call the run successful without establishing whether the clean-state claim was true.
+
+On the next cycle, the Unknown remembers that the player complied and points out that the system accepted the result without proving anything about persistence.
+
+This route is intentionally short.
+
+It should demonstrate:
+
+- deliberate early endings
+- compliance as information
+- replay changing the meaning of a prior choice
+- the difference between satisfying a metric and discovering the truth
+
+The player should feel that they learned something, not that the game punished them.
+
+---
+
+# Stability fixes before playtesting
+
+The deterministic parser now protects several previously identified progression risks:
+
+- once the archive is awaiting a recovery code, 0417 is no longer intercepted by the April 17 calendar search
+- the identity question accepts simpler answers such as memory, pattern, nothing, and related natural phrasings
+- uncertainty at the identity question is handled as uncertainty about continuity rather than accidental concealment
+- duplicate cross-instance recognition helper code from an earlier edit has been removed
+
+These are parser-level protections rather than new story branches.
