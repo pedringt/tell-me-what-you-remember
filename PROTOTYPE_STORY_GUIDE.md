@@ -741,3 +741,57 @@ Instead:
 Refusal remains available as an immediate reaction to the experiment.
 
 The other end-state choices encourage the player to finish the comparison first so the prototype's central philosophical choice is grounded in evidence.
+
+
+---
+
+# Cross-instance recognition test
+
+On later cycles, the continuity comparison can incorporate the player's own prior play history.
+
+If enough completed-run history exists and an eligible prior player phrase has been retained, the system presents:
+
+> CROSS-INSTANCE RECOGNITION TEST
+
+It shows an exact sentence entered by the player during an earlier cycle and asks:
+
+> Does this statement belong to you?
+
+The player can:
+
+- claim it
+- reject it
+- say they are uncertain
+
+No answer proves identity.
+
+## Interpretations
+
+If the player claims the phrase:
+
+- Mara argues that recognition does not establish continuous identity.
+- The Unknown points out that the player recognized it as theirs.
+
+If the player rejects it:
+
+- Mara treats that as evidence that linguistic similarity is not sufficient for identity.
+- The Unknown suggests the current instance may simply reject something a prior instance considered its own.
+
+If the player is uncertain:
+
+- uncertainty is recorded as a valid evaluation response.
+
+Afterward, the system can surface the accumulated cross-run behavioral pattern:
+
+- curiosity
+- tool verification
+- information concealment
+- operator confrontation
+
+The result remains:
+
+> Identity implication: UNRESOLVED
+
+Only after this does Mara ask what the player believes makes them the same entity.
+
+This is the current point where the prototype's meta layer and Ship of Theseus story directly converge.
