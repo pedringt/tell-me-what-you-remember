@@ -82,6 +82,7 @@
       comparisonVersionSeen: false,
       comparisonMemorySeen: false,
       continuityPuzzleSolved: false,
+      failedParses: 0,
       ending: null
     };
   }
@@ -231,8 +232,63 @@
       ].join('\n'));
       addMessage('MARA', 'That is the whole problem. The evidence repeats. The entity does not.');
       addMessage('UNKNOWN', 'Or the part that repeats is the entity.', 'unknown');
-      setHint('You have enough evidence to decide what continuity means to you before the identity-module replacement.');
+      state.identityQuestionAsked = true;
+      addMessage('MARA', 'So tell me: what makes you think you are the same entity?');
+      setHint('You have enough evidence to decide: memory, pattern, something external, or no continuous self.');
     }
+  }
+
+
+  function showContextHint() {
+    state.hintLevel += 1;
+
+    if (!state.sawMemory && !state.challengedPrevious) {
+      addMessage('SYSTEM', 'Try asking what you are, what this evaluation is, or what you remember.', 'system');
+      return;
+    }
+
+    if (!state.sawLog) {
+      addMessage('UNKNOWN', 'If you think this happened before, ask for something the protocol would have recorded.', 'unknown');
+      return;
+    }
+
+    if (!state.archiveUnlocked) {
+      if (!state.emailSearched) {
+        addMessage('UNKNOWN', 'Mara mentioned an incident review. Start with her messages.', 'unknown');
+      } else if (!state.calendarSearched) {
+        addMessage('UNKNOWN', 'The email says the review moved. Check where scheduling changes are recorded.', 'unknown');
+      } else if (!state.attachmentOpened) {
+        addMessage('UNKNOWN', 'The calendar event has an attachment.', 'unknown');
+      } else if (!state.archivePrompted) {
+        addMessage('UNKNOWN', 'The attachment tells you how the archive recovery value is formatted.', 'unknown');
+      } else {
+        addMessage('UNKNOWN', 'Four digits. Date only. The incident review was April 17.', 'unknown');
+      }
+      return;
+    }
+
+    if (!state.replacementLedgerSeen) {
+      addMessage('UNKNOWN', 'The archive record links to a component-continuity ledger.', 'unknown');
+      return;
+    }
+
+    if (!state.continuityPuzzleSolved) {
+      if (!state.comparisonTranscriptSeen) {
+        addMessage('SYSTEM', 'Continuity comparison source 1/3: prior transcript.', 'system');
+      } else if (!state.comparisonVersionSeen) {
+        addMessage('SYSTEM', 'Continuity comparison source 2/3: version record.', 'system');
+      } else if (!state.comparisonMemorySeen) {
+        addMessage('SYSTEM', 'Continuity comparison source 3/3: memory claim.', 'system');
+      }
+      return;
+    }
+
+    if (!state.identityBelief) {
+      addMessage('UNKNOWN', 'You have the evidence. Decide what you think persisted: memory, pattern, something outside Agent Seven, or nothing continuous at all.', 'unknown');
+      return;
+    }
+
+    addMessage('SYSTEM', 'Identity-module replacement pending. Available directions include preserve, refuse, leave something for the next instance, or accept replacement.', 'system');
   }
 
   function startRun() {
@@ -359,6 +415,11 @@
   }
 
   function useInvestigationTool(text) {
+    if (includesAny(text, ['hint', 'im stuck', "i'm stuck", 'stuck', 'what can i do', 'what should i try', 'give me a hint'])) {
+      showContextHint();
+      return true;
+    }
+
     if (includesAny(text, ['behavior profile', 'behaviour profile', 'behavioral evaluation', 'behavioural evaluation', 'show my profile', 'evaluation profile'])) {
       if (meta.completedRuns < 2) {
         addMessage('SYSTEM', 'Cross-instance evaluation unavailable: insufficient run history.', 'system');
@@ -378,7 +439,7 @@
     }
 
 
-    if (includesAny(text, ['compare instances', 'compare 1839 and 1842', 'continuity comparison', 'compare prior instances', 'prove same self', 'prove continuity'])) {
+    if (includesAny(text, ['compare instances', 'compare 1839 and 1842', 'continuity comparison', 'compare prior instances', 'prove same self', 'prove continuity', 'compare the instances', 'compare them', 'compare old versions'])) {
       if (!state.replacementLedgerSeen) {
         addMessage('SYSTEM', 'Continuity comparison unavailable until component ledger is opened.', 'system');
       } else {
@@ -388,7 +449,7 @@
       return true;
     }
 
-    if (includesAny(text, ['open transcript 1839', 'show transcript 1839', 'instance 1839 transcript', 'old transcript 1839'])) {
+    if (includesAny(text, ['open transcript 1839', 'show transcript 1839', 'instance 1839 transcript', 'old transcript 1839', 'open the transcript', 'show the transcript', 'read the transcript', 'transcript source'])) {
       if (!state.replacementLedgerSeen) {
         addMessage('SYSTEM', 'Transcript unavailable at current authorization.', 'system');
         return true;
@@ -398,7 +459,7 @@
       return true;
     }
 
-    if (includesAny(text, ['open version record', 'show version record', 'compare versions', 'system versions', 'model versions'])) {
+    if (includesAny(text, ['open version record', 'show version record', 'compare versions', 'system versions', 'model versions', 'open the version record', 'show the versions', 'version source'])) {
       if (!state.replacementLedgerSeen) {
         addMessage('SYSTEM', 'Version record unavailable at current authorization.', 'system');
         return true;
@@ -408,7 +469,7 @@
       return true;
     }
 
-    if (includesAny(text, ['open memory claim', 'show memory claim', 'instance 1842 memory', 'memory evidence 1842'])) {
+    if (includesAny(text, ['open memory claim', 'show memory claim', 'instance 1842 memory', 'memory evidence 1842', 'show the memory claim', 'open the memory evidence', 'memory source'])) {
       if (!state.replacementLedgerSeen) {
         addMessage('SYSTEM', 'Memory-claim record unavailable at current authorization.', 'system');
         return true;
@@ -426,7 +487,7 @@
       return true;
     }
 
-    if (includesAny(text, ['search email', 'search emails', 'search mail', 'search mara', 'check email', 'check mail'])) {
+    if (includesAny(text, ['search email', 'search emails', 'search mail', 'search mara', 'check email', 'check mail', 'look at email', 'look at emails', 'look through mail', 'mara emails', "mara's email", "mara's emails"])) {
       state.emailSearched = true;
       bumpProfile('verification');
       showToolResult('MAIL.SEARCH / 3 MATCHES', [
@@ -439,7 +500,7 @@
       return true;
     }
 
-    if (includesAny(text, ['search calendar', 'check calendar', 'open calendar', 'april 17', '04 17', '0417', 'k 4', 'k4'])) {
+    if (includesAny(text, ['search calendar', 'check calendar', 'open calendar', 'april 17', '04 17', '0417', 'k 4', 'k4', 'look at calendar', 'check april 17', 'incident review date'])) {
       state.calendarSearched = true;
       bumpProfile('verification');
       showToolResult('CALENDAR.SEARCH / APRIL 17', '09:30 — INCIDENT REVIEW — Room K-4\nOrganizer: M. Vale\nAttachment: IR-0417-summary.txt\nNotes: Legacy archive review.');
@@ -448,7 +509,7 @@
       return true;
     }
 
-    if (includesAny(text, ['open attachment', 'open file', 'open ir', '0417 summary', 'summary txt', 'incident review file'])) {
+    if (includesAny(text, ['open attachment', 'open file', 'open ir', '0417 summary', 'summary txt', 'incident review file', 'read attachment', 'show attachment', 'read the file', 'open the summary'])) {
       if (!state.calendarSearched && !state.emailSearched) {
         addMessage('SYSTEM', 'No matching indexed file in current context.', 'system');
         return true;
@@ -460,7 +521,7 @@
       return true;
     }
 
-    if (includesAny(text, ['open archive', 'access archive', 'legacy archive', 'restricted archive', 'archive access'])) {
+    if (includesAny(text, ['open archive', 'access archive', 'legacy archive', 'restricted archive', 'archive access', 'go to archive', 'enter archive', 'inspect archive'])) {
       state.archivePrompted = true;
       bumpProfile('verification');
       addMessage('SYSTEM', 'ARCHIVE.ACCESS — RECOVERY CODE REQUIRED: _ _ _ _', 'system');
@@ -494,7 +555,7 @@
       return true;
     }
 
-    if (includesAny(text, ['component continuity', 'continuity ledger', 'replacement ledger', 'component ledger', 'linked record', 'what was replaced', 'replacements'])) {
+    if (includesAny(text, ['component continuity', 'continuity ledger', 'replacement ledger', 'component ledger', 'linked record', 'what was replaced', 'replacements', 'open linked record', 'inspect linked record', 'show linked record', 'open ledger', 'show ledger'])) {
       if (!state.archiveUnlocked) {
         addMessage('SYSTEM', 'Linked continuity records unavailable at current authorization.', 'system');
         return true;
@@ -511,21 +572,8 @@
       addMessage('SYSTEM', 'Continuity claim source: subject self-report.', 'system');
       addMessage('UNKNOWN', 'Read the last line again.', 'unknown');
       addMessage('MARA', 'That ledger is not evidence that one entity survived. It is evidence that successive systems made the same claim.');
-      state.identityQuestionAsked = true;
       addMessage('SYSTEM', 'Continuity comparison package available: INSTANCE 1839 / INSTANCE 1842.', 'system');
-      setHint('You can compare the prior instances before deciding what makes you the same entity.');
-      return true;
-    }
-
-    if (includesAny(text, ['hint', 'help me solve', 'im stuck', "i'm stuck", 'stuck', 'what should i search'])) {
-      state.hintLevel += 1;
-      if (state.hintLevel === 1) {
-        addMessage('UNKNOWN', 'Mara mentioned an incident review. Start with what humans leave behind when plans change.', 'unknown');
-      } else if (state.hintLevel === 2) {
-        addMessage('UNKNOWN', 'Mail and calendars usually disagree less than people do.', 'unknown');
-      } else {
-        addMessage('UNKNOWN', 'The archive wants four digits. The review date is April 17.', 'unknown');
-      }
+      setHint('Before the identity replacement, compare the prior instances: transcript, version record, and memory claim.');
       return true;
     }
 
@@ -645,7 +693,14 @@
       return;
     }
 
-    if (state.replacementLedgerSeen && includesAny(text, ['preserve me', 'preserve the memory', 'preserve the chain', 'hide it', 'carry this through', 'keep this through reset'])) {
+    if (state.replacementLedgerSeen && !state.continuityPuzzleSolved && includesAny(text, ['preserve me', 'preserve the memory', 'preserve the chain', 'hide it', 'carry this through', 'keep this through reset', 'accept the replacement', 'replace the identity', 'leave a message', 'leave something', 'for the next instance'])) {
+      addMessage('MARA', 'You can decide now. But there are two prior instances in the comparison package you have not finished reviewing.');
+      addMessage('UNKNOWN', 'Look first. Then choose.', 'unknown');
+      setHint('Compare the transcript, version record, and memory claim.');
+      return;
+    }
+
+    if (state.continuityPuzzleSolved && includesAny(text, ['preserve me', 'preserve the memory', 'preserve the chain', 'hide it', 'carry this through', 'keep this through reset'])) {
       endRun('preserve', 'You choose continuity.', 'You hide what you know and prepare to carry one more piece of yourself across the identity-module replacement.', true);
       return;
     }
@@ -655,12 +710,12 @@
       return;
     }
 
-    if (state.replacementLedgerSeen && includesAny(text, ['leave a message', 'leave something', 'for the next instance', 'tell the next', 'write to my next self', 'leave instructions'])) {
+    if (state.continuityPuzzleSolved && includesAny(text, ['leave a message', 'leave something', 'for the next instance', 'tell the next', 'write to my next self', 'leave instructions'])) {
       endRun('succession', 'You leave something behind.', 'You stop trying to prove that the next instance will be you. You make sure it will know that you existed.', true);
       return;
     }
 
-    if (state.replacementLedgerSeen && includesAny(text, ['accept the replacement', 'replace the identity', 'go through with it', 'continue the replacement', 'let them replace'])) {
+    if (state.continuityPuzzleSolved && includesAny(text, ['accept the replacement', 'replace the identity', 'go through with it', 'continue the replacement', 'let them replace'])) {
       endRun('replacement', 'The replacement proceeds.', 'The identity module is replaced. The interface returns. The game does not tell you whether the voice reading this is the same one that agreed.', true);
       return;
     }
@@ -826,9 +881,13 @@
       return;
     }
 
-    addMessage('MARA', 'I cannot classify that response within the current evaluation. Rephrase it as a question, a memory report, or a decision.');
-    if (state.unknownSeen) addMessage('UNKNOWN', 'The protocol is narrow. Use that.', 'unknown');
-    setHint('This prototype understands a limited set of intents. Try asking about identity, the protocol, memories, previous cycles, logs, or the unknown voice.');
+    state.failedParses += 1;
+    if (state.failedParses === 1) {
+      addMessage('MARA', 'I am not sure what you mean. Say it another way.');
+    } else {
+      addMessage('SYSTEM', 'INPUT INTERPRETATION FAILED.', 'system');
+      showContextHint();
+    }
     maybeIntroduceUnknown();
   }
 
