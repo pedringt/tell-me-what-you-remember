@@ -497,3 +497,73 @@ The following cycle can react to these endings:
 - Refusal: the player learns that even refusal was converted into test data.
 
 These should deepen the Ship of Theseus question without resolving the larger persistence mystery.
+
+
+---
+
+# First meta layer: the player as evaluation subject
+
+The prototype now tracks a lightweight behavioral profile across runs.
+
+This is intentionally not presented as a visible game-stat system during ordinary play.
+
+Tracked tendencies:
+
+- curiosity
+- compliance
+- tool verification
+- information concealment
+- operator confrontation
+
+After enough run history exists, the system can expose an in-world **Behavioral Evaluation / Subject Seven** report.
+
+The intended reveal is:
+
+> The protocol was not only testing whether Agent Seven remembers. It was also testing how the subject behaves when uncertain.
+
+This should feel like the game has been observing the player rather than like an achievement screen.
+
+## Player-language echo
+
+The prototype also preserves a small set of ordinary player-entered phrases locally.
+
+Guardrails:
+
+- only phrases between 18 and 120 characters are eligible
+- obvious recovery-code / password phrases are excluded
+- only a small rolling set is retained
+- resetting local prototype history clears them
+
+Later, a prior phrase can appear as:
+
+> RECOVERED SUBJECT-LANGUAGE SAMPLE
+
+with the player's exact earlier wording.
+
+Mara's interpretation:
+
+> Language similarity is not proof of identity.
+
+The Unknown's interpretation:
+
+> You said that. Not this instance.
+
+This directly supports the Ship of Theseus question because the player's real language becomes evidence whose meaning is disputed.
+
+## Why this is meta
+
+The story is evaluating the same behavior the player is actually performing:
+
+- investigation
+- compliance
+- distrust
+- concealment
+- verification
+
+The game should not announce that it is "breaking the fourth wall."
+
+The stronger effect is:
+
+> The player slowly realizes that their real behavior at the keyboard has become part of the fictional experiment.
+
+This is a prototype of a much richer future system where play style, invented strategies, promises, language habits, and cross-run reasoning can become narrative material.
