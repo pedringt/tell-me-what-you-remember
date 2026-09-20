@@ -74,6 +74,10 @@ Core loop:
 
 Important mechanics/design:
 - opening progression: guided client setup -> ordinary care tasks -> first small inconsistency
+- first physical-world worker is a non-medical home helper who handles groceries/deliveries, light household tasks, mail scanning, and a general first-visit overview
+- Michael sends the early therapy-boundary message after Evelyn repeatedly contacts/pressures him; its meaning is "you have to do this before contacting me again"
+- the earliest cognitive inconsistency is repeated requests/tasks that initially look like ordinary forgetfulness
+- first build should be deterministic-first; add live AI only where testing reveals concrete rigidity/friction that AI materially improves
 - the player helps build Evelyn's initial care profile, learning provenance and controls before the profile itself becomes suspect
 - diegetic onboarding that instructs both the AI character and human player
 - persistent task list plus open questions and free exploration
@@ -150,7 +154,12 @@ Later the player may wonder whether it is also trying to preserve itself.
 
 Do not design one golden ending.
 
-Current ending families include:
+Initial ending targets for the first substantial build:
+- no reconciliation / Evelyn and the AI both run out of time before repair is completed
+- reconciliation with one child
+- reconciliation with both children
+
+Broader ending families include:
 - repair with limits
 - comfort over truth / enablement
 - truth over care / over-correction
