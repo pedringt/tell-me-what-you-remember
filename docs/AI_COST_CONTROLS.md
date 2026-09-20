@@ -52,3 +52,12 @@ Possible later routing:
 - cost of a replay-heavy session
 
 Never optimize solely for the cheapest model if false high-impact actions increase.
+
+
+## Gateway authentication
+
+Production should use the Vercel AI SDK with a plain AI Gateway model string such as `openai/gpt-5.6-luna`.
+
+On Vercel deployments, the AI SDK can use Vercel OIDC for AI Gateway authentication automatically. Application code should not assume `VERCEL_OIDC_TOKEN` is exposed as a normal environment variable and should not manually build the Gateway Authorization header for this path.
+
+For local development outside Vercel, an `AI_GATEWAY_API_KEY` may still be used if needed.
