@@ -26,20 +26,21 @@ Do **not** merge to `main`, deploy production, or publish anything unless Paige 
 9. `docs/story-development/EPISODE_01_ACTION_REGISTRY.md`
 10. `docs/story-development/EPISODE_01_NPC_KNOWLEDGE_CONTRACTS.md`
 11. `docs/story-development/EPISODE_01_EVIDENCE_AND_PUZZLE_MAP.md`
-12. `docs/story-development/CARE_AI_RULES.md`
-13. `docs/story-development/AI_MEMORY_AND_CONTEXT.md`
-14. `docs/story-development/EPISODE_01_ENDINGS.md`
-15. `docs/story-development/EPISODE_01_ROUTE_TEST_MATRIX.md`
-16. `docs/story-development/EPISODE_01_OPEN_DECISIONS.md`
-17. `docs/QA_AND_EVAL_STRATEGY.md`
-18. `PROTOTYPE_STORY_GUIDE.md`
-19. `docs/STORY_FLOWS.md`
-20. `docs/CASE_STUDY_NOTES.md`
-21. `docs/AI_ACTION_AUDIT.md`
-22. `docs/AI_DIALOGUE_CANON.md`
-23. `docs/AI_CANON_STATE_PACKET.md`
-24. `docs/AI_V1_PLAYTEST.md`
-25. `docs/ai-intent-evals.json`
+12. `docs/story-development/EPISODE_01_ARTIFACT_INVENTORY.md`
+13. `docs/story-development/CARE_AI_RULES.md`
+14. `docs/story-development/AI_MEMORY_AND_CONTEXT.md`
+15. `docs/story-development/EPISODE_01_ENDINGS.md`
+16. `docs/story-development/EPISODE_01_ROUTE_TEST_MATRIX.md`
+17. `docs/story-development/EPISODE_01_OPEN_DECISIONS.md`
+18. `docs/QA_AND_EVAL_STRATEGY.md`
+19. `PROTOTYPE_STORY_GUIDE.md`
+20. `docs/STORY_FLOWS.md`
+21. `docs/CASE_STUDY_NOTES.md`
+22. `docs/AI_ACTION_AUDIT.md`
+23. `docs/AI_DIALOGUE_CANON.md`
+24. `docs/AI_CANON_STATE_PACKET.md`
+25. `docs/AI_V1_PLAYTEST.md`
+26. `docs/ai-intent-evals.json`
 
 ## Current creative direction
 
@@ -271,6 +272,7 @@ The new implementation-prep package also includes:
 - `EPISODE_01_ACTION_REGISTRY.md` - bounded natural-language action space and risk gates
 - `EPISODE_01_NPC_KNOWLEDGE_CONTRACTS.md` - knowledge/boundary rules for generated dialogue
 - `EPISODE_01_EVIDENCE_AND_PUZZLE_MAP.md` - required discovery arcs and dependency rules
+- `EPISODE_01_ARTIFACT_INVENTORY.md` - stable evidence objects and which details are still placeholder/open
 - `EPISODE_01_ROUTE_TEST_MATRIX.md` - automated route/persona coverage
 - `EPISODE_01_OPEN_DECISIONS.md` - creative choices that must remain Paige's
 
