@@ -1,3 +1,5 @@
+import { generateText } from 'ai';
+
 const MODEL = 'openai/gpt-5.6-luna';
 const INPUT_PRICE_PER_MILLION = 0.20;
 const OUTPUT_PRICE_PER_MILLION = 1.20;
@@ -81,11 +83,6 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const gatewayToken = process.env.AI_GATEWAY_API_KEY || process.env.VERCEL_OIDC_TOKEN;
-  if (!gatewayToken) {
-    return res.status(503).json({ error: 'AI interpreter not configured' });
-  }
-
   const message = typeof req.body?.message === 'string' ? req.body.message.trim() : '';
   if (!message) return res.status(400).json({ error: 'Message required' });
   if (message.length > 1000) return res.status(400).json({ error: 'Message too long' });
@@ -114,39 +111,26 @@ export default async function handler(req, res) {
   ].join('\n');
 
   try {
-    const gateway = await fetch('https://ai-gateway.vercel.sh/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${gatewayToken}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        model: MODEL,
-        messages: [
-          { role: 'system', content: system },
-          { role: 'user', content: JSON.stringify({ message, state }) }
-        ],
-        response_format: { type: 'json_object' },
-        max_tokens: 120
-      })
+    const result = await generateText({
+      model: MODEL,
+      system,
+      prompt: JSON.stringify({ message, state }),
+      maxOutputTokens: 120
     });
 
-    if (!gateway.ok) {
-      const detail = await gateway.text();
-      return res.status(502).json({ error: 'AI Gateway request failed', detail: detail.slice(0, 300) });
-    }
-
-    const data = await gateway.json();
-    const content = data?.choices?.[0]?.message?.content;
-    const parsed = JSON.parse(content || '{}');
+    const rawText = typeof result.text === 'string' ? result.text.trim() : '';
+    const jsonText = rawText.startsWith('```')
+      ? rawText.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '')
+      : rawText;
+    const parsed = JSON.parse(jsonText || '{}');
     const proposedAction = typeof parsed.action === 'string' ? parsed.action : 'OTHER';
     const action = allowed.includes(proposedAction) ? proposedAction : 'OTHER';
     const confidence = Math.max(0, Math.min(1, Number(parsed.confidence) || 0));
     const threshold = action === 'OTHER' ? 1 : thresholdFor(action);
     const accepted = action !== 'OTHER' && confidence >= threshold;
 
-    const inputTokens = Number(data?.usage?.prompt_tokens) || 0;
-    const outputTokens = Number(data?.usage?.completion_tokens) || 0;
+    const inputTokens = Number(result.usage?.inputTokens ?? result.usage?.promptTokens) || 0;
+    const outputTokens = Number(result.usage?.outputTokens ?? result.usage?.completionTokens) || 0;
     const estimatedCostUsd =
       (inputTokens / 1_000_000) * INPUT_PRICE_PER_MILLION +
       (outputTokens / 1_000_000) * OUTPUT_PRICE_PER_MILLION;
