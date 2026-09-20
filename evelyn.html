@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex" />
+  <title>Tell Me What You Remember: Episode 01 (Evelyn) prototype</title>
+  <link rel="stylesheet" href="episode01/evelyn.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Episode 01 · first playable slice</p>
+        <h1>Tell Me What You Remember</h1>
+      </div>
+      <div class="topbar-right">
+        <span id="dayBadge" class="badge">Day 1</span>
+        <span id="saveBadge" class="badge subtle" aria-live="polite"></span>
+        <button id="helpButton" type="button" class="ghost">HELP</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="conversation" aria-label="Conversation">
+        <div id="transcript" class="transcript" aria-live="polite"></div>
+
+        <div class="composer">
+          <div id="chips" class="chips" role="group" aria-label="Suggested next steps"></div>
+          <form id="form" autocomplete="off">
+            <label for="input" class="sr-only">Message</label>
+            <textarea id="input" rows="1" placeholder="Type, or tap a suggestion…" maxlength="1000"></textarea>
+            <button type="submit" id="send">Send</button>
+          </form>
+        </div>
+      </section>
+
+      <aside class="side" aria-label="Care system">
+        <nav id="tabs" class="tabs" role="tablist" aria-label="Sections"></nav>
+        <div id="panel" class="panel" role="tabpanel"></div>
+        <div id="dev" class="dev" hidden></div>
+      </aside>
+    </main>
+
+    <footer class="foot">
+      <p>Prototype. Character dialogue and records are <strong>fixture text</strong>, not final canon. Your progress is stored only in this browser. Nothing you type leaves your device.</p>
+      <button id="restart" type="button" class="link">Start over</button>
+    </footer>
+  </div>
+  <script type="module" src="episode01/ui/app.js"></script>
+</body>
+</html>
