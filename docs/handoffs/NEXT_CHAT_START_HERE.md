@@ -17,14 +17,15 @@ Do **not** merge to `main`, deploy production, or publish anything unless Paige 
 
 1. `docs/handoffs/prototype-v0-current-status.md`
 2. `docs/GAME_IDEA_BIBLE.md`
-3. `PROTOTYPE_STORY_GUIDE.md`
-4. `docs/STORY_FLOWS.md`
-5. `docs/CASE_STUDY_NOTES.md`
-6. `docs/AI_ACTION_AUDIT.md`
-7. `docs/AI_DIALOGUE_CANON.md`
-8. `docs/AI_CANON_STATE_PACKET.md`
-9. `docs/AI_V1_PLAYTEST.md`
-10. `docs/ai-intent-evals.json`
+3. `docs/story-development/RESEARCH_THEMES_AND_EPISODE_SEEDS.md`
+4. `PROTOTYPE_STORY_GUIDE.md`
+5. `docs/STORY_FLOWS.md`
+6. `docs/CASE_STUDY_NOTES.md`
+7. `docs/AI_ACTION_AUDIT.md`
+8. `docs/AI_DIALOGUE_CANON.md`
+9. `docs/AI_CANON_STATE_PACKET.md`
+10. `docs/AI_V1_PLAYTEST.md`
+11. `docs/ai-intent-evals.json`
 
 ## Current situation
 
@@ -99,7 +100,9 @@ Before generated dialogue:
 
 ## If continuing story/design work
 
-Use `docs/GAME_IDEA_BIBLE.md` as the idea bank.
+Use `docs/GAME_IDEA_BIBLE.md` as the primary living idea bank.
+
+Also read `docs/story-development/RESEARCH_THEMES_AND_EPISODE_SEEDS.md` for the expanded research-backed theme map, memory/dependency ideas, identity/selfhood notes, loneliness, digital immortality/Ozymandias material, new episode seeds, anthology-cohesion model, and inspiration compass. Treat that file as **story seed / research bank**, not canon.
 
 Preserve the distinction between:
 
