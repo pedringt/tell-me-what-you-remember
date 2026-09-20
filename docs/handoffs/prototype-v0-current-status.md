@@ -73,11 +73,11 @@ Production has not yet received the long-term authentication fix.
 
 `ai-v1-hardening` contains the prepared next AI version.
 
-At this handoff it is **19 commits ahead and 1 commit behind `main`**.
+`main` has been merged into the branch, so it is no longer behind `main`. The only commit that came from `main` was the empty production retry commit described above (original merge base `2c8001cc58336d7f782b72fbfe3996c45f4108ec`).
 
-The one commit behind is the empty production retry commit described above. The merge base is `2c8001cc58336d7f782b72fbfe3996c45f4108ec`.
+The branch is ahead of `main` by the hardening work and docs. Check the current count with `git rev-list --left-right --count origin/main...ai-v1-hardening` rather than trusting a number written in a doc; it goes stale with every commit.
 
-Before promotion, reconcile that harmless divergence rather than force-updating anything.
+The divergence was reconciled by a normal merge, not a force-update.
 
 ### AI intent hardening
 
