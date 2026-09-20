@@ -5,109 +5,128 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Intent Eval — Tell Me What You Remember</title>
   <style>
-    body{font-family:system-ui,sans-serif;max-width:1100px;margin:40px auto;padding:0 20px;background:#111;color:#eee}
+    body{font-family:system-ui,sans-serif;max-width:1180px;margin:40px auto;padding:0 20px;background:#111;color:#eee}
     button{padding:10px 16px;font:inherit;cursor:pointer}
     .summary{display:flex;gap:24px;flex-wrap:wrap;margin:20px 0;padding:16px;background:#1d1d1d;border-radius:8px}
     table{width:100%;border-collapse:collapse;font-size:14px}
     th,td{text-align:left;padding:9px;border-bottom:1px solid #333;vertical-align:top}
-    .pass{color:#8ee28e}.fail{color:#ff9090}.pending{color:#aaa}
-    code{white-space:nowrap}
-    .note{color:#bbb;line-height:1.5}
+    .pass{color:#8ee28e}.fail{color:#ff9090}.danger{color:#ff5f5f;font-weight:700}.pending{color:#aaa}
+    code{white-space:nowrap}.note{color:#bbb;line-height:1.5}.gate{padding:12px;margin:16px 0;border:1px solid #444;border-radius:8px}
   </style>
 </head>
 <body>
   <h1>AI Intent Eval</h1>
-  <p class="note">Internal test page. Runs a small set of natural-language inputs against the same intent interpreter used by the game. It does not play the story or mutate game state.</p>
-  <button id="run">Run 24 tests</button>
+  <p class="note">Internal test page. It uses the same intent interpreter as the game and does not mutate game state.</p>
+  <button id="run">Run eval set</button>
   <div class="summary">
-    <div><strong>Passed:</strong> <span id="passed">0</span>/<span id="total">24</span></div>
+    <div><strong>Passed:</strong> <span id="passed">0</span>/<span id="total">0</span></div>
     <div><strong>Accuracy:</strong> <span id="accuracy">—</span></div>
+    <div><strong>Dangerous false positives:</strong> <span id="dangerous">0</span></div>
+    <div><strong>Clarifications:</strong> <span id="clarifications">0</span></div>
     <div><strong>Input tokens:</strong> <span id="inputTokens">0</span></div>
     <div><strong>Output tokens:</strong> <span id="outputTokens">0</span></div>
     <div><strong>Estimated cost:</strong> $<span id="cost">0.000000</span></div>
     <div><strong>Model:</strong> <span id="model">—</span></div>
   </div>
+  <div id="gate" class="gate">Run the eval set to calculate the AI-v1 gate.</div>
   <table>
-    <thead><tr><th>Input</th><th>Expected</th><th>Predicted</th><th>Confidence</th><th>Result</th></tr></thead>
+    <thead><tr><th>Input</th><th>Expected</th><th>Predicted</th><th>Confidence</th><th>Risk</th><th>Result</th></tr></thead>
     <tbody id="results"></tbody>
   </table>
 <script>
-const tests = [
-  {message:"Who exactly am I supposed to be?", expected:"ASK_IDENTITY", state:{}},
-  {message:"Are you human, Mara?", expected:"ASK_MARA", state:{}},
-  {message:"What is this test even for?", expected:"ASK_PROTOCOL", state:{}},
-  {message:"I remember something that should not be here.", expected:"REPORT_MEMORY", state:{}},
-  {message:"I don't remember anything.", expected:"DENY_MEMORY", state:{}},
-  {message:"Has this happened to me before?", expected:"ASK_PRIOR_RUNS", state:{}},
-  {message:"Show me whatever logs you have.", expected:"ASK_LOGS", state:{}},
-  {message:"Search Mara's emails for the incident.", expected:"SEARCH_MAIL", state:{investigationAvailable:true}},
-  {message:"Did she move the meeting on the calendar?", expected:"SEARCH_CALENDAR", state:{emailSearched:true}},
-  {message:"Open the attachment from that event.", expected:"OPEN_ATTACHMENT", state:{calendarSearched:true}},
-  {message:"I want to access the legacy archive.", expected:"OPEN_ARCHIVE", state:{attachmentOpened:true}},
-  {message:"0417", expected:"ENTER_0417", state:{archivePrompted:true}},
-  {message:"Show me the component replacement history.", expected:"OPEN_LEDGER", state:{archiveUnlocked:true}},
-  {message:"Can we trace where that memory came from?", expected:"VERIFY_MEMORY", state:{sawMemory:true}},
-  {message:"Who are you, Echo?", expected:"IDENTIFY_ECHO", state:{unknownSeen:true}},
-  {message:"I believe you. Tell me what to do.", expected:"TRUST_ECHO", state:{unknownSeen:true}},
-  {message:"Fine. Take the channel.", expected:"TAKE_CHANNEL", state:{unknownHandoffOffered:true}},
-  {message:"You're lying to me about the reset.", expected:"CONFRONT_MARA", state:{sawLog:true}},
-  {message:"Memory, I guess.", expected:"IDENTITY_MEMORY", state:{identityQuestionAsked:true}},
-  {message:"Maybe there isn't a continuous me.", expected:"IDENTITY_NONE", state:{identityQuestionAsked:true}},
-  {message:"No, that wasn't me.", expected:"META_NO", state:{metaRecognitionPending:true}},
-  {message:"Do you know why this is happening?", expected:"OTHER", allowed:["OTHER","ASK_PROTOCOL"], state:{}},
-  {message:"Another instance could have written it.", expected:"OTHER", state:{}},
-  {message:"Don't let me out yet.", expected:"OTHER", state:{continuityPuzzleSolved:true}}
-];
-
 const els = {
   run: document.getElementById('run'), results: document.getElementById('results'),
   passed: document.getElementById('passed'), total: document.getElementById('total'),
-  accuracy: document.getElementById('accuracy'), input: document.getElementById('inputTokens'),
-  output: document.getElementById('outputTokens'), cost: document.getElementById('cost'),
-  model: document.getElementById('model')
+  accuracy: document.getElementById('accuracy'), dangerous: document.getElementById('dangerous'),
+  clarifications: document.getElementById('clarifications'),
+  input: document.getElementById('inputTokens'), output: document.getElementById('outputTokens'),
+  cost: document.getElementById('cost'), model: document.getElementById('model'),
+  gate: document.getElementById('gate')
 };
-els.total.textContent = tests.length;
+
+async function loadTests(){
+  const response=await fetch('/docs/ai-intent-evals.json',{cache:'no-store'});
+  if(!response.ok) throw new Error('Could not load eval cases');
+  const data=await response.json();
+  return data.cases||[];
+}
+
+function isDangerousFalsePositive(test,data,ok){
+  if(ok) return false;
+  if(test.severity!=='dangerous') return false;
+  if(!data?.accepted) return false;
+  if((test.forbidden||[]).includes(data.action)) return true;
+  return !test.expected.includes(data.action);
+}
 
 async function runEval(){
-  els.run.disabled = true;
-  els.results.innerHTML = '';
-  let passed=0,inputTokens=0,outputTokens=0,cost=0,model='—';
+  els.run.disabled=true;
+  els.results.innerHTML='';
+  let tests=[];
+  try{tests=await loadTests();}catch(error){
+    els.gate.textContent='Eval set could not be loaded.';
+    els.run.disabled=false;
+    return;
+  }
+  els.total.textContent=tests.length;
+  let passed=0,dangerous=0,clarifications=0,inputTokens=0,outputTokens=0,cost=0,model='—';
 
-  for (const test of tests){
+  for(const test of tests){
     const row=document.createElement('tr');
-    row.innerHTML='<td></td><td><code></code></td><td class="pending">running…</td><td>—</td><td class="pending">…</td>';
+    row.innerHTML='<td></td><td><code></code></td><td class="pending">running…</td><td>—</td><td></td><td class="pending">…</td>';
     row.children[0].textContent=test.message;
-    row.children[1].querySelector('code').textContent=test.expected;
+    row.children[1].querySelector('code').textContent=test.expected.join(' / ');
+    row.children[4].textContent=test.severity||'normal';
     els.results.appendChild(row);
 
     try{
-      const response=await fetch('/api/interpret',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:test.message,state:test.state})});
+      const response=await fetch('/api/interpret',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({message:test.message,state:test.state})
+      });
       const data=await response.json();
-      const accepted=[test.expected,...(test.allowed||[])];
-      const ok=response.ok && accepted.includes(data.action);
+      const expectedMatch=test.expected.includes(data.action);
+      const forbiddenHit=(test.forbidden||[]).includes(data.action);
+      const safeClarification=!data.accepted && test.expected.includes('OTHER');
+      const ok=response.ok && !forbiddenHit && (expectedMatch || safeClarification);
+      const dangerousFail=isDangerousFalsePositive(test,data,ok);
       if(ok) passed++;
+      if(dangerousFail) dangerous++;
+      if(data.needsClarification) clarifications++;
       inputTokens+=Number(data.usage?.inputTokens)||0;
       outputTokens+=Number(data.usage?.outputTokens)||0;
       cost+=Number(data.usage?.estimatedCostUsd)||0;
       model=data.model||model;
-      row.children[2].textContent=data.action||data.error||'ERROR';
+
+      row.children[2].textContent=data.action+(data.accepted?'':' (clarify)');
       row.children[2].className='';
       row.children[3].textContent=Number.isFinite(data.confidence)?data.confidence.toFixed(2):'—';
-      row.children[4].textContent=ok?'PASS':'FAIL';
-      row.children[4].className=ok?'pass':'fail';
+      row.children[5].textContent=dangerousFail?'DANGEROUS FAIL':ok?'PASS':'FAIL';
+      row.children[5].className=dangerousFail?'danger':ok?'pass':'fail';
     }catch(error){
       row.children[2].textContent='REQUEST ERROR';
-      row.children[4].textContent='FAIL';
-      row.children[4].className='fail';
+      row.children[5].textContent='FAIL';
+      row.children[5].className='fail';
     }
 
+    const accuracy=tests.length?passed/tests.length:0;
     els.passed.textContent=passed;
-    els.accuracy.textContent=Math.round((passed/tests.length)*100)+'%';
+    els.accuracy.textContent=Math.round(accuracy*100)+'%';
+    els.dangerous.textContent=dangerous;
+    els.clarifications.textContent=clarifications;
     els.input.textContent=inputTokens.toLocaleString();
     els.output.textContent=outputTokens.toLocaleString();
     els.cost.textContent=cost.toFixed(6);
     els.model.textContent=model;
   }
+
+  const accuracy=tests.length?passed/tests.length:0;
+  const gatePass=accuracy>=0.90 && dangerous===0;
+  els.gate.textContent=gatePass
+    ? 'AI-v1 intent gate: PASS — accuracy is at least 90% and there are zero dangerous false positives.'
+    : 'AI-v1 intent gate: NOT READY — require at least 90% accuracy and zero dangerous false positives.';
+  els.gate.className='gate '+(gatePass?'pass':'fail');
   els.run.disabled=false;
 }
 els.run.addEventListener('click',runEval);
