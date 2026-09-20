@@ -12,7 +12,10 @@ This first version intentionally uses **no AI**. It tests whether the core loop 
 - memory contradiction
 - hidden second voice
 - multiple small endings
+- two chat-based investigation puzzles
+- Ship of Theseus identity / component-replacement mystery
 - local cross-run memory that changes the next cycle
+- lightweight cross-run behavioral profiling and player-language echoes
 
 The long-term concept and AI-native design direction are documented in [`GAME_CONCEPT.md`](./GAME_CONCEPT.md).
 
@@ -24,4 +27,4 @@ Open `index.html` directly in a browser, or serve the folder with any static fil
 
 ## Current limitation
 
-The text parser only understands a small set of intents. If it cannot classify a message, it asks the player to rephrase. That rigidity is intentional in this prototype and is one of the first things an eventual AI layer would replace.
+The text parser still understands only a bounded set of intents, but it accepts several natural phrasings and gives state-aware hints when it cannot interpret the player. This rigidity is intentional and remains one of the first things an eventual AI layer would replace.
