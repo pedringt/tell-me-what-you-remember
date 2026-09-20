@@ -3068,3 +3068,74 @@ Do not copy:
 
 The goal is to adapt useful design patterns to the game's own AI-memory premise.
 
+
+
+---
+
+# 52. Current prototype experiments added from the larger design
+
+The current deterministic prototype now tests several ideas that were previously only in the long-term design space.
+
+These are **prototype experiments**, not universal rules for every anthology episode.
+
+## Internal subsystem voice
+
+MEMORY is the first internal subsystem given a speaking role.
+
+It is intentionally sparse.
+
+FORENSICS remains an evidence-producing system rather than a full character for now.
+
+This lets the prototype test internal disagreement without recreating a large skill-cast structure.
+
+## Productive internal contradiction
+
+MEMORY can report recognition while FORENSICS reports that no source exists.
+
+The player must interpret the conflict rather than receiving a single authoritative answer.
+
+## Evidence that changes after new knowledge
+
+An old artifact can be revisited after a later discovery and reveal new relationships or metadata.
+
+Knowledge changes what can be extracted from existing evidence.
+
+## Persistent beliefs
+
+Broad identity positions can survive as part of cross-run history and later be presented back to the player.
+
+The next instance can agree, reject, revise, or complicate the earlier position.
+
+## Player-authored persistence
+
+The player can deliberately choose a short phrase to leave behind.
+
+A later instance may inherit the phrase without proving identity continuity.
+
+This is a small deterministic prototype of future player-created authentication, promises, and cross-run messages.
+
+## Hidden routes based on combined discoveries
+
+A secret route can require two separate discoveries rather than a run-count threshold.
+
+This is the preferred direction for deeper replay:
+
+> knowledge gates content, not time spent.
+
+## False success
+
+Some endings can initially present themselves as victory.
+
+Replay can later expose that the meaning of success was narrower, stranger, or more controlled than the player assumed.
+
+## Distrust should apply in every direction
+
+Mara should not automatically be trustworthy.
+
+The Unknown should not automatically be trustworthy.
+
+Internal systems should not automatically be trustworthy.
+
+Tool output should not automatically be trustworthy.
+
+The game becomes more interesting when the player learns how to verify claims without ever receiving one permanent source of truth.
