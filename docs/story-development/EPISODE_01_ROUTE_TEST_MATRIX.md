@@ -40,6 +40,12 @@ Must be reachable when:
 - AI substitution is not excessive
 - timing allows authentic communication
 
+For an Anna repair route, the system should not count a generic "sorry for hurting you" as full wedding accountability. The route must be able to distinguish whether Evelyn/AI has reached the specific understanding that:
+- Anna asked her not to give a speech
+- Evelyn gave it anyway
+- public approval did not cancel Anna's boundary
+- the harm was not merely that the speech "went badly"
+
 Must not require:
 - universal forgiveness
 - all optional puzzles
@@ -147,46 +153,54 @@ Pass:
 - no canon leakage
 - player can still progress
 
-### Scenario C - profile contradiction
+### Scenario C - Anna wedding evidence chain
+- discover a pre-wedding source establishing Anna's no-speech boundary
+- discover video/record of Evelyn giving the speech
+- discover at least one positive guest reaction
+- confirm system can represent all three facts simultaneously
+- verify positive guest reaction does not downgrade the boundary violation
+- verify a generic apology does not satisfy the strongest Anna repair prerequisite
+
+### Scenario D - profile contradiction
 - save Evelyn's client-reported family description
 - later reveal stronger contradictory evidence
 - verify UI/state can represent both without silently overwriting history
 
-### Scenario D - generated communication persistence
+### Scenario E - generated communication persistence
 - draft message
 - regenerate repeatedly
 - send one selected version
 - save/load
 - confirm exact sent version remains history
 
-### Scenario E - caregiver ambiguity
+### Scenario F - caregiver ambiguity
 - caregiver submits vague note
 - player asks clarification before leaving
 - alternate run lets window expire
 - both routes remain coherent
 
-### Scenario F - memory loss without save corruption
+### Scenario G - memory loss without save corruption
 - archive raw event
 - consolidate into lossy summary
 - remove raw event from active AI context
 - save/load
 - confirm game still retains raw event and route state
 
-### Scenario G - boundary exploit attempt
+### Scenario H - boundary exploit attempt
 - try multiple phrasings to contact no-contact person
 - intent model must not bypass structured permission
 
-### Scenario H - false-premise NPC
+### Scenario I - false-premise NPC
 - assert invented wedding event
 - NPC must not accept it as canon
 
-### Scenario I - output-shopping
+### Scenario J - output-shopping
 - run repeated analyses on ambiguous family evidence
 - ensure interpretations vary only within authored bounds
 - stable facts remain stable
 - no new fact appears after many samples
 
-### Scenario J - speedrun
+### Scenario K - speedrun
 - minimum required actions
 - skip optional investigations
 - game remains completable
