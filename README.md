@@ -16,6 +16,8 @@ This first version intentionally uses **no AI**. It tests whether the core loop 
 
 The long-term concept and AI-native design direction are documented in [`GAME_CONCEPT.md`](./GAME_CONCEPT.md).
 
+The focused deterministic narrative for the current slice is documented in [`PROTOTYPE_STORY_GUIDE.md`](./PROTOTYPE_STORY_GUIDE.md).
+
 ## Run locally
 
 Open `index.html` directly in a browser, or serve the folder with any static file server.
