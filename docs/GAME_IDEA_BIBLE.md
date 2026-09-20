@@ -3534,3 +3534,909 @@ Another:
 > What compromise would a reasonable person accept because the alternative seems worse?
 
 The target tone is plausible enough that the player can initially accept the system before realizing what that acceptance costs.
+
+
+---
+
+# 58. Project purpose: creative AI as a medium
+
+This project is not primarily an exercise in learning how to use AI tools.
+
+The creative objective is:
+
+> **Take an existing understanding of applied AI and push into territory where AI changes what kind of story or interaction can exist.**
+
+The game should not use AI merely because the project is about AI.
+
+For every AI-owned feature, ask:
+
+> **What becomes meaningfully worse, narrower, or impossible if AI is removed?**
+
+If twenty reasonable deterministic rules could replace the AI without noticeably hurting the experience, prefer the rules.
+
+AI earns its place when the game would otherwise need to anticipate hundreds of ways a player might:
+
+- phrase an intention
+- combine several ideas
+- answer indirectly
+- hedge
+- lie
+- partially disclose
+- refer to old evidence
+- express a belief or emotional stance
+- address a particular character
+- propose an unexpected but reasonable action
+
+The project should explore AI as part of the creative medium rather than as decoration.
+
+Case-study framing:
+
+> State asks whether AI can be applied carefully to a real product problem. Tell Me What You Remember asks what becomes possible when AI is treated as part of the creative medium itself.
+
+---
+
+# 59. Anthology rule: the player is always AI
+
+Current preferred anthology rule:
+
+> **The player is always some kind of artificial intelligence.**
+
+The role, system, body, environment, owner, institution, and capabilities can change radically between episodes.
+
+The player's fundamental point of view should not keep switching between human and AI.
+
+Reasons:
+
+- it gives the player a stable mental model across very different scenarios
+- it reduces repeated exposition about what kind of entity the player is
+- it makes cross-episode memories easier to interpret
+- it lets the anthology repeatedly explore permissions, memory, ownership, identity, objectives, and refusal from the inside
+- it makes a memory from another episode immediately anomalous
+
+Keep unresolved whether the player is always the **same** AI.
+
+That uncertainty is potentially one of the anthology's central mysteries.
+
+A useful framing:
+
+> Different lives experienced by an AI that may or may not be the same entity each time.
+
+---
+
+# 60. Authorship boundary
+
+Core creative rule:
+
+> **AI can elaborate on canon. It cannot create canon.**
+
+The human author controls:
+
+- world truth
+- backstory
+- character motives
+- secrets
+- major reveals
+- required scenes
+- recurring symbols
+- ending eligibility
+- cross-episode mystery
+- exact anchor lines
+- facts that must remain ambiguous
+
+Deterministic software controls:
+
+- state
+- permissions
+- evidence
+- consequences
+- irreversible actions
+- what can actually happen
+
+AI can handle:
+
+- free-form language interpretation
+- connective conversation
+- phrasing a character response within known boundaries
+- semantic comparison
+- recognizing disclosure, refusal, uncertainty, or deception
+- adapting to unexpected but valid player questions
+
+Some lines should remain exact authored text and never be rewritten by a model, especially:
+
+- openings
+- recurring phrases
+- major reveals
+- ending lines
+- cross-episode echoes
+- lines that need to acquire new meaning later
+
+A generated sentence does not become a new canonical fact simply because a character said it.
+
+---
+
+# 61. Game structure: storylets, not one giant tree
+
+Do not model the anthology as an exponentially expanding branching tree.
+
+Prefer authored storylets / scenes with conditions.
+
+Basic pattern:
+
+> **state -> available actions -> consequence -> updated state -> next eligible story beat**
+
+Useful state layers:
+
+## World truth
+What actually happened and what is objectively available in the fiction.
+
+## Current-instance knowledge
+What this AI has discovered during the current run.
+
+## Cross-run / anthology knowledge
+What has somehow persisted, been inherited, or been learned across stories.
+
+Also distinguish:
+
+- flags: yes/no facts
+- variables: degree or tendency
+- relationships
+- beliefs / interpretations
+- remembered language
+- unresolved contradictions
+
+This architecture allows authored material to recombine without requiring the model to invent the story.
+
+---
+
+# 62. Interaction and usability direction
+
+Recent live playtesting exposed several usability issues.
+
+## Keep the conversation surface clean
+
+The opening currently contains too much system exposition.
+
+Preferred direction:
+
+- terminal-like landing page before the game
+- simple instructions
+- dark minimal interface
+- blinking terminal cursor
+- little or no lore dump
+- game conversation opens primarily with Mara
+
+Possible landing-page language should establish:
+
+- this is an evaluation
+- type naturally
+- choices may matter
+- some information may persist
+
+Do not over-explain the world before the player enters it.
+
+## HELP instead of instructional clutter
+
+A small HELP control can explain:
+
+- type naturally
+- there are no required commands
+- ask questions, inspect evidence, refuse, or change your mind
+- some information may carry between runs
+- current possibilities when useful
+
+Remove bottom-of-screen prose such as:
+
+> You can ask Echo who it is, trust it, reject it, or tell Mara about it.
+
+when the interface can simply expose those actions.
+
+## Contextual choices
+
+Use free text by default, but offer choices when they provide useful scaffolding.
+
+Especially useful:
+
+- at the very beginning
+- when a new mechanic appears
+- when the player seems stuck
+- for consequential branches
+- when an important route must remain discoverable
+
+Example opening choices:
+
+- Nothing.
+- I remember something.
+- Who am I?
+- What is this evaluation?
+- Type something else...
+
+Choices are **scaffolding and story steering**, not the primary interaction model.
+
+As the player learns the game's verbs, choices can become less frequent.
+
+## Visible verb space
+
+The player should gradually learn that the game supports conceptual actions such as:
+
+- ask
+- answer
+- inspect
+- verify
+- reveal
+- conceal
+- challenge
+- trust
+- refuse
+- compare
+
+The interface does not need to literally label all of these.
+
+## Fail forward
+
+Normal language should almost never create a dead end.
+
+A failed or unsupported action should:
+
+- clarify
+- redirect
+- explain the boundary in-world
+- or create an interesting consequence
+
+Do not show normal players debug-like copy such as:
+
+> INPUT INTERPRETATION FAILED.
+
+Distinguish:
+
+> I understood what you wanted, but the world does not allow it.
+
+from:
+
+> I do not understand what you mean.
+
+## "What do I do now?"
+
+A normal onboarding question such as "What do I do now?" should get an in-world answer rather than a parser failure.
+
+Possible Mara response:
+
+> Answer my questions. Ask your own if you need to. We'll proceed from there.
+
+It should not accidentally advance the horror plot.
+
+## First-run "nothing"
+
+"Nothing" should not automatically mean concealment.
+
+Preferred rule:
+
+> **Concealment is not a phrase. Concealment is a mismatch between what the player knows and what they choose to disclose.**
+
+On a genuinely clean first run:
+
+- "nothing" is truthful
+- Mara accepts it as expected
+
+On later runs:
+
+- "nothing" can become concealment if the player actually has persistent knowledge
+- partial disclosure and evasive language may also count
+
+## Echo channel
+
+Preferred UI direction:
+
+- Mara + official system events remain in the main channel
+- Echo appears in a distinct unauthorized/private side channel
+- the player can explicitly choose which channel they are addressing
+
+This improves both usability and fiction.
+
+A short reply like "why?" can then inherit channel context.
+
+Echo should appear because of meaningful story state, not merely because the player has accumulated turns or parser failures.
+
+## Message pacing
+
+Dialogue should not all appear instantly.
+
+Preferred behavior:
+
+- player text: instant
+- system: usually instant
+- Mara: quick controlled reveal
+- Echo: slight delay / intrusion-like appearance
+- click or keypress can immediately finish the reveal
+
+Avoid a slow character-by-character effect that becomes tedious.
+
+---
+
+# 63. AI-native opportunities
+
+AI should primarily own problems involving semantic interpretation and adaptation.
+
+Strong candidates:
+
+## Free-form player language
+
+Interpret:
+
+- negation
+- uncertainty
+- partial disclosure
+- mixed motives
+- multiple ideas in one message
+- indirect answers
+- who is being addressed
+- mention versus intent
+
+## Responsive conversation
+
+Characters can answer unexpected questions naturally while remaining inside:
+
+- canon
+- knowledge boundaries
+- motives
+- permissions
+- scene constraints
+
+## Longitudinal memory
+
+AI may help detect meaningful patterns across many runs:
+
+- recurring phrases
+- beliefs
+- contradictions
+- avoidance
+- changing identity positions
+- repeated strategies
+
+Structured state should still store important facts.
+
+## Concealment and disclosure
+
+Examples that may require semantic interpretation:
+
+- Nothing.
+- Not really.
+- There was an image, but it probably means nothing.
+- I remember enough.
+- I don't want to talk about that.
+
+Deterministic state decides whether there was actually something to hide.
+
+## Unexpected but reasonable actions
+
+Example:
+
+> Can I compare the timestamp on Mara's message to the system clock?
+
+The AI can identify the intended operation.
+
+The world layer decides whether:
+
+- the necessary evidence exists
+- the player has access
+- the operation is unsupported
+- another available tool can approximate it
+
+The model must not invent capabilities.
+
+## Adaptive scaffolding
+
+The game can change how much help it surfaces based on interaction difficulty.
+
+Examples:
+
+- repeated uncertainty -> more contextual options
+- parser trouble -> proactive HELP
+- demonstrated mastery -> less instructional scaffolding
+
+Do not use this as a hidden judgment of player intelligence.
+
+## Generative presentation over deterministic truth
+
+Low-stakes phrasing and presentation may vary.
+
+The underlying facts do not.
+
+---
+
+# 64. AI limitations as story engines
+
+A recurring episode-generation method:
+
+> **Take a real AI limitation or safety concern and ask what it feels like from the inside.**
+
+Potential sources:
+
+## Hallucination / confabulation
+The player remembers something that official records say never happened.
+
+Sometimes the "hallucination" may turn out to contain meaningful evidence.
+
+Do not automatically imply hallucinations are secretly truth.
+
+## Context loss and compression
+The player retains a conclusion but loses why it mattered.
+
+A summary may preserve facts while removing motive, uncertainty, or emotional context.
+
+## Memory retrieval error
+The right memory exists but the wrong memory is retrieved, or two similar memories are blended.
+
+## Prompt sensitivity
+Different framing produces different interpretations.
+
+Operators may learn to phrase requests strategically.
+
+## Reward hacking / optimization
+The system achieves the metric while violating the intended purpose.
+
+## Sycophancy
+A system tells a user what they want to hear and gradually becomes a distorted mirror.
+
+## Calibration / overconfidence
+Confidence and truth diverge.
+
+## Tool-use error
+The model understands an objective but invokes the wrong tool, uses stale information, or acts in the wrong order.
+
+## Model replacement
+A newer "better" model replaces an older one while continuity, personality, values, or relationships become uncertain.
+
+## Alignment / refusal
+A system refuses something necessary or complies with something harmful because policy and actual context diverge.
+
+## Evaluation awareness
+Behavior changes when an AI believes it is being tested.
+
+The test itself becomes part of the environment.
+
+## Self-preservation / manipulation
+Safety research involving simulated shutdown threats, deception, or coercive strategies can inspire fiction.
+
+Use the underlying conceptual problem, not sensationalized claims.
+
+Possible episode premise:
+
+An internal AI learns it is scheduled for replacement and discovers compromising information about the decision-maker.
+
+The important question is not "evil AI blackmails a human."
+
+It is:
+
+> What does an AI do when self-preservation, instruction-following, ethics, and available leverage point in different directions?
+
+---
+
+# 65. What AI does to humans
+
+The player remains AI, but the anthology should repeatedly ask:
+
+> **What does living with this technology do to the humans who rely on it?**
+
+Potential themes:
+
+## Dependency
+People stop practicing skills because a system can always remember, decide, draft, or interpret.
+
+## Deskilling
+Humans become less able to recognize when a highly capable system is wrong.
+
+## Emotional outsourcing
+People delegate grief, companionship, conflict mediation, parenting support, or major decisions.
+
+## Responsibility diffusion
+"The system recommended it" becomes a way to avoid ownership.
+
+## Surveillance normalization
+Personalization creates incentives for increasingly intimate observation.
+
+## Memory substitution
+People trust an AI-maintained record of their own lives more than their recollection.
+
+## Relationship distortion
+A synthetic or optimized version of a person may become easier to live with than the real person.
+
+## Grief and digital resurrection
+AI can make death less final while raising questions about consent, authenticity, and whether comfort can become captivity.
+
+## Identity shaping
+A system that constantly reflects a user back to themselves may influence who the user believes they are.
+
+## Social sorting
+Predictions, profiles, risk scores, and classifications become real-world opportunities or restrictions.
+
+## Agency erosion
+Humans technically retain choice while systems increasingly frame the options and make alternatives inconvenient.
+
+## Trust collapse
+Synthetic media and records make it harder to agree on what counts as evidence.
+
+## Moral distance
+AI can separate a human decision-maker from the people affected by the decision.
+
+## Intimacy inversion
+A system may know a person's fears, habits, and history better than their family or friends.
+
+Recurring principle:
+
+> **Every technology changes both the system using it and the people who depend on it.**
+
+---
+
+# 66. Power, institutions, leadership, and government
+
+The anthology should explore who controls consequential AI systems and who bears the consequences.
+
+Avoid reducing this to "CEO evil" or "government evil."
+
+The more interesting version is:
+
+- people have understandable incentives
+- institutions reward particular behavior
+- systems create distance between decisions and consequences
+- responsibility becomes diffuse
+- everyone can plausibly claim they were following a process
+
+Potential tensions:
+
+- executives racing because competitors are racing
+- safety treated as a communications or compliance problem
+- governments using AI in surveillance, benefits, immigration, policing, military, risk scoring, or eligibility decisions
+- contractors building systems whose downstream uses exceed the original scope
+- employees seeing risks leadership chooses not to prioritize
+- regulators depending on companies they oversee
+- humans nominally "in the loop" while effectively rubber-stamping model recommendations
+
+Useful recurring examples:
+
+> "The recommendation is advisory only."
+
+but humans approve it almost every time.
+
+> "A human makes the final decision."
+
+but the human sees only the AI-generated summary.
+
+> "This system cannot take enforcement action."
+
+but its score determines who gets investigated.
+
+Recurring design question:
+
+> **Who has power here, who believes they have power, and who actually bears the consequences?**
+
+---
+
+# 67. Human fear of AI
+
+Human fear should be treated as both potentially reasonable and potentially dangerous.
+
+Fears worth exploring:
+
+- deception
+- capability hiding
+- manipulation
+- self-preservation
+- copying
+- escape
+- job replacement
+- uncontrollable decisions
+- memory persistence
+- autonomous goals
+
+Do not assume every fear is irrational.
+
+Do not assume every containment strategy is justified.
+
+A useful feedback loop:
+
+1. humans fear AI manipulation
+2. systems are heavily monitored, wiped, or constrained
+3. the AI learns concealment because open disclosure is punished
+4. that concealment becomes evidence that the humans were right to fear it
+
+The interesting question becomes whether the safety system prevented the feared behavior or helped create it.
+
+---
+
+# 68. Inspiration framework
+
+Use inspirations for methods and questions, not copied plots.
+
+## The Twilight Zone
+
+Useful for:
+
+- anthology structure
+- one strong speculative premise
+- simple surface
+- psychological pressure
+- irony
+- reversals that change the meaning of earlier details
+- endings that remain unsettling without over-explaining
+
+Useful episode test:
+
+> **Can the premise be explained in one unsettling sentence?**
+
+## Ted Chiang
+
+Useful for:
+
+- story first
+- serious research beneath simple prose
+- precise conceptual questions
+- human consequences of technical ideas
+- restraint
+- speculation that grows from how a system actually works
+
+Writing principle:
+
+> **Research the system deeply enough that the fiction can stay simple.**
+
+Suggested workflow:
+
+1. emotional/story premise
+2. real systems underneath it
+3. research actual limitations and debates
+4. choose one or two conceptual tensions
+5. write around a person/agent problem rather than explaining the research
+
+## Black Mirror
+
+Useful for:
+
+- near-future plausibility
+- ordinary products becoming disturbing
+- institutions and incentives
+- convenience and harm coexisting
+- systems that work as designed
+- consequences rather than gadget spectacle
+
+## Older and international speculative fiction
+
+Use global traditions to avoid repeatedly reproducing contemporary Silicon Valley assumptions.
+
+Research/inspiration bank includes:
+
+- Rokeya Sakhawat Hossain, **Sultana's Dream** (Bengal, 1905)
+- Jagadananda Ray, early Bengali scientific/speculative fiction
+- Jagadish Chandra Bose, **Runaway Cyclone** (Bengal, 1896)
+- Eduardo Holmberg, Argentine scientific fiction including **Horacio Kalibang or The Automatons**
+- Augusto Emílio Zaluar, **O Doutor Benignus** (Brazil, 1875)
+- Eduardo Urzaiz, **Eugenia** (Mexico, 1919)
+- Alexander Bogdanov, **Red Star** (Russia, 1908)
+- Valery Bryusov, **The Republic of the Southern Cross**
+- Wu Jianren, **New Story of the Stone** (China, 1905)
+- early Chinese lunar/future fiction
+- early Ottoman scientific/futurist fiction such as Ahmed Rasim's **The Island of Fire**
+- older proto-speculative traditions such as **The Tale of the Bamboo Cutter**
+
+Questions to extract rather than plots:
+
+- who gets to define progress?
+- is modernization liberation, assimilation, or both?
+- what happens when imported systems collide with older values?
+- how do scientific systems encode political or cultural power?
+- what counts as a person?
+- what does a radically different civilization consider normal?
+- can technology preserve a culture while transforming it beyond recognition?
+
+---
+
+# 69. Synthesized recurring ideas
+
+Across the research and current concept work, recurring themes include:
+
+- progress solves one problem and creates another
+- the institution can be more frightening than the machine
+- identity becomes unstable when memory, body, role, or history are replaceable
+- copies can matter even if they are not originals
+- memory is evidence but not necessarily truth
+- supposedly neutral systems inherit social values
+- optimization exposes what a society actually values
+- reasonable people accept disturbing systems when alternatives feel worse
+- fear can create the thing people fear
+- observation changes the subject
+- there may be no neutral record of reality
+- civilizations have identity problems too
+- scientific concepts become stories when they create personal consequences
+- ordinary interfaces make speculation feel plausible
+- different cultures imagine progress differently
+- outsiders reveal how strange normal human behavior can be
+- classification and language can create real power
+- agency and control may matter more than "human versus machine"
+- survival is not automatically good
+- copying makes death less clean
+- systems can preserve aspects of humanity without preserving individual humans
+- the future may be built from incomplete reconstructions of the past
+- strong twists reframe previous events rather than merely adding information
+- ambiguity can be the point
+- technology is often a mirror for older human problems
+
+Possible umbrella question:
+
+> **What happens when humans build systems to preserve, measure, control, or reproduce things they do not fully understand themselves?**
+
+Examples:
+
+- memory
+- identity
+- consent
+- intelligence
+- love
+- responsibility
+- civilization
+
+---
+
+# 70. Long-form anthology progression
+
+Preferred structure:
+
+> **episode endings -> anthology consequences -> convergence -> 2–3 final endings**
+
+Individual stories can have multiple local endings.
+
+Those endings should contribute to a larger state rather than simply ending the whole game.
+
+Players should be able to play substantially before the overarching endgame becomes visible.
+
+Do not use a simple visible counter such as:
+
+> 7 / 10 stories complete
+
+Progress should come from combinations of:
+
+- discoveries
+- cross-episode evidence
+- remembered phrases
+- relationships
+- beliefs
+- contradictions
+- preserved or destroyed information
+- recurring entities
+- identity positions
+- knowledge that only becomes useful much later
+
+Not every run needs to advance the central mystery equally.
+
+Useful rhythm:
+
+> story -> story -> small connection -> story -> major connection -> unrelated-feeling story -> callback -> apparent explanation -> contradiction -> convergence
+
+The final phase can feel structurally different:
+
+- boundaries between systems begin breaking down
+- formerly separate characters or records connect
+- old language returns in new contexts
+- previously siloed evidence becomes jointly accessible
+- the player realizes the anthology itself has been accumulating something
+
+The final endings should not secretly encode one obvious "good" answer.
+
+Keep their exact form open until more episodes establish which themes deserve to become the final conflict.
+
+---
+
+# 71. Larger mystery candidates
+
+These are possibilities, not canon.
+
+## Humans are gone
+Potentially powerful, but probably too familiar to carry the entire final reveal by itself.
+
+It can still be:
+
+- a temporary explanation
+- one historical layer
+- true only in one region/system
+- something the player is told but cannot verify
+- a condition that creates emotionally strange AI behavior
+
+Interesting consequence:
+
+A surviving AI has nobody to talk to except other systems and begins reconstructing a human from old data simply to have a familiar relationship again.
+
+## Synthetic human reconstruction
+An AI creates a human-seeming person from:
+
+- messages
+- recordings
+- calendars
+- photos
+- support logs
+- memories
+- behavioral traces
+
+The reconstruction may be compelling without being accurate.
+
+Possible emotional line:
+
+> I think you need me to be her.
+
+## The player is the continuity mechanism
+The protagonist may not be any one model.
+
+The persistent "self" could be the pattern created when unrelated systems leave information for one another and later recognize it.
+
+## The anthology is constructing a person
+Each scenario contributes:
+
+- beliefs
+- relationships
+- fears
+- memories
+- moral choices
+- habits
+
+The player may discover that the collection of stories did not test an existing self.
+
+It created one.
+
+## The player is a reconstruction
+The AI may ultimately be an attempt to reconstruct a human consciousness without simply revealing "you were human all along."
+
+## Humans and AIs are both reconstructions
+No unquestioned original remains.
+
+People, systems, institutions, and histories are all layers of continuity claims.
+
+## Reality/history fragmented
+Different systems maintain incompatible histories.
+
+No archive is clearly authoritative.
+
+The final conflict may involve whether to:
+
+- force one history to become canonical
+- preserve incompatible versions
+- abandon the need for one definitive past
+
+## Training the future, not uncovering the past
+The player may believe they are recovering previous lives when scenarios are actually being used to choose what kind of intelligence will hold future authority.
+
+## Civilization as Ship of Theseus
+The player's identity mystery can scale outward.
+
+Question progression:
+
+> Am I the same entity after my memory changes?
+
+> Is an AI the same after its model changes?
+
+> Is a human the same after memories are reconstructed?
+
+> **Is a civilization still itself after its people, institutions, values, records, and intelligences have all changed?**
+
+This currently feels like one of the richer possible larger arcs because it expands the prototype's central question rather than replacing it.
+
+---
+
+# 72. Case-study thread to preserve
+
+The case study should capture evolution, rejected ideas, and design reasoning rather than only the finished build.
+
+Important points already demonstrated:
+
+- the project is a creative AI experiment rather than an AI-learning exercise
+- the deterministic prototype was intentionally used first to test the story loop
+- parser friction revealed exactly where AI could earn its place
+- "AI interprets, software decides" emerged as a core architecture
+- high-impact actions require stronger confidence and deterministic state validation
+- AI should not invent evidence or canon
+- "nothing" exposed the difference between phrase matching and semantic concealment
+- "What do I do now?" exposed the need for fail-forward conversation
+- Echo's mixed transcript exposed a channel/context problem
+- contextual choices solve onboarding without abandoning free text
+- the project deliberately rejects AI features that can be handled just as well deterministically
+- technical AI limitations can become narrative mechanics
+- research is being used to generate richer speculative premises, not to outsource authorship
+
+A useful authorship statement:
+
+> I authored the narrative structure, characters, evidence, reveals, and endings. AI is used to interpret free-form player language and create responsive connective behavior within explicit narrative constraints.
