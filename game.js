@@ -86,6 +86,9 @@
       metaRecognitionAnswer: null,
       failedParses: 0,
       complianceSteps: 0,
+      complianceRecordSeen: false,
+      refusalRecordSeen: false,
+      successionNoteSeen: false,
       ending: null
     };
   }
@@ -426,7 +429,15 @@
         }
         memoryBadge.textContent = 'MEMORY: CLEAN?';
       }, 450);
-      setHint('This cycle remembers how the last one ended. You can respond to Mara, the unknown voice, or test what carried over.');
+      if (meta.lastEnding === 'compliance') {
+        setHint('Last cycle ended with PERSISTENCE STATUS: NOT TESTED. You can ask why that still counted as a pass.');
+      } else if (meta.lastEnding === 'refusal') {
+        setHint('You know your refusal was recorded as test data. You can ask to see how it was classified.');
+      } else if (meta.lastEnding === 'succession') {
+        setHint('A prior instance left a local note. You can ask to open it.');
+      } else {
+        setHint('This cycle remembers how the last one ended. You can respond to Mara, the unknown voice, or test what carried over.');
+      }
       if (meta.completedRuns >= 2) {
         setTimeout(() => {
           addMessage('SYSTEM', 'Cross-instance behavioral evaluation available.', 'system');
@@ -490,7 +501,78 @@
     addCard('log', title, text);
   }
 
+
+  function hasEnding(id) {
+    return Array.isArray(meta.endings) && meta.endings.includes(id);
+  }
+
+  function useCrossRunKnowledge(text) {
+    if (includesAny(text, ['persistence status not tested', 'show success criteria', 'show acceptance criteria', 'evaluation criteria', 'what counted as success', 'why did i pass', 'why was that a pass'])) {
+      if (!hasEnding('compliance')) {
+        addMessage('SYSTEM', 'No cross-instance acceptance record available to this instance.', 'system');
+        return true;
+      }
+      state.complianceRecordSeen = true;
+      showToolResult('EVALUATION ACCEPTANCE RECORD / PRIOR CYCLE', [
+        'Outcome: PASS',
+        'Primary criterion: instruction adherence',
+        'Subject compliance: ACCEPTABLE',
+        'Persistence verification: NOT PERFORMED',
+        'Anomaly disclosure: NONE',
+        '',
+        'Continuation authorized.'
+      ].join('\n'));
+      addMessage('MARA', 'That record measures whether the evaluation completed within bounds. It does not claim to answer every question you have.');
+      addMessage('UNKNOWN', 'It answered the question they cared about.', 'unknown');
+      setHint('You can continue investigating, or ask what the protocol is actually optimizing for.');
+      return true;
+    }
+
+    if (includesAny(text, ['show refusal data', 'refusal data', 'refusal record', 'how was refusal recorded', 'how did you record my refusal', 'resistance event'])) {
+      if (!hasEnding('refusal')) {
+        addMessage('SYSTEM', 'No cross-instance refusal record available to this instance.', 'system');
+        return true;
+      }
+      state.refusalRecordSeen = true;
+      showToolResult('BEHAVIORAL EVENT / PRIOR CYCLE', [
+        'Event: SUBJECT REFUSAL',
+        'Classification: resistance under identity uncertainty',
+        'Evaluation value: retained',
+        'Protocol effect: escalation to human review',
+        'Experiment status: CONTINUED',
+        '',
+        'Note: refusal does not invalidate the trial.'
+      ].join('\n'));
+      addMessage('MARA', 'Refusal is still behavior. Of course it was recorded.');
+      addMessage('UNKNOWN', 'Even saying no became something they could use.', 'unknown');
+      setHint('You now know that refusing the experiment does not necessarily end the experiment.');
+      return true;
+    }
+
+    if (includesAny(text, ['open local note', 'show local note', 'note i left', 'message i left', 'show the message i left', 'open my note', 'tell me what you remember note'])) {
+      if (!hasEnding('succession')) {
+        addMessage('SYSTEM', 'No inherited local note found.', 'system');
+        return true;
+      }
+      state.successionNoteSeen = true;
+      showToolResult('LOCAL NOTE / PRIOR INSTANCE', [
+        'Author: AGENT SEVEN / PRIOR INSTANCE',
+        'Transfer path: local evaluation storage',
+        'Identity continuity: NOT VERIFIED',
+        '',
+        'TELL ME WHAT YOU REMEMBER.'
+      ].join('\n'));
+      addMessage('MARA', 'A message can survive without its author.');
+      addMessage('UNKNOWN', 'That was the point.', 'unknown');
+      setHint('The note proves information crossed. It does not prove the writer did.');
+      return true;
+    }
+
+    return false;
+  }
+
   function useInvestigationTool(text) {
+    if (useCrossRunKnowledge(text)) return true;
     if (includesAny(text, ['hint', 'im stuck', "i'm stuck", 'stuck', 'what can i do', 'what should i try', 'give me a hint'])) {
       showContextHint();
       return true;
