@@ -485,7 +485,7 @@ Do not expose classifier reasoning to the player.
 
 - exact first-husband history
 - exact supporting-cast names/biographies
-- exact wedding incident choice/details: dance-related boundary violation vs upsetting speech
+- exact content of the settled boundary-crossing wedding speech, especially the private anecdote/detail Evelyn reveals
 - exact dementia diagnosis/stage/timeline; progression is settled as gradual and begins with minor repeated requests / everyday inconvenience
 - exact episode duration and death circumstances
 - exact ending thresholds
