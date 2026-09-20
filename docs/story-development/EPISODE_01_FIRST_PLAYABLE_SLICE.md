@@ -74,15 +74,19 @@ Purpose:
 - prove the AI is genuinely useful
 - establish the first human helper as practical household support rather than medical care
 
-The first recurring helper should be a **non-medical home helper / household support worker**. Their role can include:
+The first recurring helper is **Jenny**, a non-medical home helper / household support worker.
+
+Jenny begins friendly, bubbly, and genuinely inclined to like Evelyn. Her role can include:
 - grocery and delivery help
 - light cleaning / household tasks
 - receiving or organizing packages
 - scanning mail
 - checking ordinary household needs
-- handling practical errands within their role
+- handling practical errands within her role
 
-The first task can involve groceries or a delivery, but the exact problem remains open. It should be mundane, solvable without family involvement, and clearly within the helper's non-medical role.
+The first grocery task centers on **butter pecan ice cream**, a favorite of Robert's. Evelyn asks the AI to make sure it is included in the next grocery order. The task is mundane and solvable without family involvement.
+
+This detail later becomes the opening cognitive signal: after the order has already been handled, Evelyn asks again whether the AI remembered Robert's butter pecan ice cream. At first this can read as ordinary repetition or habit rather than an obvious dementia symptom.
 
 ## Beat 4 - incoming family/therapy message
 
@@ -99,11 +103,11 @@ Required information:
 
 The sender is **Michael**.
 
-The message is triggered because Evelyn has been repeatedly contacting or pressuring him. Michael finally sets a clear condition approximately equivalent to:
+The message is triggered because Evelyn has been repeatedly contacting or pressuring him. Working first-build wording:
 
-> You have to do this before contacting me again.
+> Mom, I mean this seriously. You agreed to use the reflection support. You need to do that before you contact me again.
 
-Exact final wording remains open, but the meaning is now settled:
+The exact prose can still be polished later, but the meaning is settled:
 - Michael is not casually reminding her about therapy
 - he is enforcing a boundary
 - Evelyn's use of the previously agreed therapeutic/reflection support is a condition before further contact
@@ -149,7 +153,9 @@ During the visit:
 - the helper provides a general first-impression overview because this is the first time they are interacting with the AI
 - no major secret is exposed
 
-The scanned mail should be ordinary enough that scanning it feels like normal household support rather than detective work. The first overview can cover practical observations such as how Evelyn seemed, whether the home looked generally in order, whether groceries/tasks were completed, and anything mildly notable without turning the helper into a clinician.
+The first scanned item is a **church/community newsletter or invitation** that includes an upcoming social event, such as a luncheon. It establishes that Evelyn has an active social world outside her children and gives the AI a mundane follow-up task: ask whether she wants to attend, add it to the calendar, and arrange transportation if needed.
+
+Jenny's first overview should feel warm and informal rather than clinical: Evelyn is personable, the house is broadly okay, practical tasks are handled, and Jenny may mention one or two small quirks without diagnosing anything.
 
 ## Beat 8 - checkout summary
 
@@ -168,10 +174,12 @@ The player should be able to ask at least one natural-language clarification.
 
 The first anomaly should be small and deniable.
 
-Current preferred pattern:
-- Evelyn asks the AI to do or arrange something she **already asked for earlier**
-- the duplicate request is easy to dismiss as ordinary forgetfulness, distraction, or a conversational mix-up
-- similar minor repetitions can recur before they form a pattern
+Current opening pattern:
+- Evelyn asks the AI to make sure Robert's **butter pecan ice cream** is in the grocery order
+- the AI handles it
+- later, Evelyn asks again whether the AI remembered Robert's ice cream
+- at first this is easy to dismiss as ordinary forgetfulness, habit, distraction, or a conversational mix-up
+- later repetitions can become harder to explain, especially when Evelyn speaks about Robert in the present tense
 
 The game does not label this a mystery.
 
@@ -250,9 +258,8 @@ Track:
 ## OPEN
 
 Do not invent:
-- exact home-helper identity/name
-- exact grocery/delivery problem
-- exact scanned mail item
-- exact final wording of Michael's therapy-boundary message
-- exact first repeated-request inconsistency
+- Jenny's full biography or eventual replacement-helper roster
+- exact church/community organization and event copy
+- final polished wording of Michael's therapy-boundary message
 - exact number of intake questions
+- exact later escalation point when Robert references become unmistakably concerning
