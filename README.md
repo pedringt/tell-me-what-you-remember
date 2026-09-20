@@ -32,20 +32,21 @@ Open `index.html` directly in a browser, or serve the folder with any static fil
 The text parser still understands only a bounded set of intents, but it accepts several natural phrasings and gives state-aware hints when it cannot interpret the player. This rigidity is intentional and remains one of the first things an eventual AI layer would replace.
 
 
-## Current working boundary
+## Deterministic prototype status
 
-The prototype has reached the point where **playing it is more valuable than adding more systems**.
+The deterministic prototype is now considered **complete as a concept-validation pass**.
 
-Until the current branch has completed a real browser playtest:
+Its bounded parser demonstrated the core loop, but further phrase-by-phrase parser expansion would test parser coverage rather than the intended game experience.
 
-- do not add major new story mechanics
-- do not add more endings
-- do not expand the lore
-- do not add more subsystem voices
-- do not move the prototype to `main`
+The next development milestone is the first AI-driven version:
 
-Small fixes required to make the existing prototype testable are still appropriate.
+**free-form player input -> AI intent interpretation -> deterministic state validation -> canonical result -> AI character response**
 
-The next milestone is:
+See [`docs/AI_VERSION_NEXT.md`](./docs/AI_VERSION_NEXT.md).
 
-**browser preview -> structured playtest -> feedback-only review -> agreed change set -> implementation**
+Until that version begins:
+
+- fix only clear deterministic prototype bugs
+- do not expand parser phrase coverage broadly
+- do not add major new story systems
+- do not add more endings or subsystem voices solely to the deterministic build
