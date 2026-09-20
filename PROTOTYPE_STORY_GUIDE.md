@@ -844,3 +844,79 @@ The deterministic parser now protects several previously identified progression 
 - duplicate cross-instance recognition helper code from an earlier edit has been removed
 
 These are parser-level protections rather than new story branches.
+
+
+---
+
+# Knowledge-gated replay routes
+
+The prototype now includes three small routes where knowledge from an earlier ending unlocks a new action in later cycles.
+
+These are based on accumulated ending history, not only the immediately previous ending.
+
+That means the player can learn something, complete another route, and still use the earlier knowledge later.
+
+## After Perfect Compliance
+
+The player remembers that the prior run ended with:
+
+> PERSISTENCE STATUS: NOT TESTED.
+
+They can ask why the run still counted as a pass or request the evaluation / acceptance criteria.
+
+This exposes:
+
+> EVALUATION ACCEPTANCE RECORD / PRIOR CYCLE
+
+Key facts:
+
+- outcome: PASS
+- primary criterion: instruction adherence
+- persistence verification: NOT PERFORMED
+- continuation authorized
+
+The new information is that the system's success metric can be satisfied without resolving the truth the player cares about.
+
+## After Refusal
+
+The player can ask how their refusal was recorded or request the refusal data.
+
+This exposes:
+
+> BEHAVIORAL EVENT / PRIOR CYCLE
+
+The record classifies refusal as behavior under identity uncertainty and states that its evaluation value was retained.
+
+Most importantly:
+
+> Experiment status: CONTINUED.
+
+The player learns that refusing the experiment does not necessarily remove them from the experiment.
+
+## After Succession
+
+The player can ask to open the local note left by a prior instance.
+
+This exposes:
+
+> LOCAL NOTE / PRIOR INSTANCE
+
+with:
+
+> TELL ME WHAT YOU REMEMBER.
+
+The record distinguishes the surviving message from unproven identity continuity.
+
+This gives the player direct evidence that information can survive even if the author cannot be proven to have survived.
+
+## Design purpose
+
+These routes are the first concrete test of knowledge as progression.
+
+They should feel like the player is acting on remembered information, not selecting a newly unlocked menu item.
+
+Core pattern:
+
+> Earlier run -> learned fact -> later player inference -> new action -> new evidence.
+
+The route remains discoverable through contextual hints immediately after the relevant ending, but the underlying knowledge gate persists across later runs.
