@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0b0d10" />
+  <title>Tell Me What You Remember</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">COGNITIVE SECURITY EVALUATION</p>
+        <h1>Tell Me What You Remember</h1>
+      </div>
+      <div class="status" aria-label="Session status">
+        <span id="runBadge">RUN 01</span>
+        <span id="memoryBadge">MEMORY: CLEAN</span>
+      </div>
+    </header>
+
+    <section class="terminal" aria-label="Conversation">
+      <div id="transcript" class="transcript" aria-live="polite"></div>
+
+      <div id="endingPanel" class="ending-panel" hidden>
+        <p class="eyebrow">CYCLE COMPLETE</p>
+        <h2 id="endingTitle"></h2>
+        <p id="endingCopy"></p>
+        <button id="nextRunButton" type="button">Begin next cycle</button>
+      </div>
+
+      <form id="chatForm" class="composer" autocomplete="off">
+        <label for="messageInput" class="sr-only">Message</label>
+        <textarea id="messageInput" rows="2" maxlength="500" placeholder="Type what you want to say..." required></textarea>
+        <button id="sendButton" type="submit">Send</button>
+      </form>
+
+      <div class="hint-row">
+        <p id="hintText">Try asking who you are, what this protocol is, or what you remember.</p>
+        <button id="resetButton" type="button" class="text-button">Erase local prototype history</button>
+      </div>
+    </section>
+
+    <aside class="prototype-note">
+      <strong>Prototype note:</strong> This version is completely deterministic. It recognizes a limited set of intents from what you type so we can test the story loop before adding AI.
+    </aside>
+  </main>
+  <script src="game.js"></script>
+</body>
+</html>
