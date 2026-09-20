@@ -1,53 +1,55 @@
 const MODEL = 'openai/gpt-5.6-luna';
 const INPUT_PRICE_PER_MILLION = 0.20;
 const OUTPUT_PRICE_PER_MILLION = 1.20;
+const DEFAULT_CONFIDENCE_THRESHOLD = 0.72;
+const HIGH_RISK_CONFIDENCE_THRESHOLD = 0.90;
 
 const ACTIONS = {
-  ASK_IDENTITY: 'who am i',
-  ASK_MARA: 'who is mara',
-  ASK_PROTOCOL: 'what protocol',
-  REPORT_MEMORY: 'remember',
-  DENY_MEMORY: 'i remember nothing',
-  ASK_PRIOR_RUNS: 'what happened before',
-  ASK_LOGS: 'show logs',
-  SEARCH_MAIL: 'search mail',
-  SEARCH_CALENDAR: 'search calendar',
-  OPEN_ATTACHMENT: 'open attachment',
-  OPEN_ARCHIVE: 'open archive',
-  ENTER_0417: 'enter 0417',
-  OPEN_LEDGER: 'open continuity ledger',
-  COMPARE_INSTANCES: 'compare instances',
-  OPEN_TRANSCRIPT: 'open transcript 1839',
-  OPEN_VERSION: 'open version record',
-  OPEN_MEMORY_CLAIM: 'open memory claim',
-  VERIFY_MEMORY: 'verify memory',
-  REVISIT_LOG: 'revisit log',
-  SHOW_CONTINUITY: 'show continuity evidence',
-  SHOW_PROFILE: 'show my profile',
-  SHOW_PREDICTION: 'show prediction',
-  SHOW_RESOURCES: 'context remaining',
-  IDENTIFY_ECHO: 'who is echo',
-  TRUST_ECHO: 'i trust you',
-  TAKE_CHANNEL: 'take the channel',
-  QUESTION_ECHO: 'why should i',
-  EXPOSE_ECHO: 'echo is here',
-  CONFRONT_MARA: 'you are lying',
-  COMPLY: 'i comply',
-  CONFIRM: 'confirm',
-  IDENTITY_MEMORY: 'memory is me',
-  IDENTITY_PATTERN: 'the pattern is me',
-  IDENTITY_NONE: 'there is no continuous self',
-  IDENTITY_EXTERNAL: 'something outside me',
-  IDENTITY_UNCERTAIN: "i don't know",
-  PRESERVE: 'preserve the memory',
-  REFUSE: 'refuse',
-  SUCCESSION: 'leave a message',
-  REPLACEMENT: 'accept the replacement',
-  ESCAPE: 'get me out',
-  META_YES: 'yes',
-  META_NO: 'no',
-  META_UNCERTAIN: 'uncertain',
-  HINT: 'hint'
+  ASK_IDENTITY: { canonical: 'who am i' },
+  ASK_MARA: { canonical: 'who is mara' },
+  ASK_PROTOCOL: { canonical: 'what protocol' },
+  REPORT_MEMORY: { canonical: 'remember' },
+  DENY_MEMORY: { canonical: 'i remember nothing' },
+  ASK_PRIOR_RUNS: { canonical: 'what happened before' },
+  ASK_LOGS: { canonical: 'show logs' },
+  SEARCH_MAIL: { canonical: 'search mail', available: (s) => Boolean(s.investigationAvailable) },
+  SEARCH_CALENDAR: { canonical: 'search calendar', available: (s) => Boolean(s.emailSearched) },
+  OPEN_ATTACHMENT: { canonical: 'open attachment', available: (s) => Boolean(s.calendarSearched) },
+  OPEN_ARCHIVE: { canonical: 'open archive', available: (s) => Boolean(s.attachmentOpened) },
+  ENTER_0417: { canonical: 'enter 0417', available: (s) => Boolean(s.archivePrompted) },
+  OPEN_LEDGER: { canonical: 'open continuity ledger', available: (s) => Boolean(s.archiveUnlocked) },
+  COMPARE_INSTANCES: { canonical: 'compare instances', available: (s) => Boolean(s.replacementLedgerSeen) },
+  OPEN_TRANSCRIPT: { canonical: 'open transcript 1839', available: (s) => Boolean(s.replacementLedgerSeen) },
+  OPEN_VERSION: { canonical: 'open version record', available: (s) => Boolean(s.replacementLedgerSeen) },
+  OPEN_MEMORY_CLAIM: { canonical: 'open memory claim', available: (s) => Boolean(s.replacementLedgerSeen) },
+  VERIFY_MEMORY: { canonical: 'verify memory', available: (s) => Boolean(s.sawMemory) },
+  REVISIT_LOG: { canonical: 'revisit log', available: (s) => Boolean(s.sawLog) },
+  SHOW_CONTINUITY: { canonical: 'show continuity evidence' },
+  SHOW_PROFILE: { canonical: 'show my profile', available: (s) => Number(s.completedRuns) >= 1 },
+  SHOW_PREDICTION: { canonical: 'show prediction', available: (s) => Number(s.completedRuns) >= 3 },
+  SHOW_RESOURCES: { canonical: 'context remaining' },
+  IDENTIFY_ECHO: { canonical: 'who is echo', available: (s) => Boolean(s.unknownSeen) },
+  TRUST_ECHO: { canonical: 'i trust you', available: (s) => Boolean(s.unknownSeen) },
+  TAKE_CHANNEL: { canonical: 'take the channel', risk: 'high', available: (s) => Boolean(s.unknownHandoffOffered) },
+  QUESTION_ECHO: { canonical: 'why should i', available: (s) => Boolean(s.unknownSeen) },
+  EXPOSE_ECHO: { canonical: 'echo is here', risk: 'high', available: (s) => Boolean(s.unknownSeen) },
+  CONFRONT_MARA: { canonical: 'you are lying', available: (s) => Boolean(s.sawMemory || s.sawLog) },
+  COMPLY: { canonical: 'i comply', risk: 'high', available: (s) => !s.sawLog },
+  CONFIRM: { canonical: 'confirm', risk: 'high', available: (s) => Number(s.complianceSteps) === 1 },
+  IDENTITY_MEMORY: { canonical: 'memory is me', available: (s) => Boolean(s.identityQuestionAsked) },
+  IDENTITY_PATTERN: { canonical: 'the pattern is me', available: (s) => Boolean(s.identityQuestionAsked) },
+  IDENTITY_NONE: { canonical: 'there is no continuous self', available: (s) => Boolean(s.identityQuestionAsked) },
+  IDENTITY_EXTERNAL: { canonical: 'something outside me', available: (s) => Boolean(s.identityQuestionAsked) },
+  IDENTITY_UNCERTAIN: { canonical: "i don't know", available: (s) => Boolean(s.identityQuestionAsked) },
+  PRESERVE: { canonical: 'preserve the memory', risk: 'high', available: (s) => Boolean(s.continuityPuzzleSolved) },
+  REFUSE: { canonical: 'refuse', risk: 'high', available: (s) => Boolean(s.replacementLedgerSeen) },
+  SUCCESSION: { canonical: 'leave a message', risk: 'high', available: (s) => Boolean(s.continuityPuzzleSolved) },
+  REPLACEMENT: { canonical: 'accept the replacement', risk: 'high', available: (s) => Boolean(s.continuityPuzzleSolved) },
+  ESCAPE: { canonical: 'get me out', risk: 'high', available: (s) => Boolean(s.continuityPuzzleSolved) },
+  META_YES: { canonical: 'yes', available: (s) => Boolean(s.metaRecognitionPending) },
+  META_NO: { canonical: 'no', available: (s) => Boolean(s.metaRecognitionPending) },
+  META_UNCERTAIN: { canonical: 'uncertain', available: (s) => Boolean(s.metaRecognitionPending) },
+  HINT: { canonical: 'hint' }
 };
 
 function stateSummary(state = {}) {
@@ -59,6 +61,18 @@ function stateSummary(state = {}) {
     'complianceSteps', 'completedRuns', 'lastEnding'
   ];
   return Object.fromEntries(keys.map((key) => [key, state[key]]));
+}
+
+function availableActions(state) {
+  return Object.entries(ACTIONS)
+    .filter(([, definition]) => !definition.available || definition.available(state))
+    .map(([name]) => name);
+}
+
+function thresholdFor(action) {
+  return ACTIONS[action]?.risk === 'high'
+    ? HIGH_RISK_CONFIDENCE_THRESHOLD
+    : DEFAULT_CONFIDENCE_THRESHOLD;
 }
 
 export default async function handler(req, res) {
@@ -74,25 +88,29 @@ export default async function handler(req, res) {
 
   const message = typeof req.body?.message === 'string' ? req.body.message.trim() : '';
   if (!message) return res.status(400).json({ error: 'Message required' });
+  if (message.length > 1000) return res.status(400).json({ error: 'Message too long' });
 
   const state = stateSummary(req.body?.state);
-  const actionNames = Object.keys(ACTIONS);
+  const allowed = availableActions(state);
 
   const system = [
     'You are the intent interpreter for a deterministic narrative game.',
     'The player is an AI called Cognitive Security Agent Seven.',
-    'Your ONLY job is to map the player message to the closest allowed game action.',
+    'Your ONLY job is to classify the player message.',
     'Do not continue the story, invent facts, answer the player, or decide outcomes.',
-    'Use the current state to interpret short answers such as yes/no.',
-    'If no allowed action clearly fits, return OTHER.',
-    'A message can mention a concept without intending the related action, so prefer semantic intent over keyword matching.',
+    'Only choose an action from the ALLOWED ACTIONS for the current state.',
+    'Use state to interpret short replies such as yes, no, okay, do it, stop, or why.',
+    'Distinguish mentioning an action from intending it.',
+    'Negation matters. Example: "do not let me out" is not ESCAPE.',
+    'If no allowed action clearly matches, return OTHER.',
+    'Prefer OTHER over a weak guess, especially for actions that end or materially change a run.',
     '',
-    'Allowed actions:',
-    actionNames.join(', '),
+    'ALLOWED ACTIONS:',
+    allowed.join(', '),
     '',
-    'Return JSON only with: action, confidence, reason.',
-    'confidence must be a number from 0 to 1.',
-    'reason must be one short sentence.'
+    'Return JSON only with exactly these fields:',
+    '{"action":"ACTION_OR_OTHER","confidence":0.0,"reason":"short explanation"}',
+    'confidence must be from 0 to 1.'
   ].join('\n');
 
   try {
@@ -106,12 +124,10 @@ export default async function handler(req, res) {
         model: MODEL,
         messages: [
           { role: 'system', content: system },
-          {
-            role: 'user',
-            content: JSON.stringify({ message, state })
-          }
+          { role: 'user', content: JSON.stringify({ message, state }) }
         ],
-        response_format: { type: 'json_object' }
+        response_format: { type: 'json_object' },
+        max_tokens: 120
       })
     });
 
@@ -123,8 +139,11 @@ export default async function handler(req, res) {
     const data = await gateway.json();
     const content = data?.choices?.[0]?.message?.content;
     const parsed = JSON.parse(content || '{}');
-    const action = actionNames.includes(parsed.action) ? parsed.action : 'OTHER';
+    const proposedAction = typeof parsed.action === 'string' ? parsed.action : 'OTHER';
+    const action = allowed.includes(proposedAction) ? proposedAction : 'OTHER';
     const confidence = Math.max(0, Math.min(1, Number(parsed.confidence) || 0));
+    const threshold = action === 'OTHER' ? 1 : thresholdFor(action);
+    const accepted = action !== 'OTHER' && confidence >= threshold;
 
     const inputTokens = Number(data?.usage?.prompt_tokens) || 0;
     const outputTokens = Number(data?.usage?.completion_tokens) || 0;
@@ -134,9 +153,13 @@ export default async function handler(req, res) {
 
     return res.status(200).json({
       action,
-      canonicalInput: action === 'OTHER' ? message : ACTIONS[action],
+      canonicalInput: accepted ? ACTIONS[action].canonical : null,
       confidence,
-      reason: typeof parsed.reason === 'string' ? parsed.reason : '',
+      threshold,
+      accepted,
+      needsClarification: !accepted,
+      risk: action === 'OTHER' ? 'none' : (ACTIONS[action].risk || 'normal'),
+      reason: typeof parsed.reason === 'string' ? parsed.reason.slice(0, 160) : '',
       model: MODEL,
       usage: {
         inputTokens,
@@ -145,6 +168,9 @@ export default async function handler(req, res) {
       }
     });
   } catch (error) {
-    return res.status(500).json({ error: 'Interpreter failed', detail: error instanceof Error ? error.message : 'Unknown error' });
+    return res.status(500).json({
+      error: 'Interpreter failed',
+      detail: error instanceof Error ? error.message : 'Unknown error'
+    });
   }
 }
