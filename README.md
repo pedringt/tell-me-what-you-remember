@@ -28,7 +28,7 @@ Start here:
 
 ## Development gate
 
-There is **no implementation yet** for the judgment game. The next step is the paper playtest. Do **not** build it, and do not resume the broader 30-45 minute Evelyn vertical slice, until the paper test has been run and Paige explicitly approves the next phase.
+A **throwaway playable prototype** of the judgment game lives in [`judgment/`](./judgment/index.html) (open it through a local static server, or a deployed preview). It was built so the design could be tried directly; the [paper kit](./docs/prototypes/PORTFOLIO_PLAYTEST_KIT.md) is still an option. Do **not** extend it, and do not resume the broader 30-45 minute Evelyn vertical slice, until it has been tried with real players and Paige explicitly approves the next phase.
 
 The immediate question is not "did the player solve the incidents?" It is whether the player feels **genuine tension between the system's reading and Evelyn's autonomy**, and wants another incident.
 

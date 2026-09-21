@@ -5,12 +5,12 @@
 
 ## Where things stand in one paragraph
 
-The target is now a **compact 8 to 12 minute portfolio judgment game** about Evelyn, inspired structurally by *Papers, Please*: three escalating incidents, two inquiries out of four per incident, and a judgment call each time about whether to trust an imperfect system's reading of a human. **The design is locked (Paige, 2026-09-20). No code has been written for it, and none is approved.** The next step is a five-minute **paper playtest**. Earlier work (a three-day slice, a six-day scaffold, two one-day management plans) is preserved but is not the target.
+The target is now a **compact 8 to 12 minute portfolio judgment game** about Evelyn, inspired structurally by *Papers, Please*: three escalating incidents, two inquiries out of four per incident, and a judgment call each time about whether to trust an imperfect system's reading of a human. **The design is locked (Paige, 2026-09-20).** At Paige's request a **throwaway playable prototype** was then built in `judgment/` so she could try it directly; it follows the spec literally and is not approved for extension. The paper kit remains an alternative way to test. Earlier work (a three-day slice, a six-day scaffold, two one-day management plans) is preserved but is not the target.
 
 ## Rules that apply to everything
 
 - Work on `ai-v1-hardening` only. Do **not** merge to `main`, deploy, or publish anything without Paige's explicit authorization for that destination in the current conversation.
-- **Do not build anything until Paige approves the paper playtest result.**
+- **Do not extend the `judgment/` prototype, or build anything else, until Paige approves the result of real play.** It is deliberately throwaway.
 - **Never show the word "dementia" on screen** in this slice. It is canon; it is deliberately off-screen so players don't pathologize every anomaly.
 - **The system never sees Evelyn, only traces of her.** No portraits, no cameras. See the sensory model in the spec.
 - Cast is **Evelyn, Jenny (incident 2 only), Michael (a message only), and Anna (offstage, never speaks).**
@@ -53,11 +53,15 @@ The target is now a **compact 8 to 12 minute portfolio judgment game** about Eve
 | Thing | State |
 |---|---|
 | `ai-v1-hardening` | Has the story chat's docs, the merge of `main`, `.gitignore` and lockfile, the three-day slice, the earlier plans, and now the locked spec. See git for whether the newest commit is pushed. |
-| Tests | `npm test`: 123 passing (the three-day slice). The judgment game has no code or tests yet. |
+| Tests | `npm test`: the three-day slice (123) plus the judgment game (36: content fidelity to the spec, guardrails, an exhaustive walk). |
 | `wip/six-day-loop` | **Local only, on the implementation machine (`~/dev/tell-me-what-you-remember`), commit `2dd7c51`. Not pushed.** Half-wired six-day scaffolding; suite red on that branch by design. Salvage material only. |
 | `main` | Untouched. |
 
 ## What exists in the code
+
+**`judgment/`** is the playable judgment game: `content.js` (spec text, checked against the spec by a test), `engine.js` (a pure state machine), `app.js` and `style.css` (a bare terminal-style UI), `index.html`. No network, no storage, no live AI. Open it through a static server (`python3 -m http.server`, then `/judgment/`).
+
+The rest of this section describes the **older three-day slice**:
 
 Everything under `episode01/` and `evelyn.html` is the **three-day slice**. It is not the target, and its chat-first UI should not be expanded. What is reusable for the judgment game:
 

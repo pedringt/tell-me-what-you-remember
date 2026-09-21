@@ -1,0 +1,87 @@
+:root {
+  color-scheme: dark;
+  --bg: #0c0f0d;
+  --panel: #111612;
+  --line: #26302a;
+  --text: #dfe6df;
+  --muted: #93a093;
+  --trace: #7fc8d6;
+  --reading: #e6b25c;
+  --said: #f0d9c4;
+  --record: #9fd19a;
+  --report: #aebcf2;
+  --focus: #e6b25c;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--text); }
+body {
+  font: 16px/1.55 ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  -webkit-text-size-adjust: 100%;
+}
+
+.shell { max-width: 46rem; margin: 0 auto; padding: 20px 16px 40px; }
+
+.top { display: flex; gap: 12px; align-items: baseline; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+.brand { font-weight: 700; letter-spacing: .14em; font-size: 13px; }
+.sub { color: var(--muted); font-size: 13px; }
+
+.log { padding: 18px 0 8px; }
+.log > * { margin: 0 0 14px; }
+
+.plain { margin: 0 0 6px; }
+
+.heading { margin-top: 26px; padding-top: 12px; border-top: 1px dashed var(--line); font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.heading .time { color: var(--text); }
+
+.panel { border: 1px solid var(--line); background: var(--panel); padding: 10px 12px; }
+.panel > .title { font-size: 12px; letter-spacing: .14em; color: var(--muted); margin-bottom: 6px; }
+
+.row { display: grid; grid-template-columns: 5.4rem minmax(0, 1fr); gap: 12px; margin: 0 0 4px; }
+.tag { font-size: 12px; letter-spacing: .08em; padding-top: 3px; font-weight: 700; }
+.tag-TRACE { color: var(--trace); }
+.tag-READING { color: var(--reading); }
+.tag-SAID { color: var(--said); }
+.tag-RECORD { color: var(--record); }
+.tag-REPORT { color: var(--report); }
+.tag-PROTOCOL { color: var(--muted); }
+.txt { white-space: pre-wrap; overflow-wrap: anywhere; }
+.txt em { font-style: italic; }
+.row.plainline { grid-template-columns: 1fr; }
+
+.protocol .row .tag { color: var(--muted); }
+
+.block-label { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 0 0 4px; }
+.inq, .cons { border-left: 2px solid var(--line); padding-left: 12px; }
+.note { color: var(--muted); font-size: 13px; }
+
+.controls { border-top: 1px solid var(--line); padding-top: 14px; }
+.controls h3 { margin: 0 0 8px; font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.group { margin: 0 0 18px; }
+.btns { display: grid; gap: 8px; }
+button {
+  font: inherit; color: var(--text); text-align: left; cursor: pointer;
+  background: var(--panel); border: 1px solid #38473c; border-radius: 4px;
+  padding: 11px 14px; min-height: 46px;
+}
+button:hover { border-color: var(--reading); }
+button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+button .mark { display: block; font-size: 12px; color: var(--muted); margin-top: 2px; }
+.primary { border-color: var(--reading); }
+
+.acct { border-top: 1px solid var(--line); padding-top: 14px; margin-top: 18px; }
+.acct h3 { margin: 0 0 8px; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; }
+.acct dl { margin: 0 0 10px; display: grid; grid-template-columns: 9rem minmax(0, 1fr); gap: 4px 12px; }
+.acct dt { color: var(--muted); font-size: 13px; }
+.acct dd { margin: 0; }
+.acct .unseen { margin-top: 6px; }
+.closing { font-size: 20px; margin: 26px 0 16px; line-height: 1.35; }
+
+.foot { margin-top: 30px; color: var(--muted); font-size: 12px; }
+
+@media (max-width: 440px) {
+  body { font-size: 15px; }
+  .row { grid-template-columns: 4.4rem minmax(0, 1fr); gap: 8px; }
+  .acct dl { grid-template-columns: 1fr; gap: 0; }
+  .acct dt { margin-top: 6px; }
+}

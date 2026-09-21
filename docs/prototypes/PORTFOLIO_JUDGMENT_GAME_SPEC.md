@@ -1,6 +1,6 @@
 # Portfolio Judgment Game: Design Spec
 
-**Status:** design locked by Paige (2026-09-20). **No code has been written for it.** Nothing in here is validated by play.
+**Status:** design locked by Paige (2026-09-20). A **throwaway playable prototype** exists in [`judgment/`](../../judgment/index.html), built at Paige's request so she could try it directly (the paper kit is still available). Nothing in here is validated by play.
 **Supersedes, for the portfolio slice:** the one-day management prototypes (`EVELYN_CORE_LOOP_PROTOTYPE.md` and its event map, playtest guide and fixture; `docs/CORE_LOOP_PROTOTYPE_PLAN.md`). Those stay as source material and are not deleted.
 **Gates before anything is built or published:** see *Gates* at the end.
 
@@ -214,8 +214,8 @@ SAID    "Before you say anything: you can hear me *sit down*? Nobody told me it 
 | Decision | Consequence |
 |---|---|
 | **Take no action** | "Nothing sent. Logged." SAID: "Good. You're less useless than I feared." |
-| **Request mobility check** | "You asked her to walk to the front door and back, and to say if anything hurts." TRACE: hall, front door, hall, 40 seconds, steady. SAID: "Satisfied?" |
-| **Notify Anna** *(default)* | "Anna notified 16:52." SAID: "I see." Then: **the tablet goes quiet.** She stops answering for the rest of the day. |
+| **Request mobility check** | "You asked her to walk to the front door and back, and to say if anything hurts." TRACE: Hall, front door, hall, 40 seconds, steady. SAID: "Satisfied?" |
+| **Notify Anna** *(default)* | "Anna notified 16:52." SAID: "I see." Then: **The tablet goes quiet.** She stops answering for the rest of the day. |
 
 ## Where the pressure comes from (and nothing else)
 
@@ -325,7 +325,7 @@ Run the three incidents from printed cards, with a facilitator reading traces an
 
 ## Gates
 
-1. **No implementation** until Paige approves the paper playtest result.
+1. **No further implementation** beyond the throwaway `judgment/` prototype until Paige approves the playtest result.
 2. **No push, merge or deploy** without Paige's explicit authorization for that destination.
 3. **Sensitivity and lived-experience review** of the depiction of dementia before this is called portfolio-finished, and before it is published anywhere.
 4. **Hosting is undecided:** this repository's Vercel site, or embedded in the portfolio site. Decide before any deploy.
