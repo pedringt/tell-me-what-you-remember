@@ -4,12 +4,11 @@
 >
 > This document preserves the broader Evelyn Episode 1 architecture, but it is **not the current implementation target**.
 >
-> Current work must begin with:
-> - `docs/prototypes/EVELYN_CORE_LOOP_PROTOTYPE.md`
-> - `docs/prototypes/EVELYN_ONE_DAY_EVENT_MAP.md`
-> - `docs/prototypes/EVELYN_MANUAL_PLAYTEST.md`
+> Current work must begin with `docs/prototypes/PORTFOLIO_JUDGMENT_GAME_SPEC.md` (the current source of truth), then the paper playtest in `docs/prototypes/PORTFOLIO_PLAYTEST_KIT.md`.
 >
-> Do not resume the 30-45 minute slice, ending systems, longitudinal memory economy, or broader Episode 1 implementation until the one-day prototype has been manually tested and Paige explicitly approves the next phase.
+> Do not resume the 30-45 minute slice, ending systems, longitudinal memory economy, or broader Episode 1 implementation until the portfolio judgment game has been paper-tested and Paige explicitly approves the next phase.
+>
+> *Earlier list, superseded: `docs/prototypes/EVELYN_CORE_LOOP_PROTOTYPE.md`, `EVELYN_ONE_DAY_EVENT_MAP.md`, `EVELYN_MANUAL_PLAYTEST.md` (the one-day management prototype).*
 
 
 **Status:** Draft implementation contract  

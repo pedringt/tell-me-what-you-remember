@@ -2,13 +2,14 @@
 
 > **CURRENT TESTING PRIORITY**
 >
-> Before broader Episode 1 route/eval work, run the one-day Evelyn core-loop experiment using:
-> - `docs/prototypes/EVELYN_MANUAL_PLAYTEST.md`
-> - `docs/prototypes/EVELYN_PLAYTEST_SCORECARD.md`
+> Before broader Episode 1 route/eval work, run the five-minute paper playtest in [`docs/prototypes/PORTFOLIO_PLAYTEST_KIT.md`](../docs/prototypes/PORTFOLIO_PLAYTEST_KIT.md), based on
+> [`docs/prototypes/PORTFOLIO_JUDGMENT_GAME_SPEC.md`](../docs/prototypes/PORTFOLIO_JUDGMENT_GAME_SPEC.md) (the current source of truth).
 >
-> The immediate question is behavioral and experiential: **does the player want another turn?**
+> The immediate question is behavioral and experiential: **does the player feel genuine tension between the system's reading and Evelyn's autonomy, and want another incident?** It is not whether they solve the incidents.
 >
-> Do not use automated route coverage as a substitute for proving that attention, delegation, evidence synthesis, and memory preservation are enjoyable.
+> Do not use automated route coverage as a substitute for that.
+>
+> *Earlier priority, superseded: run the one-day Evelyn core-loop experiment using `docs/prototypes/EVELYN_MANUAL_PLAYTEST.md` and `docs/prototypes/EVELYN_PLAYTEST_SCORECARD.md`, asking whether attention, delegation, evidence synthesis and memory preservation are enjoyable.*
 
 
 ## Purpose

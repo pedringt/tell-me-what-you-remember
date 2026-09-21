@@ -1,5 +1,12 @@
 # Start Here: New Chat / Tool Handoff
 
+> **CURRENT SOURCE OF TRUTH (2026-09-20): [`docs/prototypes/PORTFOLIO_JUDGMENT_GAME_SPEC.md`](../../docs/prototypes/PORTFOLIO_JUDGMENT_GAME_SPEC.md).**
+> The target is now a compact 8 to 12 minute portfolio judgment game, and the next step is the five-minute paper playtest in
+> [`docs/prototypes/PORTFOLIO_PLAYTEST_KIT.md`](../../docs/prototypes/PORTFOLIO_PLAYTEST_KIT.md). The sections below headed "Earlier phase" through "Current implementation gate" describe the
+> **earlier one-day management prototype** (attention / delegation / memory, working interpretations, event map). They are
+> preserved as history and source material. The **settled story anchors** (Evelyn, Jenny, Robert, butter pecan, Michael's
+> message, canon and rules) remain valid.
+
 You are continuing work on **Tell Me What You Remember**.
 
 ## Repository
@@ -13,7 +20,7 @@ You are continuing work on **Tell Me What You Remember**.
 
 Do **not** merge to `main`, deploy production, or publish anything unless Paige explicitly authorizes that destination in the current conversation.
 
-## Current phase: core-loop validation, not Episode 1 production
+## Earlier phase (superseded by the portfolio judgment game): core-loop validation, not Episode 1 production
 
 The project has deliberately stepped back from implementing the full Evelyn opening.
 
@@ -28,6 +35,8 @@ Do not expand endings, dementia progression, anthology content, full replay, hel
 The active work is a **manual/paper core-loop prototype** followed, only if it works, by the smallest possible ugly digital prototype.
 
 ## Read these first
+
+**Start with** `docs/prototypes/PORTFOLIO_JUDGMENT_GAME_SPEC.md` (current source of truth) and `docs/prototypes/PORTFOLIO_PLAYTEST_KIT.md` (the next step). Items 1 to 5 below are the earlier one-day management prototype: **superseded**, kept as history.
 
 1. `docs/prototypes/EVELYN_CORE_LOOP_PROTOTYPE.md`
 2. `docs/prototypes/EVELYN_ONE_DAY_EVENT_MAP.md`
@@ -244,8 +253,8 @@ If another coding agent reports local/unpushed work from a previous paused sessi
 
 Before writing more gameplay code:
 
-1. Run the manual one-day prototype.
-2. Record results with `EVELYN_PLAYTEST_SCORECARD.md`.
+1. Run the five-minute paper playtest (`docs/prototypes/PORTFOLIO_PLAYTEST_KIT.md`). *(Earlier wording: run the manual one-day prototype.)*
+2. Record results with the kit's Observation Sheet. *(Earlier wording: `EVELYN_PLAYTEST_SCORECARD.md`, now superseded.)*
 3. Identify what felt fun, what felt like work, and what the player tried to do.
 4. Revise the loop.
 5. Repeat cheaply if necessary.
@@ -278,6 +287,6 @@ Those require Paige's explicit current approval.
 
 ## Implementation and repository state
 
-For the state of the code, the branches, the test suite, and how the build chat relates to the story chat, see `docs/handoffs/BUILD_HANDOFF.md`. It also compares the build chat's more detailed plan (`docs/CORE_LOOP_PROTOTYPE_PLAN.md`) with the documents in `docs/prototypes/`, which remain the current definition of the experiment.
+For the state of the code, the branches, the test suite, and how the build chat relates to the story chat, see `docs/handoffs/BUILD_HANDOFF.md`.
 
-**Newer than the one-day prototype documents above:** `docs/prototypes/PORTFOLIO_JUDGMENT_GAME_SPEC.md` (locked by Paige, 2026-09-20) redirects the target to a compact 8 to 12 minute portfolio judgment game. Where it differs from the one-day management prototype, the spec is current. The story chat has not yet marked its own documents accordingly.
+The one-day prototype documents under `docs/prototypes/` (`EVELYN_CORE_LOOP_PROTOTYPE.md`, the event map, the manual playtest guide, the scorecard and the fixture) are **superseded** by `docs/prototypes/PORTFOLIO_JUDGMENT_GAME_SPEC.md`, and are marked as such. `docs/CORE_LOOP_PROTOTYPE_PLAN.md` (the build chat's heavier one-day plan) is superseded too.
