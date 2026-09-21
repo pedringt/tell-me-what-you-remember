@@ -1,0 +1,130 @@
+{
+  "schemaVersion": 1,
+  "prototypeId": "evelyn-one-day-core-loop",
+  "time": {
+    "dayLabel": "Monday",
+    "minuteIndex": 0,
+    "canAdvance": true
+  },
+  "people": {
+    "evelyn": {
+      "role": "client",
+      "availability": "available",
+      "contactBoundary": "normal"
+    },
+    "jenny": {
+      "role": "non_medical_home_helper",
+      "availability": "scheduled",
+      "visitStart": "11:30",
+      "visitMinutes": 45,
+      "taskCapacity": 3
+    },
+    "michael": {
+      "role": "son",
+      "availability": "message_only",
+      "contactBoundary": "routine_contact_blocked"
+    }
+  },
+  "claims": {
+    "robert_spouse": {
+      "text": "Robert Williams is Evelyn's spouse.",
+      "category": "verified_record",
+      "sourceIds": ["care_profile_verified"],
+      "status": "supported"
+    },
+    "robert_deceased": {
+      "text": "Robert Williams is deceased.",
+      "category": "verified_record",
+      "sourceIds": ["care_profile_verified"],
+      "status": "supported"
+    },
+    "robert_likes_butter_pecan": {
+      "text": "Robert likes butter pecan ice cream.",
+      "category": "patient_recollection",
+      "sourceIds": ["evelyn_request_0905"],
+      "status": "unreviewed"
+    },
+    "delivery_completed": {
+      "text": "The grocery delivery was marked delivered.",
+      "category": "verified_record",
+      "sourceIds": ["delivery_event_1014"],
+      "status": "supported"
+    },
+    "butter_pecan_physically_present": {
+      "text": "Butter pecan ice cream is physically present in Evelyn's home.",
+      "category": "human_testimony",
+      "sourceIds": [],
+      "status": "uncertain"
+    }
+  },
+  "artifacts": {
+    "care_profile_verified": {
+      "kind": "care_record",
+      "sourceActorId": "system",
+      "provenance": "verified_record",
+      "visible": true
+    },
+    "evelyn_request_0905": {
+      "kind": "conversation",
+      "sourceActorId": "evelyn",
+      "provenance": "patient_recollection",
+      "visible": true
+    },
+    "church_luncheon_mail": {
+      "kind": "mail",
+      "sourceActorId": "community",
+      "provenance": "physical_mail",
+      "visible": false,
+      "deadline": "today"
+    },
+    "delivery_event_1014": {
+      "kind": "system_event",
+      "sourceActorId": "delivery_service",
+      "provenance": "verified_record",
+      "visible": false
+    },
+    "evelyn_request_1017": {
+      "kind": "conversation",
+      "sourceActorId": "evelyn",
+      "provenance": "patient_recollection",
+      "visible": false
+    },
+    "jenny_checkout": {
+      "kind": "human_observation",
+      "sourceActorId": "jenny",
+      "provenance": "human_testimony",
+      "visible": false
+    },
+    "michael_boundary_message": {
+      "kind": "message",
+      "sourceActorId": "michael",
+      "provenance": "human_testimony",
+      "visible": false
+    }
+  },
+  "openItems": [
+    {
+      "id": "grocery_delivery",
+      "status": "active",
+      "deadline": "11:00"
+    },
+    {
+      "id": "church_rsvp",
+      "status": "active",
+      "deadline": "end_of_day"
+    },
+    {
+      "id": "jenny_visit",
+      "status": "scheduled",
+      "deadline": "12:15"
+    }
+  ],
+  "workingInterpretations": {},
+  "memory": {
+    "fullFidelityCapacityAtConsolidation": 3,
+    "candidateItemIds": [],
+    "protectedItemIds": [],
+    "compressedItemIds": []
+  },
+  "audit": []
+}

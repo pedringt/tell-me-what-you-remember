@@ -1,5 +1,17 @@
 # Episode 01 Implementation Specification
 
+> **PAUSED / FUTURE DESIGN**
+>
+> This document preserves the broader Evelyn Episode 1 architecture, but it is **not the current implementation target**.
+>
+> Current work must begin with:
+> - `docs/prototypes/EVELYN_CORE_LOOP_PROTOTYPE.md`
+> - `docs/prototypes/EVELYN_ONE_DAY_EVENT_MAP.md`
+> - `docs/prototypes/EVELYN_MANUAL_PLAYTEST.md`
+>
+> Do not resume the 30-45 minute slice, ending systems, longitudinal memory economy, or broader Episode 1 implementation until the one-day prototype has been manually tested and Paige explicitly approves the next phase.
+
+
 **Status:** Draft implementation contract  
 **Episode:** Evelyn  
 **Branch target:** `ai-v1-hardening`  

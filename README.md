@@ -1,78 +1,79 @@
 # Tell Me What You Remember
 
-A deterministic vertical-slice prototype for a replayable text-based science-fiction game about an AI security agent that remembers across supposedly clean resets.
+A speculative narrative game project about an AI embedded inside human systems, currently focused on proving the **Evelyn care-AI core loop** before expanding into a full episode or anthology.
 
-## Prototype goals
+## Current development target
 
-This first version intentionally uses **no AI**. It tests whether the core loop is compelling before adding model calls:
+The active experiment is intentionally small:
 
-- chat-style interaction
-- authored intent matching
-- repeated security protocol framing
-- memory contradiction
-- hidden cross-instance voice, Echo
-- multiple small endings
-- two chat-based investigation puzzles
-- Ship of Theseus identity / component-replacement mystery
-- local cross-run memory that changes the next cycle
-- lightweight cross-run behavioral profiling and player-language echoes
-- explicit AI context / inference-budget pressure
-- late-cycle prediction and historical-gap anomalies
+> **One ordinary day with Evelyn. Does the player want another turn?**
 
-The long-term concept and AI-native design direction are documented in [`GAME_CONCEPT.md`](./GAME_CONCEPT.md).
+The current prototype work tests three mechanics first:
 
-The focused deterministic narrative for the current slice is documented in [`PROTOTYPE_STORY_GUIDE.md`](./PROTOTYPE_STORY_GUIDE.md).
+- **Attention** - the player cannot pursue everything.
+- **Delegation** - the AI acts through humans with limited time, access, and knowledge.
+- **Memory** - the player cannot preserve everything at full fidelity.
 
-## Run locally
+Supporting systems include evidence provenance and a small working model of uncertain claims.
 
-Open `index.html` directly in a browser, or serve the folder with any static file server.
+Start here:
 
-## Current limitation
+- [Evelyn core-loop prototype](./docs/prototypes/EVELYN_CORE_LOOP_PROTOTYPE.md)
+- [One-day event map](./docs/prototypes/EVELYN_ONE_DAY_EVENT_MAP.md)
+- [Manual playtest guide](./docs/prototypes/EVELYN_MANUAL_PLAYTEST.md)
+- [Playtest scorecard](./docs/prototypes/EVELYN_PLAYTEST_SCORECARD.md)
+- [One-day state fixture](./docs/prototypes/EVELYN_ONE_DAY_STATE_FIXTURE.json)
 
-The text parser still understands only a bounded set of intents, but it accepts several natural phrasings and gives state-aware hints when it cannot interpret the player. This rigidity is intentional and remains one of the first things an eventual AI layer would replace.
+## Development gate
 
+Do **not** resume the broader 30-45 minute Evelyn vertical slice until the one-day loop has been manually tested and Paige explicitly approves the next implementation phase.
 
-## Deterministic prototype status
+The immediate success criterion is not "the story is interesting."
 
-The deterministic prototype is now considered **complete as a concept-validation pass**.
+It is:
 
-Its bounded parser demonstrated the core loop, but further phrase-by-phrase parser expansion would test parser coverage rather than the intended game experience.
+> **The player wants another turn.**
 
-The next development milestone is the first AI-driven version:
+## Deterministic-first rule
 
-**free-form player input -> AI intent interpretation -> deterministic state validation -> canonical result -> AI character response**
+The game must work without live generative AI.
 
-See [`docs/AI_VERSION_NEXT.md`](./docs/AI_VERSION_NEXT.md).
+Authored software owns canon, permissions, consequences, and state changes. AI-backed features may be added later only where testing shows that they materially improve the experience.
 
-Until that version begins:
+Potential future seams include:
+- mapping varied natural language to bounded actions
+- constrained synthesis of multiple sources
+- variable but canon-safe interpretation
+- adaptive scaffolding
+- intentionally lossy summaries
 
-- fix only clear deterministic prototype bugs
-- do not expand parser phrase coverage broadly
-- do not add major new story systems
-- do not add more endings or subsystem voices solely to the deterministic build
+AI is not a requirement for a mechanic that deterministic software handles better.
 
+## Existing prototype history
 
-## AI v1 architecture
+The repository also contains an earlier Agent Seven / security-evaluation prototype. That work remains useful as technical and creative history, but it is **not the current implementation target**.
 
-Current development is moving toward a hybrid model:
+The earlier deterministic prototype tested bounded parsing, memory contradiction, cross-run state, and an initial AI intent layer. Preserve it; do not treat it as current Episode 1 canon.
 
-**player language -> AI intent classification -> confidence/state gate -> deterministic game action**
+## Broader Evelyn design
 
-Key safety rule:
+Long-range Episode 1 material remains documented under:
 
-- uncertain classifications ask for clarification
-- high-impact actions require stronger confidence
-- unavailable actions are never offered to the model
-- deterministic code remains authoritative
+- [Episode 1 implementation spec](./docs/EPISODE_01_IMPLEMENTATION_SPEC.md) - **future design, currently paused**
+- [Episode 1 story-development docs](./docs/story-development/)
+- [Game idea bible](./docs/GAME_IDEA_BIBLE.md)
 
-The active offline hardening work is tracked on `ai-v1-hardening`.
+These docs preserve future architecture, story, endings, and systems. They should not be used to expand current implementation scope until the core loop earns that expansion.
 
+## Run existing prototype locally
+
+The existing static prototype can still be opened through `index.html` or a local static server. It represents earlier prototype work, not the new Evelyn one-day experiment.
 
 ## Project handoff
 
-For the current technical + creative state, start with:
+For the latest technical and creative state, start with:
 
 - [New chat / tool handoff](./docs/handoffs/NEXT_CHAT_START_HERE.md)
-- [Current status](./docs/handoffs/prototype-v0-current-status.md)
-- [Game idea bible](./docs/GAME_IDEA_BIBLE.md)
+- [Evelyn core-loop prototype](./docs/prototypes/EVELYN_CORE_LOOP_PROTOTYPE.md)
+- [Current older prototype status](./docs/handoffs/prototype-v0-current-status.md)
 - [Case study notes](./docs/CASE_STUDY_NOTES.md)
