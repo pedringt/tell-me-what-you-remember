@@ -221,7 +221,7 @@ SAID    "Before you say anything: you can hear me *sit down*? Nobody told me it 
 
 1. **Two inquiries out of four.** The player cannot look at everything.
 2. **The system's default is always visible.** Confirming it costs nothing. Overriding it is the risk.
-3. **Evelyn's patience.** Asking her twice in one incident gets a colder answer. This shows in her words and never as a meter.
+3. **Evelyn's patience.** Asking her twice in one incident gets a colder answer. This shows in her words and never as a meter. The line is `SAID "I have answered that. I would like my crossword back."` (approved by Paige, 2026-09-20, as a test fixture). With only one Evelyn inquiry per incident, this triggers only if a player spends both inquiries on her. **If it rarely triggers in play, that is evidence to cut the mechanic.**
 4. **One carry-over.** Escalating in incident 1, or filing the family note in incident 2, makes her `guarded`. In incident 3 she withholds her account. **The player is shaping the quality of their own future evidence, not just choosing endings.**
 5. **One window.** Jenny leaves at 12:15, in incident 2 only.
 
@@ -278,7 +278,7 @@ Recorded here so nothing is decided silently.
 | Jenny | A source in incident 2 only, until 12:15. Not a scheduler. |
 | Cut from this slice | Memory consolidation, hypothesis cards, Jenny task menus, minute budgets, RSVP and mail, intake, the chat interface. |
 
-**Fixture details (not canon, all replaceable):** the newspaper and crossword, the refused bedroom sensor, the salon booking, the bath mat, "third row, wretched view", the door chime, the kettle, the six-minute inactivity, and all of Evelyn's and Jenny's dialogue.
+**Fixture details (not canon, all replaceable):** Evelyn's cold repeat-ask line, the newspaper and crossword, the refused bedroom sensor, the salon booking, the bath mat, "third row, wretched view", the door chime, the kettle, the six-minute inactivity, and all of Evelyn's and Jenny's dialogue.
 
 ## Authoring notes (never displayed; keep incidents consistent and testable)
 

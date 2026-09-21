@@ -2,9 +2,9 @@
 
 > **FUTURE SLICE - NOT CURRENT BUILD TARGET**
 >
-> This 30-45 minute structure remains useful as future Episode 1 design. The active experiment is the much smaller one-day core loop under `docs/prototypes/`.
+> This 30-45 minute structure remains useful as future Episode 1 design. The current target is the much smaller portfolio judgment game specified in `docs/prototypes/PORTFOLIO_JUDGMENT_GAME_SPEC.md`. (An earlier one-day management prototype under `docs/prototypes/` is superseded.)
 >
-> Do not implement this full slice until the one-day prototype proves that attention, delegation, evidence synthesis, and memory preservation are enjoyable.
+> Do not implement this full slice until the portfolio judgment game has been paper-tested and Paige explicitly approves the next phase.
 
 
 **Status:** Draft, implementation-ready structure  

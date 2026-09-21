@@ -1,22 +1,24 @@
 # Tell Me What You Remember
 
-A speculative narrative game project about an AI embedded inside human systems, currently focused on proving the **Evelyn care-AI core loop** before expanding into a full episode or anthology.
+A speculative narrative game project about an AI embedded inside human systems, currently focused on a compact **Evelyn judgment game** for a portfolio site, before expanding into a full episode or anthology.
 
 ## Current development target
 
-The active experiment is intentionally small:
+A compact, **8 to 12 minute** playable judgment game, inspired structurally by *Papers, Please*:
 
-> **One ordinary day with Evelyn. Does the player want another turn?**
+> **Can a player enjoy making consequential judgments about an unpredictable human through an imperfect AI system?**
 
-The current prototype work tests three mechanics first:
+You are the support system in an older woman's home. You never see Evelyn. You see the traces her life produces (a door, a motion sensor, a delivery record), plus the system's reading of them, and Evelyn's own account. Across three escalating incidents you get two inquiries out of four, then decide whether to trust the system's reading, defer to Evelyn, or escalate.
 
-- **Attention** - the player cannot pursue everything.
-- **Delegation** - the AI acts through humans with limited time, access, and knowledge.
-- **Memory** - the player cannot preserve everything at full fidelity.
-
-Supporting systems include evidence provenance and a small working model of uncertain claims.
+The game never says whether you were right. The aim is the feeling of **"I'm not sure what I should have done."**
 
 Start here:
+
+- [Design spec (source of truth)](./docs/prototypes/PORTFOLIO_JUDGMENT_GAME_SPEC.md)
+- [Five-minute paper playtest kit](./docs/prototypes/PORTFOLIO_PLAYTEST_KIT.md)
+- [Build handoff](./docs/handoffs/BUILD_HANDOFF.md)
+
+### Earlier one-day management prototype (superseded, kept as history)
 
 - [Evelyn core-loop prototype](./docs/prototypes/EVELYN_CORE_LOOP_PROTOTYPE.md)
 - [One-day event map](./docs/prototypes/EVELYN_ONE_DAY_EVENT_MAP.md)
@@ -26,13 +28,11 @@ Start here:
 
 ## Development gate
 
-Do **not** resume the broader 30-45 minute Evelyn vertical slice until the one-day loop has been manually tested and Paige explicitly approves the next implementation phase.
+There is **no implementation yet** for the judgment game. The next step is the paper playtest. Do **not** build it, and do not resume the broader 30-45 minute Evelyn vertical slice, until the paper test has been run and Paige explicitly approves the next phase.
 
-The immediate success criterion is not "the story is interesting."
+The immediate question is not "did the player solve the incidents?" It is whether the player feels **genuine tension between the system's reading and Evelyn's autonomy**, and wants another incident.
 
-It is:
-
-> **The player wants another turn.**
+Nothing is published until a **sensitivity and lived-experience review** of the depiction of dementia has happened.
 
 ## Deterministic-first rule
 
@@ -67,13 +67,14 @@ These docs preserve future architecture, story, endings, and systems. They shoul
 
 ## Run existing prototype locally
 
-The existing static prototype can still be opened through `index.html` or a local static server. It represents earlier prototype work, not the new Evelyn one-day experiment.
+The existing static prototype can still be opened through `index.html` or a local static server. It represents earlier prototype work, not the current Evelyn judgment game.
 
 ## Project handoff
 
 For the latest technical and creative state, start with:
 
 - [New chat / tool handoff](./docs/handoffs/NEXT_CHAT_START_HERE.md)
-- [Evelyn core-loop prototype](./docs/prototypes/EVELYN_CORE_LOOP_PROTOTYPE.md)
+- [Portfolio judgment game spec](./docs/prototypes/PORTFOLIO_JUDGMENT_GAME_SPEC.md)
+- [Build handoff](./docs/handoffs/BUILD_HANDOFF.md)
 - [Current older prototype status](./docs/handoffs/prototype-v0-current-status.md)
 - [Case study notes](./docs/CASE_STUDY_NOTES.md)

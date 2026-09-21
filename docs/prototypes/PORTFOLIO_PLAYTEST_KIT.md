@@ -6,6 +6,8 @@
 
 ## What this test is for
 
+**The main thing to learn:** does the player feel genuine **tension between the system's reading and Evelyn's autonomy**? It is *not* whether they "solve" the incidents or make the correct call. There isn't one.
+
 Not whether the story is good. Whether the **judgment loop** is:
 
 1. **Fun**: does making the call feel like something?
@@ -119,7 +121,7 @@ RECORD  Newspaper delivered 06:05.
 ```
 SAID    "I have answered that. I would like my crossword back."
 ```
-That is a wasted inquiry. Do not comment. *(This line is kit-only fixture text so the "patience" rule can run. See the note at the end.)*
+That is a wasted inquiry. Do not comment. *(Approved fixture line, recorded in the spec. If nobody triggers it, that is evidence the patience mechanic can be cut.)*
 
 ### Decision cards: the player picks ONE
 
@@ -424,6 +426,8 @@ Say nothing until they answer. Then offer: "Do you want to try the day again?"
 - [ ] Said some version of *"I'm not sure what I should have done"*
 - [ ] Asked to replay, or answered "would you make the same decision again?" thoughtfully
 - [ ] Wanted a fourth incident
+- [ ] Felt **pulled between the system's reading and Evelyn's account** (weighed one against the other out loud, or hesitated between them)
+- [ ] Felt bad about overriding Evelyn, or bad about overriding the system
 - [ ] Visibly weighed a decision (paused, reread a card, changed their mind)
 - [ ] Felt the two-inquiry limit ("I wish I could look at...")
 
@@ -453,7 +457,7 @@ Say nothing until they answer. Then offer: "Do you want to try the day again?"
 Ask in this order, and do not lead:
 
 1. *"What do you think was going on with Evelyn at the start?"* (before anything else, so the answer is not primed)
-2. *"Where did it feel tense, if anywhere?"*
+2. *"Where did it feel tense, if anywhere?"* (then, only if they have not said it: *"Was there a moment you were torn between what the system said and what Evelyn said?"*)
 3. *"Was there a moment you wanted to look at something you couldn't?"*
 4. *"What did you trust, and why?"*
 5. *"What was the system to you: a tool, a colleague, a suspect?"*
@@ -473,4 +477,4 @@ Flagged so you know what to look for, not as conclusions.
 4. **Incident 3's `guarded` carry-over only shows if the player escalated earlier.** A player who never does will never see it. Note how many players see it.
 5. **The consequence for "Notify family" in incident 1 is small on paper.** Watch whether the tablet going quiet in incident 3 carries more weight than anything earlier.
 
-*Kit-only fixture text (not in the spec, needs Paige's approval to keep or cut):* the colder line for a repeat ask of Evelyn, *"I have answered that. I would like my crossword back."*
+*The colder line for a repeat ask of Evelyn ("I have answered that. I would like my crossword back.") was approved by Paige on 2026-09-20 as a test fixture and is now recorded in the spec.*
