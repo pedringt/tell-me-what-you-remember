@@ -1,6 +1,10 @@
 # Evelyn Manual Playtest Guide
 
-**Status:** Active test procedure  
+> **Superseded (2026-09-20).** The current design is [`PORTFOLIO_JUDGMENT_GAME_SPEC.md`](./PORTFOLIO_JUDGMENT_GAME_SPEC.md): a compact 8 to 12 minute portfolio
+> judgment game. This playtest guide belongs to the earlier one-day management prototype. It is kept as history and as source
+> material for later slices, and its content below is unchanged.
+
+**Status:** Superseded. (Previously: Active test procedure.) The paper test for the current design is `PORTFOLIO_PLAYTEST_KIT.md`.  
 **Purpose:** Run the one-day core loop manually before more implementation.
 
 ## Roles

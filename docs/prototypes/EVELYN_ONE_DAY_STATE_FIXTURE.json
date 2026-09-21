@@ -1,4 +1,6 @@
 {
+  "_status": "superseded",
+  "_supersededBy": "docs/prototypes/PORTFOLIO_JUDGMENT_GAME_SPEC.md",
   "schemaVersion": 1,
   "prototypeId": "evelyn-one-day-core-loop",
   "time": {

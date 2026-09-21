@@ -1,6 +1,10 @@
 # Evelyn Core-Loop Prototype
 
-**Status:** Active experiment - current implementation target  
+> **Superseded (2026-09-20).** The current design is [`PORTFOLIO_JUDGMENT_GAME_SPEC.md`](./PORTFOLIO_JUDGMENT_GAME_SPEC.md): a compact 8 to 12 minute portfolio
+> judgment game. This plan belongs to the earlier one-day management prototype. It is kept as history and as source
+> material for later slices, and its content below is unchanged.
+
+**Status:** Superseded. (Previously: Active experiment - current implementation target)  
 **Scope:** One in-game day, approximately 15-20 minutes  
 **Purpose:** Determine whether the core interaction is engaging before resuming Episode 1 production.
 

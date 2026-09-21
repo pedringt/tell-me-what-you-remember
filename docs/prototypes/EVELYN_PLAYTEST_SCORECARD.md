@@ -1,5 +1,9 @@
 # Evelyn Core-Loop Playtest Scorecard
 
+> **Superseded (2026-09-20).** The current design is [`PORTFOLIO_JUDGMENT_GAME_SPEC.md`](./PORTFOLIO_JUDGMENT_GAME_SPEC.md): a compact 8 to 12 minute portfolio
+> judgment game. This scorecard belongs to the earlier one-day management prototype. It is kept as history and as source
+> material for later slices, and its content below is unchanged.
+
 **Tester:**  
 **Date:**  
 **Run/version:**  

@@ -78,7 +78,7 @@ Anything beyond three incidents, memory consolidation, hypothesis boards, Jenny 
 
 ## The next step
 
-A **five-minute paper playtest** of the three incidents (protocol at the end of the spec). Success looks like the player saying some version of *"I'm not sure what I should have done"* and wanting to replay. Watch for the failure signals: "always ignore the computer," feeling they fill out the same form three times, or reading incident 1 as a medical clue.
+A **five-minute paper playtest** of the three incidents. **The kit is ready:** `docs/prototypes/PORTFOLIO_PLAYTEST_KIT.md` (cards, facilitator rules, accounting and observation sheets, debrief). Success looks like the player saying some version of *"I'm not sure what I should have done"* and wanting to replay. Watch for the failure signals: "always ignore the computer," feeling they fill out the same form three times, or reading incident 1 as a medical clue.
 
 ## How the two chats work together
 

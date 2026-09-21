@@ -1,6 +1,10 @@
 # Evelyn One-Day Event Map
 
-**Status:** Draft paper-prototype scenario  
+> **Superseded (2026-09-20).** The current design is [`PORTFOLIO_JUDGMENT_GAME_SPEC.md`](./PORTFOLIO_JUDGMENT_GAME_SPEC.md): a compact 8 to 12 minute portfolio
+> judgment game. This event map belongs to the earlier one-day management prototype. It is kept as history and as source
+> material for later slices, and its content below is unchanged.
+
+**Status:** Superseded. (Previously: Draft paper-prototype scenario)  
 **Target:** 15-20 minutes of play  
 **Goal:** Produce one complete turn with attention, delegation, provenance, memory, and a player-caused consequence.
 
