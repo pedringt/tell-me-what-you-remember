@@ -279,3 +279,5 @@ Those require Paige's explicit current approval.
 ## Implementation and repository state
 
 For the state of the code, the branches, the test suite, and how the build chat relates to the story chat, see `docs/handoffs/BUILD_HANDOFF.md`. It also compares the build chat's more detailed plan (`docs/CORE_LOOP_PROTOTYPE_PLAN.md`) with the documents in `docs/prototypes/`, which remain the current definition of the experiment.
+
+**Newer than the one-day prototype documents above:** `docs/prototypes/PORTFOLIO_JUDGMENT_GAME_SPEC.md` (locked by Paige, 2026-09-20) redirects the target to a compact 8 to 12 minute portfolio judgment game. Where it differs from the one-day management prototype, the spec is current. The story chat has not yet marked its own documents accordingly.

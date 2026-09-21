@@ -1,93 +1,85 @@
-# Build Chat Handoff: Core-Loop Prototype
+# Build Chat Handoff
 
-**Written:** 2026-09-20, by the chat that did the implementation work.
-**Purpose:** repository and code state, what was learned while building, and how this relates to the story chat's documents. Creative direction lives in `NEXT_CHAT_START_HERE.md` and `docs/prototypes/`; this file does not override them.
+**Last updated:** 2026-09-20, by the chat that does the implementation work.
+**Purpose:** repository and code state, what building taught us, and how the build chat and the story chat relate. Creative direction is in `docs/prototypes/PORTFOLIO_JUDGMENT_GAME_SPEC.md` and `NEXT_CHAT_START_HERE.md`.
 
 ## Where things stand in one paragraph
 
-The project is **paused between two goals**. A three-day Evelyn slice was built and tested. Then the goal narrowed: prove that managing **one ordinary day** of Evelyn's life is fun enough that a player wants another turn, before investing further in story. **No further implementation is approved.** The next step is a **paper playtest**, which is Paige's to run or authorize.
+The target is now a **compact 8 to 12 minute portfolio judgment game** about Evelyn, inspired structurally by *Papers, Please*: three escalating incidents, two inquiries out of four per incident, and a judgment call each time about whether to trust an imperfect system's reading of a human. **The design is locked (Paige, 2026-09-20). No code has been written for it, and none is approved.** The next step is a five-minute **paper playtest**. Earlier work (a three-day slice, a six-day scaffold, two one-day management plans) is preserved but is not the target.
 
 ## Rules that apply to everything
 
-- Work on `ai-v1-hardening` only. Do **not** merge to `main`, deploy production, or publish anything without Paige's explicit authorization in the current conversation.
-- **Do not resume the 30 to 45 minute vertical slice.** No broad Episode 1 content, endings, more characters, later-game systems, or story progression until the core loop has been proven.
-- Cast is **Evelyn, Jenny, Michael** only.
-- **No live AI** until testing shows a concrete rigidity problem that deterministic handling does not solve. The game must work without it.
-- **Canon safety:** fixture or generated text must not invent clues, relatives, diagnoses, historical events, permissions or consequences. Do not fill anything in `docs/story-development/EPISODE_01_OPEN_DECISIONS.md`.
-- All Evelyn and Jenny dialogue written in code so far is **fixture text**, flagged `placeholder` in `episode01/content.js`. Only Michael's message is `working` wording.
+- Work on `ai-v1-hardening` only. Do **not** merge to `main`, deploy, or publish anything without Paige's explicit authorization for that destination in the current conversation.
+- **Do not build anything until Paige approves the paper playtest result.**
+- **Never show the word "dementia" on screen** in this slice. It is canon; it is deliberately off-screen so players don't pathologize every anomaly.
+- **The system never sees Evelyn, only traces of her.** No portraits, no cameras. See the sensory model in the spec.
+- Cast is **Evelyn, Jenny (incident 2 only), Michael (a message only), and Anna (offstage, never speaks).**
+- **No live AI.** The game must work without it. If a use is proposed, ask what it does better than authored state, and it must never generate canon.
+- **Canon safety:** generated or fixture text must not invent clues, relatives, diagnoses, permissions or consequences. Do not fill anything in `docs/story-development/EPISODE_01_OPEN_DECISIONS.md`.
+- All dialogue is **fixture text**, flagged `placeholder`. Only Michael's message is `working` wording.
+- **No verdicts.** The game never says a decision was correct or incorrect, and the ending must not become a "you should have clicked that" quiz (see the unseen-item rule in the spec).
+- **The design fails** if a player concludes "always ignore the computer" or "always obey the computer."
 
 ## Read in this order
 
-1. `docs/handoffs/NEXT_CHAT_START_HERE.md`, the story chat's handoff. **It defines the current experiment.**
-2. `docs/prototypes/EVELYN_CORE_LOOP_PROTOTYPE.md` and the other four files in `docs/prototypes/`: the current definition of the one-day paper prototype (event map, manual playtest, scorecard, state fixture).
+1. **`docs/prototypes/PORTFOLIO_JUDGMENT_GAME_SPEC.md`**: the current design. Sensory model, protocol, all three incidents with their evidence and consequences, ending rules, canon log, guardrails, gates.
+2. `docs/handoffs/NEXT_CHAT_START_HERE.md`: the story chat's handoff. Creative canon still applies. Its one-day management framing is superseded where it differs from the spec.
 3. This file.
-4. `docs/CORE_LOOP_PROTOTYPE_PLAN.md`: the build chat's **more detailed companion proposal**. See the comparison below. It is not the authority.
-5. `docs/EPISODE_01_SLICE_IMPLEMENTATION_NOTES.md`: what the three-day slice is and what testing found.
-6. `docs/EPISODE_01_LOOP_DESIGN.md`: a six-day design. **Superseded**, kept for reference.
+4. Background only: `docs/prototypes/EVELYN_CORE_LOOP_PROTOTYPE.md` and its siblings (story chat's one-day plan), `docs/CORE_LOOP_PROTOTYPE_PLAN.md` (build chat's heavier one-day plan, **superseded**), `docs/EPISODE_01_LOOP_DESIGN.md` (six-day design, **superseded**), `docs/EPISODE_01_SLICE_IMPLEMENTATION_NOTES.md` (the three-day slice).
 
-## Two plans exist: decide which to run
+## How the direction got here
 
-The story chat and the build chat each wrote a one-day plan at the same time. They agree on the goal, cast, loop, non-goals, Robert/butter pecan/vanilla/church-mail/Michael material, and the paper-first gate. They differ in how much machinery they add:
-
-| | `docs/prototypes/` (story chat) | `docs/CORE_LOOP_PROTOTYPE_PLAN.md` (build chat) |
-|---|---|---|
-| Jenny | 45 minutes, **3 task slots** of 15 minutes | 45 minutes, **7 tasks with different minute costs** |
-| The AI's own time | Not costed | **Every AI action costs minutes** on a visible clock |
-| Evelyn's limits | Not modelled | **Behavioural patience**: her tone changes after repeated asks; no number |
-| Events | 8, including the 9:30 church item and Michael late in the day | 6 events and 4 deadlines; Michael arrives 9:40 with a 1:30 consequence |
-| Memory | **5 items, keep 3** | ~8 items, keep 3, plus a **four-card next-morning test** |
-| Interpretations | Up to 3; must affect behaviour | 3, automatic status, plus a one-at-a-time "acting assumption" toggle |
-| Size | Leaner | Heavier: more systems to test at once |
-
-**My recommendation:** run the story chat's leaner version on paper first. The brief said to cut aggressively, and the build chat's plan tests seven things at once. Borrow from the heavier plan **only if paper play shows a specific gap**:
-
-- If Jenny's three equal slots feel flat, try varied minute costs.
-- If nobody feels the memory choice, try the next-morning test cards.
-- If the AI has too much free time, try costing its actions.
-
-That decision is Paige's; nothing in either document was silently overridden.
+| Step | What changed |
+|---|---|
+| Three-day Evelyn slice built | Linear tutorial. Green, 123 tests. Paused. |
+| Six-day loop scaffold started | Half-wired, moved to a local side branch. |
+| One-day management plans (two, written at the same time by the two chats) | Attention, delegation and memory as a management loop. |
+| **Portfolio judgment game (current)** | Not "manage Evelyn's day" but "judge whether the system's interpretation of Evelyn should be trusted." Cut memory consolidation, hypothesis cards, Jenny scheduling and minute budgets. Kept: provenance (now five tags), patience, consequences for what you don't investigate, the Robert/vanilla thread, Michael's message, Evelyn's voice. |
 
 ## Decisions Paige has made (do not reopen without new evidence)
 
-- Work is redirected to a **one-day core-loop prototype**; a paper playtest comes before more code.
-- The half-finished six-day scaffolding was **moved to a side branch**, not discarded.
-- The first present-tense Robert slip ("Robert won't eat vanilla", in Jenny's report) **appears on Day 1**. Earlier docs had it as a later escalation; the new brief overrides that.
+- Direction: compact portfolio judgment game; paper playtest before code.
+- **Dementia is canon but never shown.** The only cognitive signal is a plain family care note in incident 2: `RECORD Care note (family): recent memory concerns reported.` It is held back from incident 1 so the first lesson is purely "real observation, wrong inference."
+- **Consent model:** Evelyn agreed to assistance in broad terms and did not fully understand every inference the installed sensors allow.
+- **The bathroom impact sensor** is the capability she didn't fully understand. It reports an impact and inactivity, never "Evelyn fell." Her reaction: "You can hear me sit down?"
+- **Anna** is offstage only, with one narrow standing instruction: falls and hospital visits only.
+- **Memory consolidation** is cut from this slice.
+- **Action labels are natural** (for example "Log as routine exception / Enable door reminder / Notify family") over a consistent accept / adjust / escalate structure underneath.
+- **The first present-tense Robert slip** ("Robert won't eat vanilla") stays, and now sits in incident 2.
+- **A sensitivity and lived-experience review** is required before this is called portfolio-finished.
 
 ## Repository state
 
 | Thing | State |
 |---|---|
-| `ai-v1-hardening` | Contains the story chat's docs, the merge of `main`, `.gitignore` and lockfile, the three-day slice (`2e48b3c`, `1ba5bb6`), and the build chat's plan and handoff. |
-| Tests | `npm test`: 123 passing. Node's built-in runner, no extra dependencies. |
-| `wip/six-day-loop` | **Local only, on the implementation machine (`~/dev/tell-me-what-you-remember`), commit `2dd7c51`. Not pushed.** Half-wired scaffolding (resources, threads, notes/hypothesis model, week config); the suite is red on that branch by design. Salvage material, not a starting point. Ask Paige if it is needed. |
+| `ai-v1-hardening` | Has the story chat's docs, the merge of `main`, `.gitignore` and lockfile, the three-day slice, the earlier plans, and now the locked spec. See git for whether the newest commit is pushed. |
+| Tests | `npm test`: 123 passing (the three-day slice). The judgment game has no code or tests yet. |
+| `wip/six-day-loop` | **Local only, on the implementation machine (`~/dev/tell-me-what-you-remember`), commit `2dd7c51`. Not pushed.** Half-wired six-day scaffolding; suite red on that branch by design. Salvage material only. |
 | `main` | Untouched. |
 
-## What exists in the code (under `episode01/`, page at `evelyn.html`)
+## What exists in the code
 
-The committed code is the **three-day slice**. It is *not* the target, but its foundations are reusable:
+Everything under `episode01/` and `evelyn.html` is the **three-day slice**. It is not the target, and its chat-first UI should not be expanded. What is reusable for the judgment game:
 
-- **Reuse now:** `state.js` (versioned save/load), `engine.js` (`dispatch`: validate, gate, confirm, resolve, audit invariant), `actions.js` (bounded action registry, including the Jenny visit logic), `session.js`, `harness.js`, and the test approach (seeded random walks, "every suggestion is available", mutation-checked).
-- **Reuse later:** `interpreter.js` (text to bounded action; hypotheticals and negations never execute; ties ask; never substitutes an action) and `guidance.js`.
-- **Too broad for now:** the intake and tutorial flow, profile saving, the therapy-behaviour choice, the three-day time model, the chat-first UI.
+- **Reuse:** the deterministic engine core (`dispatch` and its audit invariant), the harness, the seeded random-walk and "every suggestion is available" test approach, the provenance idea, and the fixture-status flags.
+- **Not needed:** the text interpreter (the game is buttons only), the guidance and scaffolding layer, the save system, the intake flow, the chat UI.
 
-Run it: `npm test`. To see the old slice: `python3 -m http.server 8137`, then open `http://127.0.0.1:8137/evelyn.html` (`?dev=1` adds a state panel). Progress is stored only in that browser's local storage.
+Run the old slice: `npm test`, or `python3 -m http.server 8137` and open `http://127.0.0.1:8137/evelyn.html`.
 
-## Known follow-ups (do these when building resumes)
+## Known follow-ups (when building resumes)
 
-1. **The "Robert only in past tense" content test is defective.** It is a short verb list and does not catch "Robert won't eat vanilla" or "Robert doesn't eat vanilla". Replace it with a **tagged allowlist**: present-tense Robert allowed only in lines explicitly marked as the designated anomaly, forbidden everywhere else.
-2. **Jenny's model differs between the two plans** (3 slots versus a minutes budget). The existing code uses a 3-task cap; the uncommitted-then-shelved work moved to minutes. Settle this before building.
-3. **Pushing to this branch may start a Vercel preview build**, which would make `evelyn.html` reachable on a preview URL. Nothing is on `main`. Vercel is build-rate limited on this account, so batch pushes.
+1. **The "Robert only in past tense" content test is defective** (a short verb list that misses "Robert won't eat vanilla"). Replace it with a **tagged allowlist**: present-tense Robert permitted only in the one designated incident-2 line, forbidden elsewhere.
+2. **Guardrail tests** listed at the end of the spec: no "dementia" on screen, two inquiries then a decision, two-sided evidence, unseen item independent of the decision, no verdict language, sensors limited to the perceivable list, no Anna dialogue, no network.
+3. **Hosting is undecided:** this repository's Vercel site, or embedded in the portfolio site. Decide before any deploy. Pushing may also start a Vercel preview build; Vercel is build-rate limited on this account, so batch pushes.
 
 ## What is paused (do not start)
 
-The three-day and six-day tutorial expansion, Anna and the wedding arc, dementia progression, endings, hospice, helper turnover, any memory economy beyond one event, more than three interpretations, monitoring systems, anthology work, live AI, and a chat-first interface.
+Anything beyond three incidents, memory consolidation, hypothesis boards, Jenny scheduling, the 30 to 45 minute Episode 1 slice, Anna's wedding arc, dementia progression, endings, hospice, helper turnover, monitoring systems, anthology work, live AI, and any chat-first interface.
 
 ## The next step
 
-**A paper playtest of the one-day plan**, following `docs/prototypes/EVELYN_MANUAL_PLAYTEST.md` and its scorecard. Report on the ten questions in the brief, especially: *did the player want another turn?*
-
-If it succeeds, the smallest digital build is a single deterministic **Day Board** (specified at the end of the build chat's plan). If it does not, cut or simplify, and do not preserve a system because it maps neatly to an AI concept.
+A **five-minute paper playtest** of the three incidents (protocol at the end of the spec). Success looks like the player saying some version of *"I'm not sure what I should have done"* and wanting to replay. Watch for the failure signals: "always ignore the computer," feeling they fill out the same form three times, or reading incident 1 as a medical clue.
 
 ## How the two chats work together
 
-Story planning happens in one chat, which pushes docs to `ai-v1-hardening`. Building happens in another. **Always `git fetch` before pushing**, and put build notes in **new files** rather than editing the other chat's documents. Both chats acted on the same brief at the same moment this session and produced two plans; a quick check-in before writing a design document would avoid that.
+Story planning happens in one chat, which pushes docs to `ai-v1-hardening`. Building happens in another. **Always `git fetch` before pushing**, and put build notes in **new files** rather than editing the other chat's documents. The story chat should now mark its `docs/prototypes/` one-day documents as superseded by the spec; the build chat has not edited them. Twice this session both chats wrote a plan for the same brief at the same moment, so a quick check-in before writing a design document would avoid duplicates.
