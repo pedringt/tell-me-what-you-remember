@@ -1,5 +1,16 @@
 # QA and Eval Strategy
 
+> **CURRENT TESTING PRIORITY**
+>
+> Before broader Episode 1 route/eval work, run the one-day Evelyn core-loop experiment using:
+> - `docs/prototypes/EVELYN_MANUAL_PLAYTEST.md`
+> - `docs/prototypes/EVELYN_PLAYTEST_SCORECARD.md`
+>
+> The immediate question is behavioral and experiential: **does the player want another turn?**
+>
+> Do not use automated route coverage as a substitute for proving that attention, delegation, evidence synthesis, and memory preservation are enjoyable.
+
+
 ## Purpose
 
 Tell Me What You Remember combines:
