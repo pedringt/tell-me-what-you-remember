@@ -1,5 +1,12 @@
 # Episode 01 First Playable Slice
 
+> **FUTURE SLICE - NOT CURRENT BUILD TARGET**
+>
+> This 30-45 minute structure remains useful as future Episode 1 design. The active experiment is the much smaller one-day core loop under `docs/prototypes/`.
+>
+> Do not implement this full slice until the one-day prototype proves that attention, delegation, evidence synthesis, and memory preservation are enjoyable.
+
+
 **Status:** Draft, implementation-ready structure  
 **Target duration:** approximately 30-45 minutes  
 **Purpose:** teach the care system, establish Evelyn as a person, make the player competent at routine care, then introduce one small inconsistency without turning the opening into a mystery immediately.
