@@ -1,10 +1,5 @@
 # Start Here: New Chat / Tool Handoff
 
-> **CURRENT STATUS OVERRIDE (2026-09-20). Read `docs/handoffs/BUILD_HANDOFF.md` first.**
-> Implementation is **paused**. The immediate goal is now a **one-day core-loop prototype**, tested on paper before any more code:
-> see `docs/CORE_LOOP_PROTOTYPE_PLAN.md`. Where this document's "Immediate recommended task" (build the 30 to 45 minute
-> vertical slice) conflicts with that, **the plan wins**. Story direction and canon below still apply.
-
 You are continuing work on **Tell Me What You Remember**.
 
 ## Repository
@@ -280,3 +275,7 @@ Nothing in these instructions authorizes:
 - publishing a public release
 
 Those require Paige's explicit current approval.
+
+## Implementation and repository state
+
+For the state of the code, the branches, the test suite, and how the build chat relates to the story chat, see `docs/handoffs/BUILD_HANDOFF.md`. It also compares the build chat's more detailed plan (`docs/CORE_LOOP_PROTOTYPE_PLAN.md`) with the documents in `docs/prototypes/`, which remain the current definition of the experiment.

@@ -1,5 +1,11 @@
 # Core-Loop Prototype Plan: One Day With Evelyn
 
+> **Companion proposal, not the authority.** The current definition of the experiment is the story chat's set in
+> [`docs/prototypes/`](./prototypes/EVELYN_CORE_LOOP_PROTOTYPE.md). This document is a **more detailed, heavier alternative**
+> written at the same time (varied Jenny minute costs, a costed AI clock, behavioural patience, a next-morning test).
+> `docs/handoffs/BUILD_HANDOFF.md` compares the two. Recommendation: paper-test the leaner set first and borrow from
+> this one only where play shows a specific gap.
+
 **Status:** draft for Paige's review. A paper/manual prototype plan, not an implementation. **Nothing in here is validated.** Every "fun hypothesis" below is a bet to be tested, not a finding.
 
 **Branch:** `ai-v1-hardening`. No merge, no deploy, no push implied.
